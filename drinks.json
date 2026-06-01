@@ -1,0 +1,27 @@
+{
+  "drinks": [
+    { "id": "red-bull-20oz",          "name": "Red Bull (20oz)",               "brand": "Red Bull",        "price": 5.49, "size_oz": 20,  "caffeine_mg": 189 },
+    { "id": "red-bull-16oz",          "name": "Red Bull (16oz)",               "brand": "Red Bull",        "price": 4.89, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "red-bull-12oz",          "name": "Red Bull (12oz)",               "brand": "Red Bull",        "price": 3.99, "size_oz": 12,  "caffeine_mg": 114 },
+    { "id": "red-bull-regular",       "name": "Red Bull (8.4oz)",              "brand": "Red Bull",        "price": 3.19, "size_oz": 8.4, "caffeine_mg": 80  },
+    { "id": "monster-original",       "name": "Monster Original (16oz)",       "brand": "Monster",         "price": 3.59, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "monster-ultra",          "name": "Monster Ultra (16oz)",          "brand": "Monster",         "price": 3.59, "size_oz": 16,  "caffeine_mg": 150 },
+    { "id": "monster-juice",          "name": "Monster Juice (16oz)",          "brand": "Monster",         "price": 3.59, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "java-monster",           "name": "Java Monster (15oz)",           "brand": "Monster",         "price": 3.79, "size_oz": 15,  "caffeine_mg": 188 },
+    { "id": "celsius-original",       "name": "Celsius Original (12oz)",       "brand": "Celsius",         "price": 3.29, "size_oz": 12,  "caffeine_mg": 200 },
+    { "id": "celsius-essentials",     "name": "Celsius Essentials (16oz)",     "brand": "Celsius",         "price": 3.49, "size_oz": 16,  "caffeine_mg": 200 },
+    { "id": "alani-nu",               "name": "Alani Nu (12oz)",               "brand": "Alani Nu",        "price": 3.39, "size_oz": 12,  "caffeine_mg": 200 },
+    { "id": "ghost-energy",           "name": "Ghost Energy (16oz)",           "brand": "Ghost",           "price": 3.49, "size_oz": 16,  "caffeine_mg": 200 },
+    { "id": "prime-energy",           "name": "Prime Energy (12oz)",           "brand": "Prime",           "price": 3.29, "size_oz": 12,  "caffeine_mg": 200 },
+    { "id": "c4-energy",              "name": "C4 Energy (16oz)",              "brand": "C4",              "price": 3.49, "size_oz": 16,  "caffeine_mg": 200 },
+    { "id": "reign-total-body",       "name": "Reign Total Body (16oz)",       "brand": "Reign",           "price": 3.49, "size_oz": 16,  "caffeine_mg": 300 },
+    { "id": "reign-storm",            "name": "Reign Storm (12oz)",            "brand": "Reign",           "price": 3.29, "size_oz": 12,  "caffeine_mg": 130 },
+    { "id": "bang-energy",            "name": "Bang Energy (16oz)",            "brand": "Bang",            "price": 3.29, "size_oz": 16,  "caffeine_mg": 300 },
+    { "id": "rockstar-original",      "name": "Rockstar Original (16oz)",      "brand": "Rockstar",        "price": 3.29, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "nos-original",           "name": "NOS Original (16oz)",           "brand": "NOS",             "price": 3.29, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "full-throttle",          "name": "Full Throttle (16oz)",          "brand": "Full Throttle",   "price": 3.29, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "ryse-fuel",              "name": "Ryse Fuel (16oz)",              "brand": "Ryse",            "price": 3.49, "size_oz": 16,  "caffeine_mg": 200 },
+    { "id": "bucked-up",              "name": "Bucked Up (16oz)",              "brand": "Bucked Up",       "price": 3.49, "size_oz": 16,  "caffeine_mg": 300 },
+    { "id": "cstore-private-label",   "name": "C-Store Private Label (16oz)",  "brand": "Private Label",   "price": 2.39, "size_oz": 16,  "caffeine_mg": 160 }
+  ]
+}

@@ -1,0 +1,1137 @@
+/* ============================================================
+   YOUR DAILY DRAIN — Industrial Brutalist Dark Theme
+   ============================================================ */
+
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --bg:           #0A0A0A;
+  --bg-card:      #111111;
+  --bg-input:     #0D0D0D;
+  --yellow:       #00ff87;
+  --yellow-dim:   #00cc6a;
+  --orange:       #FF4D00;
+  --red:          #FF1A1A;
+  --green:        #00ff87;
+  --white:        #F2F2F2;
+  --grey:         #cccccc;
+  --border-bright:#00ff87;
+  --border-dim:   #222222;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --max-w:        480px;
+  --pad:          20px;
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── RESET ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+/* ── BASE ────────────────────────────────────────────────── */
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* ── BACKGROUND TEXTURES ─────────────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(0deg,   rgba(0,255,135,0.018) 0, rgba(0,255,135,0.018) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg,  rgba(0,255,135,0.018) 0, rgba(0,255,135,0.018) 1px, transparent 1px, transparent 48px);
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad) 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 52px var(--pad) 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--yellow);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--yellow);
+  flex-shrink: 0;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(58px, 16vw, 90px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-headline .hl {
+  color: var(--yellow);
+  position: relative;
+  display: inline-block;
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: #e0e0e0;
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 300px;
+  margin-bottom: 32px;
+}
+
+.hero-scroll-hint {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--grey);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+/* ── CARD SECTIONS — shared tab label ────────────────────── */
+.section-label-tab {
+  position: absolute;
+  top: -20px;
+  left: 16px;
+  background: var(--yellow);
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  padding: 3px 14px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* THE DAMAGE label is red — signals cost/danger */
+#results .section-label-tab {
+  background: var(--red);
+  color: #ffffff;
+}
+
+/* ── CALCULATOR CARD ─────────────────────────────────────── */
+.calc-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-bright);
+  padding: 28px;
+  position: relative;
+  margin-top: 32px;
+}
+
+/* ── FIELD ───────────────────────────────────────────────── */
+.field-group {
+  margin-bottom: 28px;
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--grey);
+  margin-bottom: 10px;
+}
+
+/* ── SELECT ──────────────────────────────────────────────── */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  width: 100%;
+  background: var(--bg-input);
+  border: 2px solid var(--border-dim);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 44px 14px 14px;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+  line-height: 1.2;
+}
+
+.select-wrap select:focus,
+.select-wrap select:hover {
+  border-color: var(--yellow);
+}
+
+.select-wrap select option {
+  background: #1a1a1a;
+  color: var(--white);
+}
+
+.select-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--yellow);
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.drink-meta {
+  font-size: 12px;
+  color: #e0e0e0;
+  margin-top: 8px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  min-height: 16px;
+}
+
+/* ── STEPPER ─────────────────────────────────────────────── */
+.stepper {
+  display: flex;
+  width: fit-content;
+  border: 2px solid var(--border-dim);
+}
+
+.stepper-btn {
+  background: var(--bg-input);
+  border: none;
+  color: var(--yellow);
+  font-size: 26px;
+  width: 56px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 300;
+  transition: background 0.1s, color 0.1s;
+  line-height: 1;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stepper-btn:hover  { background: var(--yellow); color: #000; }
+.stepper-btn:active { opacity: 0.8; }
+
+.stepper-value {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 60px;
+  width: 84px;
+  text-align: center;
+  color: var(--white);
+  border-left: 2px solid var(--border-dim);
+  border-right: 2px solid var(--border-dim);
+  height: 60px;
+  display: block;
+}
+
+/* ── NUMBER INPUT ────────────────────────────────────────── */
+.input-wrap {
+  display: flex;
+  align-items: stretch;
+  border: 2px solid var(--border-dim);
+  background: var(--bg-input);
+  transition: border-color 0.15s;
+}
+
+.input-wrap:focus-within { border-color: var(--yellow); }
+
+.input-prefix {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--yellow);
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border-right: 2px solid var(--border-dim);
+  height: 60px;
+}
+
+.input-wrap input {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 500;
+  padding: 0 14px;
+  height: 60px;
+  flex: 1;
+  outline: none;
+  min-width: 0;
+  -moz-appearance: textfield;
+}
+
+.input-wrap input::-webkit-inner-spin-button,
+.input-wrap input::-webkit-outer-spin-button { opacity: 0.3; }
+
+/* ── CALCULATE BUTTON ────────────────────────────────────── */
+.calc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--yellow);
+  border: none;
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  padding: 20px 24px;
+  cursor: pointer;
+  margin-top: 32px;
+  transition: background 0.1s, transform 0.08s;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.calc-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.1s;
+}
+
+.calc-btn:hover { background: #e0ff26; }
+
+.calc-btn:active {
+  transform: scale(0.985);
+  background: var(--yellow-dim);
+}
+
+.calc-btn-arrow {
+  font-size: 24px;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.calc-btn:hover .calc-btn-arrow { transform: translateX(5px); }
+
+/* ── RESULTS SECTION ─────────────────────────────────────── */
+.results-section {
+  background: var(--bg-card);
+  border: 2px solid var(--border-bright);
+  padding: 28px;
+  position: relative;
+  margin-top: 32px;
+}
+
+/* ── ALT + IDEAS SECTIONS ────────────────────────────────── */
+.alt-section,
+.ideas-section {
+  background: var(--bg-card);
+  border: 2px solid var(--border-bright);
+  padding: 28px;
+  position: relative;
+  margin-top: 32px;
+}
+
+/* ── REVEAL ANIMATION ────────────────────────────────────── */
+.results-section.reveal  { animation: revealUp 0.45s var(--ease-out) both; }
+.alt-section.reveal      { animation: revealUp 0.45s var(--ease-out) 0.1s both; }
+.ideas-section.reveal    { animation: revealUp 0.45s var(--ease-out) 0.15s both; }
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none !important; }
+
+.results-subline {
+  font-size: 13px;
+  color: #e0e0e0;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* ── PER-CAN AT REGISTER ─────────────────────────────────── */
+.price-per-can-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg);
+  border: 1px solid var(--border-dim);
+  padding: 10px 16px;
+  margin-bottom: 16px;
+}
+
+.ppc-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--grey);
+}
+
+.ppc-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--white);
+  line-height: 1;
+}
+
+/* ── WEEKLY / MONTHLY GRID ───────────────────────────────── */
+.results-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.result-cell {
+  background: var(--bg);
+  border: 1px solid var(--border-dim);
+  padding: 14px 16px;
+}
+
+.result-cell-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--grey);
+  margin-bottom: 6px;
+}
+
+.result-cell-value {
+  font-family: var(--font-display);
+  font-size: 34px;
+  color: var(--white);
+  line-height: 1;
+}
+
+/* ── ANNUAL COST ─────────────────────────────────────────── */
+.result-annual-block {
+  background: var(--bg);
+  border: 2px solid var(--border-dim);
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-annual-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity: 0.6;
+}
+
+.annual-label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--grey);
+  margin-bottom: 8px;
+}
+
+.annual-number {
+  font-family: var(--font-display);
+  font-size: clamp(68px, 20vw, 100px);
+  color: var(--green);
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+}
+
+.annual-sub {
+  font-size: 12px;
+  color: #e0e0e0;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+/* ── HOURS WORKED — horizontal conversion ────────────────── */
+.result-hours-block {
+  background: var(--bg);
+  border: 2px solid var(--orange);
+  padding: 22px 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.hours-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--orange);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* ── HOURS → WEEKS CONVERSION ROW ───────────────────────────
+   Three equal flex cells: [hours | arrow | weeks]
+   Each cell centered H + V. Arrow fixed-width, never squished.
+   min-width prevents collapse on very narrow viewports.
+   ─────────────────────────────────────────────────────────── */
+.hours-conversion-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 220px;
+}
+
+/* Hours and weeks each take exactly half the remaining space */
+.hcr-left,
+.hcr-right {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Viewport-relative font — readable at 320 px, large at 1280 px */
+.hours-number,
+.weeks-count {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 8vw, 80px);
+  color: var(--orange);
+  line-height: 1;
+}
+
+.hcr-unit,
+.hcr-weeks-unit {
+  font-family: var(--font-display);
+  font-size: clamp(11px, 2.5vw, 15px);
+  color: var(--orange);
+  letter-spacing: 0.16em;
+  opacity: 0.65;
+  margin-top: 2px;
+}
+
+/* Arrow: fixed flex-basis keeps it centred regardless of number width */
+.hcr-arrow {
+  flex: 0 0 clamp(36px, 8vw, 68px);
+  height: clamp(24px, 5vw, 44px);
+  background: var(--orange);
+  clip-path: polygon(0 22%, 62% 22%, 62% 0%, 100% 50%, 62% 100%, 62% 78%, 0 78%);
+  opacity: 0.95;
+  align-self: center;
+}
+
+/* Lives outside the flex row — full-width, centred below */
+.hcr-weeks-label {
+  font-size: 10px;
+  color: #e0e0e0;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-top: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── CAFFEINE COST INDEX ─────────────────────────────────── */
+.caff-section {
+  background: var(--bg-card);
+  border: 2px solid var(--border-bright);
+  padding: 28px;
+  position: relative;
+  margin-top: 32px;
+}
+
+.caff-section.reveal { animation: revealUp 0.45s var(--ease-out) 0.08s both; }
+
+.caff-callout {
+  background: var(--bg);
+  border: 1px solid var(--border-dim);
+  padding: 12px 16px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: #e0e0e0;
+  line-height: 1.55;
+}
+
+.caff-callout-expensive { color: var(--red); font-weight: 600; }
+.caff-callout-cheap     { color: var(--yellow); font-weight: 600; }
+.caff-callout-mult      { font-family: var(--font-display); font-size: 22px; color: var(--orange); }
+
+.caff-row {
+  margin-bottom: 10px;
+}
+
+.caff-row:last-child { margin-bottom: 0; }
+
+.caff-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.caff-name {
+  font-size: 12px;
+  color: #e0e0e0;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Can price lives in the meta row (secondary, grey) */
+.caff-can-price {
+  font-size: 11px;
+  color: var(--grey);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.caff-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.caff-bar-track {
+  flex: 1;
+  height: 9px;
+  background: rgba(255,255,255,0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+.caff-bar {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  min-width: 4px;
+  transition: width 0.4s ease;
+}
+
+/* CPM lives beside the bar — prominent stat column */
+.caff-cpm {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--white);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 76px;
+  text-align: right;
+}
+
+/* ── TAX SLIDER ──────────────────────────────────────────── */
+.tax-block {
+  background: var(--bg);
+  border: 1px solid var(--border-dim);
+  padding: 16px;
+}
+
+.tax-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+
+.tax-label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--grey);
+}
+
+.tax-pct {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--yellow);
+  line-height: 1;
+}
+
+.tax-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: var(--border-dim);
+  outline: none;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 6px;
+  border-radius: 0;
+}
+
+.tax-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--yellow);
+  cursor: pointer;
+  border: 3px solid #000;
+  outline: 2px solid var(--yellow);
+  border-radius: 0;
+  transition: transform 0.1s;
+}
+
+.tax-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+.tax-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--yellow);
+  cursor: pointer;
+  border: 3px solid #000;
+  outline: 2px solid var(--yellow);
+  border-radius: 0;
+}
+
+.tax-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--grey);
+  font-family: var(--font-display);
+  margin-bottom: 6px;
+}
+
+.tax-note {
+  font-size: 11px;
+  color: #e0e0e0;
+  font-weight: 300;
+}
+
+/* ── SECTION SUBTITLE ────────────────────────────────────── */
+.section-subtitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: #e0e0e0;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+}
+
+/* ── STRATEGY CARDS (Cheaper Hits section) ───────────────── */
+.alt-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.strategy-card {
+  background: var(--bg);
+  border: 1px solid var(--border-dim);
+  padding: 24px;
+  transition: border-color 0.15s;
+}
+
+.strategy-card:hover { border-color: var(--yellow); }
+
+.strategy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.strategy-label {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1;
+}
+
+.strategy-savings-badge {
+  background: var(--yellow);
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
+  align-self: flex-start;
+}
+
+.strategy-options {
+  border-top: 1px solid var(--border-dim);
+  margin-bottom: 16px;
+}
+
+.strategy-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-dim);
+  gap: 12px;
+}
+
+.strategy-item-name {
+  font-size: 13px;
+  color: #e0e0e0;
+  font-weight: 400;
+  flex: 1;
+}
+
+.strategy-item-price {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--yellow);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.strategy-item-unit {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--grey);
+  font-weight: 300;
+}
+
+/* ── ALDI detailed option rows ───────────────────────────── */
+.strategy-item--detailed {
+  align-items: flex-start;
+}
+
+.strategy-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.strategy-item-size {
+  font-size: 11px;
+  color: var(--grey);
+  font-weight: 300;
+  font-family: var(--font-body);
+}
+
+.strategy-item-vs {
+  font-size: 11px;
+  color: var(--yellow);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.strategy-item-note {
+  font-size: 10px;
+  color: var(--grey);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.strategy-annual {
+  font-size: 13px;
+  color: var(--yellow);
+  font-weight: 500;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.strategy-tip {
+  font-size: 12px;
+  color: #e0e0e0;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--border-dim);
+}
+
+.strategy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--grey);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.strategy-link::after { content: ' →'; }
+.strategy-card:hover .strategy-link { color: var(--yellow); }
+
+/* ── SAVINGS IDEA CARDS ──────────────────────────────────── */
+.ideas-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.idea-card {
+  display: block;
+  background: var(--bg);
+  border: 1px solid var(--border-dim);
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative;
+}
+
+.idea-card:hover {
+  border-color: var(--yellow);
+  background: #111;
+}
+
+.idea-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.idea-icon { font-size: 26px; line-height: 1; }
+
+.idea-tag {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  background: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #666666;
+  padding: 3px 10px;
+}
+
+.idea-name {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 0.95;
+  color: var(--white);
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+
+.idea-desc {
+  font-size: 13px;
+  color: #e0e0e0;
+  font-weight: 300;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.idea-amount {
+  font-size: 13px;
+  color: var(--yellow);
+  font-weight: 500;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.idea-cta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--grey);
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.idea-card:hover .idea-cta { color: var(--yellow); }
+.idea-cta::after { content: '→'; }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad) 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer p {
+  font-size: 11px;
+  color: #e0e0e0;
+  font-weight: 300;
+  border-top: 1px solid var(--border-dim);
+  padding-top: 20px;
+  line-height: 1.6;
+}
+
+/* ── SELECTION ───────────────────────────────────────────── */
+::selection {
+  background: var(--yellow);
+  color: #000;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-dim); }
+::-webkit-scrollbar-thumb:hover { background: var(--yellow); }
+
+/* ── FOCUS VISIBLE ───────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 360px) {
+  :root { --pad: 14px; }
+  .hero-headline { font-size: 52px; }
+  .stepper-value { width: 70px; font-size: 36px; }
+  .stepper-btn   { width: 48px; }
+}
+
+@media (min-width: 520px) {
+  .hero-headline { font-size: 90px; }
+}
+
+/* ── DESKTOP TWO-COLUMN LAYOUT ───────────────────────────── */
+@media (min-width: 900px) {
+
+  /* Expand page container */
+  :root { --pad: 40px; }
+
+  .container {
+    max-width: 1440px;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+
+  /* Hero: full width, bigger type */
+  .hero {
+    max-width: none;
+    padding: 64px var(--pad) 52px;
+  }
+
+  .hero-headline {
+    font-size: clamp(80px, 9vw, 128px);
+  }
+
+  .hero-sub { max-width: 480px; }
+
+  /* Hide scroll hint — results are always visible on desktop */
+  .hero-scroll-hint { display: none; }
+
+  /* Two-column grid */
+  .app-grid {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    column-gap: 32px;
+    align-items: start;
+  }
+
+  /* Left column: sticky so calculator stays in view while scrolling results */
+  .col-left {
+    position: sticky;
+    top: 24px;
+  }
+
+  /* Right column */
+  .col-right {
+    min-width: 0;
+  }
+
+  /* Strategy cards: 2×2 grid for 4 tiles */
+  .alt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: unset;
+    gap: 16px;
+  }
+
+  /* Idea cards: 2-column grid */
+  .ideas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: unset;
+    gap: 10px;
+  }
+
+  /* Annual number: cap size for right column */
+  .annual-number {
+    font-size: clamp(60px, 7vw, 92px);
+  }
+
+  /* Desktop: numbers scale with viewport; arrow larger */
+  .hours-number,
+  .weeks-count {
+    font-size: clamp(44px, 5vw, 80px);
+  }
+
+  .hcr-unit,
+  .hcr-weeks-unit {
+    font-size: 14px;
+  }
+
+  .hcr-arrow {
+    flex-basis: 72px;
+    height: 46px;
+  }
+
+  /* Hide button — results update live on desktop */
+  .calc-btn { display: none; }
+
+  /* Footer: match container width */
+  .site-footer {
+    max-width: 1440px;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+}

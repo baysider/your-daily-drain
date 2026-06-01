@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate the true cost of your daily energy drink habit in hours worked.">
+  <meta property="og:title" content="Your Daily Drain — The True Cost of Your Energy Habit">
+  <meta property="og:description" content="That $3 Monster cost you $4 to earn. Find out exactly how many hours you're working for caffeine.">
+  <title>Your Daily Drain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- ░░ HERO ░░ -->
+  <header class="hero">
+    <div class="hero-eyebrow">YOUR DAILY DRAIN</div>
+    <h1 class="hero-headline">
+      That <span class="hl">$3</span> Monster<br>
+      cost you <span class="hl">$4</span><br>
+      to earn.
+    </h1>
+    <p class="hero-sub">Every can costs more than the price tag.<br>Find out what your habit is really taking from you.</p>
+    <div class="hero-scroll-hint" aria-hidden="true">↓ CALCULATE BELOW</div>
+  </header>
+
+  <!-- ░░ MAIN ░░ -->
+  <main class="container">
+  <div class="app-grid">
+
+    <!-- LEFT COL: Calculator -->
+    <div class="col-left">
+    <section class="calc-card" id="calculator" aria-label="Calculator">
+      <div class="section-label-tab">YOUR HABIT</div>
+
+      <div class="field-group">
+        <label for="drink-select" class="field-label">YOUR POISON</label>
+        <div class="select-wrap">
+          <select id="drink-select" name="drink" aria-label="Select your drink"></select>
+          <div class="select-chevron" aria-hidden="true">▼</div>
+        </div>
+        <div class="drink-meta" id="drink-meta" aria-live="polite"></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label" id="stepper-label">CANS PER DAY</div>
+        <div class="stepper" role="group" aria-labelledby="stepper-label">
+          <button class="stepper-btn" id="stepper-minus" aria-label="Decrease cans per day">−</button>
+          <output class="stepper-value" id="stepper-value" for="stepper-minus stepper-plus">1</output>
+          <button class="stepper-btn" id="stepper-plus" aria-label="Increase cans per day">+</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="hourly-wage" class="field-label">YOUR HOURLY WAGE</label>
+        <div class="input-wrap">
+          <span class="input-prefix" aria-hidden="true">$</span>
+          <input
+            type="number"
+            id="hourly-wage"
+            name="hourly-wage"
+            min="1"
+            max="9999"
+            step="0.50"
+            value="20"
+            placeholder="20.00"
+            aria-label="Hourly wage in dollars"
+          >
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="tax-row">
+          <label for="sales-tax-slider" class="field-label">SALES TAX RATE</label>
+          <span class="tax-pct" id="sales-tax-display" aria-live="polite">6%</span>
+        </div>
+        <input
+          type="range"
+          id="sales-tax-slider"
+          min="0"
+          max="10"
+          value="6"
+          step="0.5"
+          class="tax-slider"
+          aria-label="Sales tax rate percentage"
+          aria-valuemin="0"
+          aria-valuemax="10"
+          aria-valuenow="6"
+        >
+        <div class="tax-range-labels" aria-hidden="true">
+          <span>0%</span><span>10%</span>
+        </div>
+        <p class="tax-note">Applied to shelf price before all calculations</p>
+      </div>
+
+      <button class="calc-btn" id="calc-btn" type="button">
+        <span>CALCULATE MY DRAIN</span>
+        <span class="calc-btn-arrow" aria-hidden="true">→</span>
+      </button>
+    </section>
+    </div><!-- /col-left -->
+
+    <!-- RIGHT COL: Results + sections -->
+    <div class="col-right">
+
+    <!-- RESULTS -->
+    <section class="results-section hidden" id="results" aria-label="Results" aria-live="polite">
+      <div class="section-label-tab">THE DAMAGE</div>
+      <p class="results-subline" id="results-subline"></p>
+
+      <div class="price-per-can-row">
+        <span class="ppc-label">PER CAN AT REGISTER</span>
+        <span class="ppc-value" id="price-per-can">$0.00</span>
+      </div>
+
+      <div class="results-row-grid">
+        <div class="result-cell">
+          <div class="result-cell-label">PER WEEK</div>
+          <div class="result-cell-value" id="weekly-cost">$0.00</div>
+        </div>
+        <div class="result-cell">
+          <div class="result-cell-label">PER MONTH</div>
+          <div class="result-cell-value" id="monthly-cost">$0.00</div>
+        </div>
+      </div>
+
+      <div class="result-annual-block">
+        <div class="annual-label">PER YEAR</div>
+        <div class="annual-number" id="annual-cost" aria-label="Annual cost">$0</div>
+        <div class="annual-sub">gone. every single year.</div>
+      </div>
+
+      <div class="result-hours-block">
+        <div class="hours-label">HOURS OF YOUR LIFE / YEAR</div>
+        <div class="hours-conversion-row" aria-live="polite">
+          <div class="hcr-left">
+            <div class="hours-number" id="hours-worked">0.0</div>
+            <div class="hcr-unit">HRS</div>
+          </div>
+          <div class="hcr-arrow" aria-hidden="true"></div>
+          <div class="hcr-right">
+            <div class="weeks-count" id="weeks-count">—</div>
+            <div class="hcr-weeks-unit">WKS</div>
+          </div>
+        </div>
+        <div class="hcr-weeks-label">of your working life every year</div>
+      </div>
+
+      <div class="tax-block">
+        <div class="tax-row">
+          <label for="tax-slider" class="tax-label">TAX RATE</label>
+          <span class="tax-pct" id="tax-display" aria-live="polite">25%</span>
+        </div>
+        <input
+          type="range"
+          id="tax-slider"
+          min="15"
+          max="40"
+          value="25"
+          step="1"
+          class="tax-slider"
+          aria-label="Tax rate percentage"
+          aria-valuemin="15"
+          aria-valuemax="40"
+          aria-valuenow="25"
+        >
+        <div class="tax-range-labels" aria-hidden="true">
+          <span>15%</span><span>40%</span>
+        </div>
+        <p class="tax-note">Drag to match your bracket</p>
+      </div>
+
+    </section>
+
+    <!-- CAFFEINE COST INDEX -->
+    <section class="caff-section hidden" id="caffeine-index" aria-label="Caffeine Cost Index">
+      <div class="section-label-tab">CAFFEINE COST INDEX</div>
+      <p class="section-subtitle">Cost per 10mg of caffeine for every drink — sorted most to least expensive.</p>
+      <div class="caff-callout" id="caff-callout"></div>
+      <div class="caff-chart" id="caff-chart"></div>
+    </section>
+
+    <!-- CHEAPER ALTERNATIVES -->
+    <section class="alt-section hidden" id="alternatives" aria-label="Smarter buying strategies">
+      <div class="section-label-tab">CHEAPER HITS</div>
+      <p class="section-subtitle">Four ways to buy smarter and keep the caffeine.</p>
+      <div class="alt-grid" id="alt-grid"></div>
+    </section>
+
+    <!-- WHAT YOU COULD DO -->
+    <section class="ideas-section hidden" id="savings-ideas" aria-label="What you could do with savings">
+      <div class="section-label-tab">REDIRECT THE CASH</div>
+      <p class="section-subtitle">What your savings could actually buy you.</p>
+      <div class="ideas-grid" id="ideas-grid"></div>
+    </section>
+
+    </div><!-- /col-right -->
+  </div><!-- /app-grid -->
+  </main>
+
+  <footer class="site-footer">
+    <p>Prices are US retail averages. Results are estimates for illustrative purposes. Affiliate links may earn a commission.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
