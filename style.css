@@ -912,6 +912,23 @@ body::before {
 .strategy-link::after { content: ' →'; }
 .strategy-card:hover .strategy-link { color: var(--yellow); }
 
+/* Inline per-option link (e.g. Venom at Walmart) */
+.strategy-opt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--grey);
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-top: 3px;
+  transition: color 0.15s;
+}
+.strategy-opt-link::after { content: ' →'; }
+.strategy-opt-link:hover  { color: var(--yellow); }
+
 /* ── SAVINGS IDEA CARDS ──────────────────────────────────── */
 .ideas-grid {
   display: flex;

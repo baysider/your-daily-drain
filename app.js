@@ -38,7 +38,7 @@ const STRATEGIES = [
     ],
     tip: 'Buy a pack once a month and you\'re done. Kirkland at $0.71 is the lowest per-can cost available anywhere.',
     linkText: 'Find a Costco near you',
-    href: '#affiliate-costco'
+    href: 'https://www.costco.com/s?keyword=energy%20drinks'
   },
   {
     id: 'sams-club',
@@ -52,7 +52,7 @@ const STRATEGIES = [
     ],
     tip: "Sam's Club carries a wide multi-brand lineup. Alani Mini at $0.94 is one of the sharpest value cans in the market.",
     linkText: "Find a Sam's Club near you",
-    href: '#affiliate-samsclub'
+    href: 'https://www.samsclub.com/search?q=energy+drink'
   },
   {
     id: 'discount-grocery',
@@ -77,18 +77,19 @@ const STRATEGIES = [
     ],
     tip: "ALDI private-label cans are consistent quality with no membership required. Prices are shelf-stable — no need to wait for a sale.",
     linkText: 'Find an ALDI near you',
-    href: '#affiliate-aldi'
+    href: 'https://www.aldi.us/store-locator'
   },
   {
     id: 'dollar-closeout',
     label: 'DOLLAR TREE & CLOSEOUT',
     options: [
       { name: 'Dollar Tree Energy Closeouts', price: 1.25, note: 'Rotating name-brand closeouts — Celsius, Monster, Rockstar, Bang and others. Not a private label. Stock varies by location and week.' },
-      { name: 'Venom Energy',                 price: 0.99, note: 'Available at major grocery and convenience stores — $0.99 to $1.49 per can.' }
+      { name: 'Venom Energy',                 price: 0.99, note: 'Available at major grocery and convenience stores — $0.99 to $1.49 per can.',
+        optLink: { text: 'Find Venom at Walmart', href: 'https://www.walmart.com/search?q=venom+energy+drink' } }
     ],
     tip: 'Closeout stores and Grocery Outlet occasionally stock name brands at deep discount — worth a look every visit.',
-    linkText: 'Find Dollar Tree / Grocery Outlet',
-    href: '#affiliate-closeout'
+    linkText: 'Find Dollar Tree near you',
+    href: 'https://locations.dollartree.com/store-locator#?callerURL=www.dollartree.com&dest=/drinks/sport-energy-drinks'
   }
 ];
 
@@ -103,7 +104,7 @@ const SAVINGS_IDEAS = [
     desc: 'Pay once. Drink forever. The only purchase that pays you back every single day.',
     annual_cost: 150,
     cta: 'Shop coffee makers',
-    href: 'https://amazon.com/s?k=premium+coffee+maker'
+    href: 'https://amzn.to/4o0VuB5'
   },
   {
     icon: '💪',
@@ -112,7 +113,7 @@ const SAVINGS_IDEAS = [
     desc: "A full year's supply of high-quality whey. Actually useful fuel.",
     annual_cost: 420,
     cta: 'Shop protein',
-    href: 'https://amazon.com/s?k=protein+powder'
+    href: 'https://amzn.to/49vmBy7'
   },
   /* pair 2 */
   {
@@ -162,7 +163,7 @@ const SAVINGS_IDEAS = [
     desc: 'Whatever you actually want — your habit savings cover it.',
     annual_cost: 500,
     cta: 'Shop Amazon',
-    href: 'https://amazon.com'
+    href: 'https://amzn.to/4ucr14y'
   },
   {
     icon: '🛒',
@@ -315,11 +316,15 @@ function renderStrategies(annualCost) {
 
       optionsHTML = strategy.options.map(o => {
         if (o.note) {
+          const optLinkHtml = o.optLink
+            ? `<a href="${o.optLink.href}" class="strategy-opt-link" target="_blank" rel="noopener noreferrer">${o.optLink.text}</a>`
+            : '';
           return `
             <div class="strategy-item strategy-item--detailed">
               <div class="strategy-item-info">
                 <span class="strategy-item-name">${o.name}</span>
                 <div class="strategy-item-note">${o.note}</div>
+                ${optLinkHtml}
               </div>
               <span class="strategy-item-price">$${o.price.toFixed(2)}<span class="strategy-item-unit">/can</span></span>
             </div>
@@ -344,7 +349,7 @@ function renderStrategies(annualCost) {
       <div class="strategy-options">${optionsHTML}</div>
       <div class="strategy-annual">${annualText}</div>
       <p class="strategy-tip">${strategy.tip}</p>
-      <a href="${strategy.href}" class="strategy-link" rel="noopener noreferrer">${strategy.linkText}</a>
+      <a href="${strategy.href}" class="strategy-link" target="_blank" rel="noopener noreferrer">${strategy.linkText}</a>
     `;
     grid.appendChild(card);
   });
