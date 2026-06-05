@@ -59,7 +59,7 @@ const CAFFEINE_INDEX = [
   { name: 'Solimo — Amazon',         cpm: 0.08, price: 1.59 },
   { name: 'Summit Waves — ALDI',     cpm: 0.07, price: 1.35 },
   { name: 'Venom (16oz)',            cpm: 0.06, price: 0.99 },
-  { name: 'Dollar Tree Bang',        cpm: 0.06, price: 1.25 },
+  { name: 'Dollar Tree Bang (12oz, DT only)', cpm: 0.06, price: 1.25 },
   { name: 'Kirkland — Costco',       cpm: 0.04, price: 0.71 }
 ];
 
