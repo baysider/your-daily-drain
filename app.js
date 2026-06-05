@@ -27,6 +27,42 @@ const FALLBACK_DRINKS = [
   { id: 'cstore-private-label',  name: 'C-Store Private Label (16oz)', brand: 'Private Label', price: 2.39, size_oz: 16,  caffeine_mg: 160 }
 ];
 
+/* ── CAFFEINE COST INDEX — curated static list ───────────────
+   Sorted strict descending by cost per 10 mg caffeine.
+   Covers c-store, ALDI, Costco, Sam's, Amazon and Dollar Tree.
+   dividerBefore: true inserts the channel-break separator row.
+   ─────────────────────────────────────────────────────────── */
+const CAFFEINE_INDEX = [
+  /* ── C-store & mainstream channel ─────────────────────── */
+  { name: 'Red Bull (8.4oz)',        cpm: 0.40, price: 3.19 },
+  { name: 'Red Bull (12oz)',         cpm: 0.35, price: 3.99 },
+  { name: 'Red Bull (16oz)',         cpm: 0.32, price: 4.89 },
+  { name: 'Red Bull (20oz)',         cpm: 0.26, price: 5.49 },
+  { name: 'Monster (16oz)',          cpm: 0.22, price: 3.59 },
+  { name: 'NOS (16oz)',              cpm: 0.21, price: 3.29 },
+  { name: 'Rockstar (16oz)',         cpm: 0.21, price: 3.29 },
+  { name: 'Full Throttle (16oz)',    cpm: 0.21, price: 3.29 },
+  { name: 'Bucked Up (16oz)',        cpm: 0.17, price: 3.49 },
+  { name: 'Alani Nu (12oz)',         cpm: 0.17, price: 3.39 },
+  { name: 'Ghost (16oz)',            cpm: 0.17, price: 3.49 },
+  { name: 'C4 Energy (16oz)',        cpm: 0.17, price: 3.49 },
+  { name: 'Ryse Fuel (16oz)',        cpm: 0.17, price: 3.49 },
+  { name: 'Celsius (12oz)',          cpm: 0.16, price: 3.29 },
+  { name: 'Prime (12oz)',            cpm: 0.16, price: 3.29 },
+  { name: 'Reign Storm (12oz)',      cpm: 0.16, price: 3.29 },
+  { name: 'Reign (16oz)',            cpm: 0.12, price: 3.49 },
+  { name: 'Bang (16oz)',             cpm: 0.11, price: 3.29 },
+  { name: 'Red Thunder — ALDI',      cpm: 0.11, price: 0.91 },
+  { name: 'Summit Gridlock — ALDI',  cpm: 0.10, price: 1.45 },
+  /* ── Warehouse & discount channel ─────────────────────── */
+  { name: 'C4 Energy — Costco',      cpm: 0.08, price: 1.59, dividerBefore: true },
+  { name: 'Solimo — Amazon',         cpm: 0.08, price: 1.59 },
+  { name: 'Summit Waves — ALDI',     cpm: 0.07, price: 1.35 },
+  { name: 'Venom (16oz)',            cpm: 0.06, price: 0.99 },
+  { name: 'Dollar Tree Bang',        cpm: 0.06, price: 1.25 },
+  { name: 'Kirkland — Costco',       cpm: 0.04, price: 0.71 }
+];
+
 /* ── PURCHASING STRATEGIES ───────────────────────────────── */
 const STRATEGIES = [
   {
@@ -420,46 +456,45 @@ function renderCaffeineIndex() {
   const section = document.getElementById('caffeine-index');
   const chart   = document.getElementById('caff-chart');
   const callout = document.getElementById('caff-callout');
-  if (!section || !drinks.length) return;
+  if (!section) return;
 
-  /* Cost per 10mg, tax-inclusive */
-  const withCpm = drinks.map(d => ({
-    ...d,
-    taxPrice: d.price * (1 + salesTaxRate),
-    cpm: (d.price * (1 + salesTaxRate) * 10) / d.caffeine_mg
-  }));
-
-  /* Sort most expensive → cheapest */
-  const sorted = [...withCpm].sort((a, b) => b.cpm - a.cpm);
-  const maxCpm = sorted[0].cpm;
-  const minCpm = sorted[sorted.length - 1].cpm;
+  const maxCpm = CAFFEINE_INDEX[0].cpm;
+  const minCpm = CAFFEINE_INDEX[CAFFEINE_INDEX.length - 1].cpm;
   const ratio  = maxCpm / minCpm;
 
-  /* Interpolate red (#FF1A1A) → green (#00ff87) */
+  /* red (#FF1A1A) → green (#00ff87); fraction 0=expensive, 1=cheap */
   function barColor(fraction) {
-    /* fraction 0 = most expensive (red), 1 = cheapest (green) */
     const r = Math.round(255 * (1 - fraction));
     const g = Math.round(26  + 229 * fraction);
     const b = Math.round(26  + 109 * fraction);
     return `rgb(${r},${g},${b})`;
   }
 
-  /* Dynamic callout */
   callout.innerHTML =
-    `<span class="caff-callout-expensive">${sorted[0].name}</span> costs ` +
+    `<span class="caff-callout-expensive">${CAFFEINE_INDEX[0].name}</span> costs ` +
     `<span class="caff-callout-mult">${ratio.toFixed(1)}&times;</span> more per mg of caffeine than ` +
-    `<span class="caff-callout-cheap">${sorted[sorted.length - 1].name}</span>`;
+    `<span class="caff-callout-cheap">${CAFFEINE_INDEX[CAFFEINE_INDEX.length - 1].name}</span>`;
 
-  /* Bar rows — fraction 0=most expensive(red) 1=cheapest(green) */
-  chart.innerHTML = sorted.map(d => {
-    const fraction = 1 - (d.cpm - minCpm) / (maxCpm - minCpm);
-    const barPct   = (d.cpm / maxCpm) * 100;
-    const color    = barColor(fraction);
+  chart.innerHTML = CAFFEINE_INDEX.map(d => {
+    const fraction  = 1 - (d.cpm - minCpm) / (maxCpm - minCpm);
+    const barPct    = (d.cpm / maxCpm) * 100;
+    const color     = barColor(fraction);
+    const priceHtml = d.price != null
+      ? `<span class="caff-can-price">$${d.price.toFixed(2)}/can</span>`
+      : '';
+    const dividerHtml = d.dividerBefore
+      ? `<div class="caff-divider">
+           <div class="caff-divider-line"></div>
+           <span class="caff-divider-label">WAREHOUSE &amp; DISCOUNT CHANNEL</span>
+           <div class="caff-divider-line"></div>
+         </div>`
+      : '';
     return `
+      ${dividerHtml}
       <div class="caff-row">
         <div class="caff-meta">
           <span class="caff-name">${d.name}</span>
-          <span class="caff-can-price">$${d.price.toFixed(2)}/can</span>
+          ${priceHtml}
         </div>
         <div class="caff-bar-row">
           <div class="caff-bar-track">

@@ -604,6 +604,28 @@ body::before {
 .caff-callout-cheap     { color: var(--yellow); font-weight: 600; }
 .caff-callout-mult      { font-family: var(--font-display); font-size: 22px; color: var(--orange); }
 
+/* Channel-break divider between c-store and warehouse tier */
+.caff-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 8px;
+}
+
+.caff-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-dim);
+}
+
+.caff-divider-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--grey);
+  white-space: nowrap;
+}
+
 .caff-row {
   margin-bottom: 10px;
 }
