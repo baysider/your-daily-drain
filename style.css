@@ -651,6 +651,14 @@ body::before {
   min-width: 0;
 }
 
+/* Parenthesised size label — smaller, muted, feels like a subtitle */
+.caff-size {
+  font-size: 10px;
+  color: #777;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
 /* Can price lives in the meta row (secondary, grey) */
 .caff-can-price {
   font-size: 11px;

@@ -482,6 +482,8 @@ function renderCaffeineIndex() {
     const priceHtml = d.price != null
       ? `<span class="caff-can-price">$${d.price.toFixed(2)}/can</span>`
       : '';
+    /* Wrap parenthesised size — e.g. "(16oz)" — in a lighter sub-label */
+    const nameHtml  = d.name.replace(/(\([^)]+\))/, '<span class="caff-size">$1</span>');
     const dividerHtml = d.dividerBefore
       ? `<div class="caff-divider">
            <div class="caff-divider-line"></div>
@@ -493,7 +495,7 @@ function renderCaffeineIndex() {
       ${dividerHtml}
       <div class="caff-row">
         <div class="caff-meta">
-          <span class="caff-name">${d.name}</span>
+          <span class="caff-name">${nameHtml}</span>
           ${priceHtml}
         </div>
         <div class="caff-bar-row">
