@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Daily Drain — Drink Cheaper, Not Less</title>
+  <meta name="description" content="Find out how much your daily energy drink habit really costs you — in dollars and in hours worked. Then find cheaper alternatives with the same fix.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">Energy drink reality check</div>
+      <h1 class="hero-title">YOUR DAILY DRAIN</h1>
+      <p class="hero-tagline">That $3 Monster cost you $4 to earn.</p>
+      <p class="hero-sub">Drink cheaper. Not less.</p>
+      <a href="#calculator" class="hero-cta">Run the numbers</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== CALCULATOR ========== -->
+    <section class="section calculator-section" id="calculator">
+      <div class="container">
+        <h2 class="section-title">WHAT'S YOUR HABIT COSTING YOU?</h2>
+        <form class="calc-form" id="calcForm" novalidate>
+
+          <div class="form-group">
+            <label class="form-label" for="drinkSelect">Your drink</label>
+            <div class="select-wrap">
+              <select id="drinkSelect" required>
+                <option value="">Select your drink...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="customPrice">
+              My actual price per can
+              <span class="label-optional">(optional)</span>
+            </label>
+            <div class="input-prefix-wrap">
+              <span class="input-prefix">$</span>
+              <input
+                type="number"
+                id="customPrice"
+                min="0.25"
+                max="20"
+                step="0.01"
+                placeholder="Leave blank to use our retail estimate"
+              >
+            </div>
+            <p class="field-hint">Use this if you buy in bulk, subscribe on Amazon, or have a membership price.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="cansPerDay">Cans per day</label>
+              <input type="number" id="cansPerDay" min="0.5" max="10" step="0.5" value="1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hourlyWage">Hourly wage</label>
+              <div class="input-prefix-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="hourlyWage" min="1" max="999" step="0.5" placeholder="e.g. 20" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group tax-group">
+            <label class="form-label" for="taxSlider">
+              Effective tax rate: <span class="tax-display" id="taxDisplay">25%</span>
+            </label>
+            <p class="field-hint">Used to calculate your true pre-tax cost — what you actually had to earn to afford each can.</p>
+            <input type="range" id="taxSlider" min="15" max="40" value="25" step="1">
+            <div class="slider-labels">
+              <span>15%</span>
+              <span>40%</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-calculate">CALCULATE MY DRAIN</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== RESULTS ========== -->
+    <section class="section results-section hidden" id="results">
+      <div class="container">
+        <div class="pretax-headline" id="pretaxHeadline"></div>
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-label">Annual cost</div>
+            <div class="result-value" id="annualCost">$0</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Weekly cost</div>
+            <div class="result-value" id="weeklyCost">$0</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Hours worked per year just for this</div>
+            <div class="result-value" id="hoursWorked">0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CHEAPER HITS ========== -->
+    <section class="section cheaper-hits-section hidden" id="cheaperHits">
+      <div class="container">
+        <h2 class="section-title">CHEAPER HITS</h2>
+        <p class="section-sub">Same fix. Fraction of the cost. Your selected drink is <strong id="selectedDrinkLabel">—</strong>.</p>
+        <div class="cards-grid" id="cheaperHitsCards"></div>
+      </div>
+    </section>
+
+    <!-- ========== CAFFEINE COST INDEX ========== -->
+    <section class="section index-section" id="caffeineIndex">
+      <div class="container">
+        <h2 class="section-title">CAFFEINE COST INDEX</h2>
+        <p class="section-sub">Milligrams of caffeine per dollar spent at convenience store price. Higher is better value.</p>
+        <div class="index-table-wrap">
+          <table class="index-table" id="indexTable">
+            <thead>
+              <tr>
+                <th>Drink</th>
+                <th class="num">Size</th>
+                <th class="num">Caffeine</th>
+                <th class="num">Price</th>
+                <th class="num">mg / $</th>
+              </tr>
+            </thead>
+            <tbody id="indexBody"></tbody>
+          </table>
+        </div>
+        <p class="index-note">Prices reflect typical convenience store single-can pricing. Value alternatives priced at their primary channel. Liquid Death Caffeinated Tea entries are included for reference — caffeine levels are much lower than energy drinks.</p>
+      </div>
+    </section>
+
+    <!-- ========== REDIRECT THE CASH ========== -->
+    <section class="section redirect-section hidden" id="redirectCash">
+      <div class="container">
+        <h2 class="section-title">REDIRECT THE CASH</h2>
+        <p class="section-sub">Switch to a cheaper alternative and here's what your <span id="annualSavingsLabel">$0</span> in annual savings could actually buy.</p>
+        <div class="redirect-grid" id="redirectGrid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-brand">YOUR DAILY DRAIN</p>
+      <p class="footer-tagline">Drink cheaper. Not less.</p>
+      <p class="footer-disclaimer">Prices are estimates and vary by region, retailer, and date. Always verify current pricing. Some links may be affiliate links — we earn a small commission at no extra cost to you. Caffeine content sourced from manufacturer labels and third-party lab data.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
