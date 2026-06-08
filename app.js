@@ -180,9 +180,8 @@ function buildCards(selectedDrink, selectedPrice, cansPerDay, taxRate) {
     body: `
       <div class="hit-product-row">
         <div>
-          <div class="hit-product-name">Bang ${bang12 ? bang12.size_oz : 12}oz</div>
-          <div class="hit-product-meta">${bang12 ? bang12.caffeine_mg : 300}mg caffeine &bull; zero sugar</div>
-          <span class="exclusive-tag">Dollar Tree exclusive format</span>
+          <div class="hit-product-name">Bang ${bang12 ? bang12.size_oz : 12}oz (Dollar Tree)</div>
+          <div class="hit-product-meta">${bang12 ? bang12.caffeine_mg : 225}mg caffeine &bull; zero sugar</div>
         </div>
         <div class="hit-product-price">
           <div class="hit-price-main">$${bang12 ? bang12.price_convenience.toFixed(2) : '1.25'}</div>
@@ -191,15 +190,15 @@ function buildCards(selectedDrink, selectedPrice, cansPerDay, taxRate) {
       </div>
       <div class="hit-product-row">
         <div>
-          <div class="hit-product-name">Rockstar ${rock12 ? rock12.size_oz : 12}oz</div>
+          <div class="hit-product-name">Rockstar ${rock12 ? rock12.size_oz : 12}oz (Dollar Tree)</div>
           <div class="hit-product-meta">${rock12 ? rock12.caffeine_mg : 160}mg caffeine &bull; ${rock12 ? rock12.sugar_g : 24}g sugar</div>
-          <span class="exclusive-tag">Dollar Tree and Dollar General exclusive format</span>
         </div>
         <div class="hit-product-price">
           <div class="hit-price-main">$${rock12 ? rock12.price_convenience.toFixed(2) : '1.25'}</div>
           <div class="hit-price-sub">per can</div>
         </div>
       </div>
+      <div class="hit-product-meta" style="margin-top:10px;">Celsius, Monster, and other name brand closeouts rotate regularly &mdash; stock varies by location.</div>
       ${savingsBar(dtSavings)}
     `,
     cta: null
@@ -396,14 +395,14 @@ function renderCaffeineIndex() {
   ];
 
   all.sort((a, b) => {
-    const mgA = a.caffeine_mg / a.price_convenience;
-    const mgB = b.caffeine_mg / b.price_convenience;
-    return mgB - mgA;
+    const costA = a.price_convenience / a.caffeine_mg;
+    const costB = b.price_convenience / b.caffeine_mg;
+    return costB - costA;
   });
 
   all.forEach(d => {
-    const mgPerDollar = d.caffeine_mg / d.price_convenience;
-    const mgClass = mgPerDollar >= 100 ? 'high' : mgPerDollar >= 50 ? 'mid' : 'low';
+    const costPer10mg = (d.price_convenience / d.caffeine_mg) * 10;
+    const mgClass = costPer10mg >= 0.25 ? 'high' : costPer10mg >= 0.12 ? 'mid' : 'low';
 
     const isValueTier = d.tier === 'value';
     const isTea = d.category === 'caffeinated-tea';
@@ -421,7 +420,7 @@ function renderCaffeineIndex() {
       <td class="num">${d.size_oz}oz</td>
       <td class="num">${d.caffeine_mg}mg</td>
       <td class="num">$${d.price_convenience.toFixed(2)}</td>
-      <td class="num index-mg-value ${mgClass}">${mgPerDollar.toFixed(1)}</td>
+      <td class="num index-mg-value ${mgClass}">$${costPer10mg.toFixed(2)}</td>
     `;
     tbody.appendChild(tr);
   });

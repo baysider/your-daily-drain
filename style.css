@@ -644,9 +644,9 @@ input[type="range"]::-moz-range-thumb {
   letter-spacing: 0.02em;
 }
 
-.index-mg-value.high { color: var(--accent); }
-.index-mg-value.mid { color: var(--text-dim); }
-.index-mg-value.low { color: var(--text-muted); }
+.index-mg-value.high { color: var(--danger); }
+.index-mg-value.mid  { color: var(--warning); }
+.index-mg-value.low  { color: var(--info); }
 
 .index-category-badge {
   display: inline-block;

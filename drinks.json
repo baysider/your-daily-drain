@@ -6,7 +6,7 @@
       "size_oz": 16,
       "caffeine_mg": 160,
       "sugar_g": 54,
-      "price_convenience": 2.99,
+      "price_convenience": 3.59,
       "price_retail": 1.99,
       "buy_link": "https://www.amazon.com/s?k=monster+energy+original+16oz",
       "category": "energy"
@@ -15,9 +15,9 @@
       "id": "monster-ultra-16",
       "name": "Monster Ultra",
       "size_oz": 16,
-      "caffeine_mg": 150,
+      "caffeine_mg": 160,
       "sugar_g": 0,
-      "price_convenience": 2.99,
+      "price_convenience": 3.59,
       "price_retail": 1.99,
       "buy_link": "https://www.amazon.com/s?k=monster+ultra+energy+16oz",
       "category": "energy"
@@ -28,7 +28,7 @@
       "size_oz": 8.4,
       "caffeine_mg": 80,
       "sugar_g": 27,
-      "price_convenience": 2.99,
+      "price_convenience": 3.19,
       "price_retail": 1.89,
       "buy_link": "https://www.amazon.com/s?k=red+bull+8.4oz",
       "category": "energy"
@@ -39,7 +39,7 @@
       "size_oz": 12,
       "caffeine_mg": 114,
       "sugar_g": 38,
-      "price_convenience": 3.49,
+      "price_convenience": 3.99,
       "price_retail": 2.29,
       "buy_link": "https://www.amazon.com/s?k=red+bull+12oz",
       "category": "energy"
@@ -50,7 +50,7 @@
       "size_oz": 16,
       "caffeine_mg": 151,
       "sugar_g": 51,
-      "price_convenience": 3.99,
+      "price_convenience": 4.89,
       "price_retail": 2.79,
       "buy_link": "https://www.amazon.com/s?k=red+bull+16oz",
       "category": "energy"
@@ -61,7 +61,7 @@
       "size_oz": 20,
       "caffeine_mg": 189,
       "sugar_g": 63,
-      "price_convenience": 4.49,
+      "price_convenience": 5.49,
       "price_retail": 3.49,
       "buy_link": "https://www.amazon.com/s?k=red+bull+20oz",
       "category": "energy"
@@ -72,7 +72,7 @@
       "size_oz": 16,
       "caffeine_mg": 300,
       "sugar_g": 0,
-      "price_convenience": 2.99,
+      "price_convenience": 3.29,
       "price_retail": 1.99,
       "buy_link": "https://www.amazon.com/s?k=bang+energy+drink+16oz",
       "category": "energy"
@@ -94,7 +94,7 @@
       "size_oz": 12,
       "caffeine_mg": 200,
       "sugar_g": 0,
-      "price_convenience": 2.49,
+      "price_convenience": 3.39,
       "price_retail": 1.99,
       "buy_link": "https://www.amazon.com/s?k=alani+nu+energy+drink",
       "category": "energy"
@@ -105,7 +105,7 @@
       "size_oz": 12,
       "caffeine_mg": 200,
       "sugar_g": 0,
-      "price_convenience": 2.49,
+      "price_convenience": 3.29,
       "price_retail": 1.99,
       "buy_link": "https://www.amazon.com/s?k=celsius+energy+drink+12oz",
       "category": "energy"
@@ -209,7 +209,7 @@
       "id": "bang-12-dt",
       "name": "Bang 12oz",
       "size_oz": 12,
-      "caffeine_mg": 300,
+      "caffeine_mg": 225,
       "sugar_g": 0,
       "price_convenience": 1.25,
       "price_retail": 1.25,
@@ -232,17 +232,17 @@
       "channel_note": "Dollar Tree and Dollar General exclusive format"
     },
     {
-      "id": "liquid-death-sell-out",
-      "name": "Liquid Death Sell Out",
-      "size_oz": 19.2,
-      "caffeine_mg": 30,
+      "id": "liquid-death-energy-12",
+      "name": "Liquid Death Energy",
+      "size_oz": 12,
+      "caffeine_mg": 100,
       "sugar_g": 0,
       "price_convenience": 2.99,
-      "price_retail": 2.49,
-      "buy_link": "https://www.amazon.com/s?k=liquid+death+sell+out",
-      "category": "caffeinated-tea",
-      "category_label": "Caffeinated Tea",
-      "channel_note": "Caffeinated iced tea — not an energy drink. 30mg caffeine from green tea."
+      "price_retail": null,
+      "buy_link": "https://www.amazon.com/s?k=liquid+death+energy",
+      "category": "energy",
+      "channel": "Convenience",
+      "channel_note": "Value alternative — 100mg caffeine at convenience store price."
     },
     {
       "id": "liquid-death-convicted",
