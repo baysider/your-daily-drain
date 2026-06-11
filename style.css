@@ -435,6 +435,7 @@ body::before {
   background: var(--bg);
   border: 1px solid var(--border-dim);
   padding: 14px 16px;
+  text-align: center;
 }
 
 .result-cell-label {
@@ -443,6 +444,7 @@ body::before {
   letter-spacing: 0.2em;
   color: var(--grey);
   margin-bottom: 6px;
+  text-align: center;
 }
 
 .result-cell-value {
@@ -450,6 +452,7 @@ body::before {
   font-size: 34px;
   color: var(--white);
   line-height: 1;
+  text-align: center;
 }
 
 /* ── ANNUAL COST ─────────────────────────────────────────── */
@@ -562,10 +565,33 @@ body::before {
 .hcr-arrow {
   flex: 0 0 clamp(36px, 8vw, 68px);
   height: clamp(24px, 5vw, 44px);
-  background: var(--orange);
-  clip-path: polygon(0 22%, 62% 22%, 62% 0%, 100% 50%, 62% 100%, 62% 78%, 0 78%);
+  position: relative;
   opacity: 0.95;
   align-self: center;
+}
+
+.hcr-arrow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: calc(100% - 18px);
+  height: 6px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, rgba(255, 77, 0, 0.2), var(--orange) 18%, #ff7a33 100%);
+  box-shadow: 0 0 14px rgba(255, 77, 0, 0.25);
+}
+
+.hcr-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 18px solid #ff7a33;
+  filter: drop-shadow(0 0 8px rgba(255, 77, 0, 0.25));
 }
 
 /* Lives outside the flex row — full-width, centred below */

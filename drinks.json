@@ -15,7 +15,7 @@
     { "id": "prime-energy",           "name": "Prime Energy (12oz)",           "brand": "Prime",           "price": 3.29, "size_oz": 12,  "caffeine_mg": 200 },
     { "id": "c4-energy",              "name": "C4 Energy (16oz)",              "brand": "C4",              "price": 3.49, "size_oz": 16,  "caffeine_mg": 200 },
     { "id": "reign-total-body",       "name": "Reign Total Body (16oz)",       "brand": "Reign",           "price": 3.49, "size_oz": 16,  "caffeine_mg": 300 },
-    { "id": "reign-storm",            "name": "Reign Storm (12oz)",            "brand": "Reign",           "price": 3.29, "size_oz": 12,  "caffeine_mg": 130 },
+    { "id": "reign-storm",            "name": "Storm (12oz)",            "brand": "Reign",           "price": 3.29, "size_oz": 12,  "caffeine_mg": 130 },
     { "id": "bang-energy",            "name": "Bang Energy (16oz)",            "brand": "Bang",            "price": 3.29, "size_oz": 16,  "caffeine_mg": 300 },
     { "id": "rockstar-original",      "name": "Rockstar Original (16oz)",      "brand": "Rockstar",        "price": 3.29, "size_oz": 16,  "caffeine_mg": 160 },
     { "id": "nos-original",           "name": "NOS Original (16oz)",           "brand": "NOS",             "price": 3.29, "size_oz": 16,  "caffeine_mg": 160 },

@@ -17,7 +17,7 @@ const FALLBACK_DRINKS = [
   { id: 'prime-energy',          name: 'Prime Energy (12oz)',           brand: 'Prime',         price: 3.29, size_oz: 12,  caffeine_mg: 200 },
   { id: 'c4-energy',             name: 'C4 Energy (16oz)',              brand: 'C4',            price: 3.49, size_oz: 16,  caffeine_mg: 200 },
   { id: 'reign-total-body',      name: 'Reign Total Body (16oz)',       brand: 'Reign',         price: 3.49, size_oz: 16,  caffeine_mg: 300 },
-  { id: 'reign-storm',           name: 'Reign Storm (12oz)',            brand: 'Reign',         price: 3.29, size_oz: 12,  caffeine_mg: 130 },
+  { id: 'reign-storm',           name: 'Storm (12oz)',                  brand: 'Reign',         price: 3.29, size_oz: 12,  caffeine_mg: 130 },
   { id: 'bang-energy',           name: 'Bang Energy (16oz)',            brand: 'Bang',          price: 3.29, size_oz: 16,  caffeine_mg: 300 },
   { id: 'rockstar-original',     name: 'Rockstar Original (16oz)',      brand: 'Rockstar',      price: 3.29, size_oz: 16,  caffeine_mg: 160 },
   { id: 'nos-original',          name: 'NOS Original (16oz)',           brand: 'NOS',           price: 3.29, size_oz: 16,  caffeine_mg: 160 },
@@ -49,7 +49,7 @@ const CAFFEINE_INDEX = [
   { name: 'Ryse Fuel (16oz)',        cpm: 0.17, price: 3.49 },
   { name: 'Celsius (12oz)',          cpm: 0.16, price: 3.29 },
   { name: 'Prime (12oz)',            cpm: 0.16, price: 3.29 },
-  { name: 'Reign Storm (12oz)',      cpm: 0.16, price: 3.29 },
+  { name: 'Storm (12oz)',            cpm: 0.16, price: 3.29 },
   { name: 'Reign (16oz)',            cpm: 0.12, price: 3.49 },
   { name: 'Bang (16oz)',             cpm: 0.11, price: 3.29 },
   { name: 'Red Thunder — ALDI',      cpm: 0.11, price: 0.91 },
@@ -64,13 +64,42 @@ const CAFFEINE_INDEX = [
 ];
 
 /* ── PURCHASING STRATEGIES ───────────────────────────────── */
+/* Normalize labels/order for the UI while leaving the source list intact above. */
+CAFFEINE_INDEX.splice(0, CAFFEINE_INDEX.length,
+  { name: 'Red Bull (8.4oz)', cpm: 0.40, price: 3.19 },
+  { name: 'Red Bull (12oz)', cpm: 0.35, price: 3.99 },
+  { name: 'Red Bull (16oz)', cpm: 0.32, price: 4.89 },
+  { name: 'Red Bull (20oz)', cpm: 0.26, price: 5.49 },
+  { name: 'Monster (16oz)', cpm: 0.22, price: 3.59 },
+  { name: 'NOS (16oz)', cpm: 0.21, price: 3.29 },
+  { name: 'Rockstar (16oz)', cpm: 0.21, price: 3.29 },
+  { name: 'Full Throttle (16oz)', cpm: 0.21, price: 3.29 },
+  { name: 'Bucked Up (16oz)', cpm: 0.17, price: 3.49 },
+  { name: 'Alani Nu (12oz)', cpm: 0.17, price: 3.39 },
+  { name: 'Ghost (16oz)', cpm: 0.17, price: 3.49 },
+  { name: 'C4 Energy (16oz)', cpm: 0.17, price: 3.49 },
+  { name: 'Ryse Fuel (16oz)', cpm: 0.17, price: 3.49 },
+  { name: 'Celsius (12oz)', cpm: 0.16, price: 3.29 },
+  { name: 'Prime (12oz)', cpm: 0.16, price: 3.29 },
+  { name: 'Storm (12oz)', cpm: 0.16, price: 3.29 },
+  { name: 'Reign (16oz)', cpm: 0.12, price: 3.49 },
+  { name: 'Bang (16oz)', cpm: 0.11, price: 3.29 },
+  { name: 'Red Thunder (12oz) - ALDI', cpm: 0.11, price: 0.91, dividerBefore: true },
+  { name: 'Summit Gridlock (16oz) - ALDI', cpm: 0.10, price: 1.45 },
+  { name: 'Solimo (16oz) - Amazon', cpm: 0.08, price: 1.59 },
+  { name: 'Summit Waves (12oz) - ALDI', cpm: 0.07, price: 1.35 },
+  { name: 'Venom (16oz)', cpm: 0.06, price: 0.99 },
+  { name: 'Bang (12oz, Dollar Tree only)', cpm: 0.06, price: 1.25 },
+  { name: 'Kirkland Energy (12oz) - Costco', cpm: 0.04, price: 0.71 }
+);
+
 const STRATEGIES = [
   {
     id: 'costco',
     label: 'COSTCO',
     options: [
-      { name: 'Kirkland Energy',          price: 0.71 },
-      { name: 'Ghost Energy (18-pack)',   price: 1.53 }
+      { name: 'Kirkland Energy (12oz)',          price: 0.71 },
+      { name: 'Ghost (18-pack / 16oz)',          price: 1.53 }
     ],
     tip: 'Buy a pack once a month and you\'re done. Kirkland at $0.71 is the lowest per-can cost available anywhere.',
     linkText: 'Find a Costco near you',
@@ -81,10 +110,9 @@ const STRATEGIES = [
     label: "SAM'S CLUB",
     options: [
       { name: 'Liquid Death Energy (12oz)',    price: 1.22 },
-      { name: 'Aspire Energy',                 price: 1.22 },
-      { name: 'Celsius',                       price: 1.33 },
-      { name: 'Alani Nu',                      price: 1.26 },
-      { name: 'Alani Nu Mini',                 price: 0.94 }
+      { name: 'Celsius (12oz)',                price: 1.33 },
+      { name: 'Alani Nu (12oz)',               price: 1.26 },
+      { name: 'Alani Nu Mini (8.4oz)',         price: 0.94 }
     ],
     tip: "Sam's Club carries a wide multi-brand lineup. Alani Mini at $0.94 is one of the sharpest value cans in the market.",
     linkText: "Find a Sam's Club near you",
@@ -131,6 +159,35 @@ const STRATEGIES = [
 
 /* ── SAVINGS IDEAS ───────────────────────────────────────── */
 /* Order determines 2-column pairing on desktop */
+const costcoStrategy = STRATEGIES.find(strategy => strategy.id === 'costco');
+if (costcoStrategy) {
+  costcoStrategy.options = [
+    { name: 'Kirkland Energy (12oz)', price: 0.71 },
+    { name: 'Ghost (18-pack / 16oz)', price: 1.53 }
+  ];
+  costcoStrategy.tip = 'Buy a pack once a month and you\'re done. Kirkland at $0.71 is the lowest per-can cost available anywhere. Costco also often runs a rotating monthly energy drink deal at 20%+ off.';
+}
+
+const samsStrategy = STRATEGIES.find(strategy => strategy.id === 'sams-club');
+if (samsStrategy) {
+  samsStrategy.options = [
+    { name: 'Liquid Death Energy (12oz)', price: 1.22 },
+    { name: 'Celsius (12oz)', price: 1.33 },
+    { name: 'Alani Nu (12oz)', price: 1.26 },
+    { name: 'Alani Nu Mini (8.4oz)', price: 0.94 }
+  ];
+}
+
+const dollarStrategy = STRATEGIES.find(strategy => strategy.id === 'dollar-closeout');
+if (dollarStrategy) {
+  dollarStrategy.options = [
+    { name: 'Dollar Tree Energy Closeouts', price: 1.25, note: 'Rotating name-brand closeouts - Celsius, Monster, Rockstar, Bang and others. Not a private label. Stock varies by location and week.' },
+    { name: 'Bang (12oz)', price: 1.25 },
+    { name: 'Rockstar (12oz)', price: 1.25 },
+    { name: 'Venom', price: 0.99, note: 'Available at Dollar General.' }
+  ];
+}
+
 const SAVINGS_IDEAS = [
   /* pair 1 */
   {
