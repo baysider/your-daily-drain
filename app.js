@@ -1,193 +1,17 @@
 'use strict';
 
-/* ── INLINE FALLBACK ─────────────────────────────────────── */
-const FALLBACK_DRINKS = [
-  { id: 'red-bull-20oz',         name: 'Red Bull (20oz)',               brand: 'Red Bull',      price: 5.49, size_oz: 20,  caffeine_mg: 189 },
-  { id: 'red-bull-16oz',         name: 'Red Bull (16oz)',               brand: 'Red Bull',      price: 4.89, size_oz: 16,  caffeine_mg: 160 },
-  { id: 'red-bull-12oz',         name: 'Red Bull (12oz)',               brand: 'Red Bull',      price: 3.99, size_oz: 12,  caffeine_mg: 114 },
-  { id: 'red-bull-regular',      name: 'Red Bull (8.4oz)',              brand: 'Red Bull',      price: 3.19, size_oz: 8.4, caffeine_mg: 80  },
-  { id: 'monster-original',      name: 'Monster Original (16oz)',       brand: 'Monster',       price: 3.59, size_oz: 16,  caffeine_mg: 160 },
-  { id: 'monster-ultra',         name: 'Monster Ultra (16oz)',          brand: 'Monster',       price: 3.59, size_oz: 16,  caffeine_mg: 150 },
-  { id: 'monster-juice',         name: 'Monster Juice (16oz)',          brand: 'Monster',       price: 3.59, size_oz: 16,  caffeine_mg: 160 },
-  { id: 'java-monster',          name: 'Java Monster (15oz)',           brand: 'Monster',       price: 3.79, size_oz: 15,  caffeine_mg: 188 },
-  { id: 'celsius-original',      name: 'Celsius Original (12oz)',       brand: 'Celsius',       price: 3.29, size_oz: 12,  caffeine_mg: 200 },
-  { id: 'celsius-essentials',    name: 'Celsius Essentials (16oz)',     brand: 'Celsius',       price: 3.49, size_oz: 16,  caffeine_mg: 200 },
-  { id: 'alani-nu',              name: 'Alani Nu (12oz)',               brand: 'Alani Nu',      price: 3.39, size_oz: 12,  caffeine_mg: 200 },
-  { id: 'ghost-energy',          name: 'Ghost Energy (16oz)',           brand: 'Ghost',         price: 3.49, size_oz: 16,  caffeine_mg: 200 },
-  { id: 'prime-energy',          name: 'Prime Energy (12oz)',           brand: 'Prime',         price: 3.29, size_oz: 12,  caffeine_mg: 200 },
-  { id: 'c4-energy',             name: 'C4 Energy (16oz)',              brand: 'C4',            price: 3.49, size_oz: 16,  caffeine_mg: 200 },
-  { id: 'reign-total-body',      name: 'Reign Total Body (16oz)',       brand: 'Reign',         price: 3.49, size_oz: 16,  caffeine_mg: 300 },
-  { id: 'reign-storm',           name: 'Storm (12oz)',                  brand: 'Reign',         price: 3.29, size_oz: 12,  caffeine_mg: 130 },
-  { id: 'bang-energy',           name: 'Bang Energy (16oz)',            brand: 'Bang',          price: 3.29, size_oz: 16,  caffeine_mg: 300 },
-  { id: 'rockstar-original',     name: 'Rockstar Original (16oz)',      brand: 'Rockstar',      price: 3.29, size_oz: 16,  caffeine_mg: 160 },
-  { id: 'nos-original',          name: 'NOS Original (16oz)',           brand: 'NOS',           price: 3.29, size_oz: 16,  caffeine_mg: 160 },
-  { id: 'full-throttle',         name: 'Full Throttle (16oz)',          brand: 'Full Throttle', price: 3.29, size_oz: 16,  caffeine_mg: 160 },
-  { id: 'ryse-fuel',             name: 'Ryse Fuel (16oz)',              brand: 'Ryse',          price: 3.49, size_oz: 16,  caffeine_mg: 200 },
-  { id: 'bucked-up',             name: 'Bucked Up (16oz)',              brand: 'Bucked Up',     price: 3.49, size_oz: 16,  caffeine_mg: 300 },
-  { id: 'cstore-private-label',  name: 'C-Store Private Label (16oz)', brand: 'Private Label', price: 2.39, size_oz: 16,  caffeine_mg: 160 }
-];
+const getFallbackDrinks = globalThis.SiteData?.getFallbackDrinks || (() => []);
+const getSiteCopy = globalThis.SiteData?.getSiteCopy || (() => ({}));
+const getStrategies = globalThis.SiteData?.getStrategies || (() => []);
+const fallbackDrinks = getFallbackDrinks();
+const siteCopy = getSiteCopy();
+const STRATEGIES = getStrategies();
 
-/* ── CAFFEINE COST INDEX — curated static list ───────────────
-   Sorted strict descending by cost per 10 mg caffeine.
-   Covers c-store, ALDI, Costco, Sam's, Amazon and Dollar Tree.
-   dividerBefore: true inserts the channel-break separator row.
-   ─────────────────────────────────────────────────────────── */
-const CAFFEINE_INDEX = [
-  /* ── C-store & mainstream channel ─────────────────────── */
-  { name: 'Red Bull (8.4oz)',        cpm: 0.40, price: 3.19 },
-  { name: 'Red Bull (12oz)',         cpm: 0.35, price: 3.99 },
-  { name: 'Red Bull (16oz)',         cpm: 0.32, price: 4.89 },
-  { name: 'Red Bull (20oz)',         cpm: 0.26, price: 5.49 },
-  { name: 'Monster (16oz)',          cpm: 0.22, price: 3.59 },
-  { name: 'NOS (16oz)',              cpm: 0.21, price: 3.29 },
-  { name: 'Rockstar (16oz)',         cpm: 0.21, price: 3.29 },
-  { name: 'Full Throttle (16oz)',    cpm: 0.21, price: 3.29 },
-  { name: 'Bucked Up (16oz)',        cpm: 0.17, price: 3.49 },
-  { name: 'Alani Nu (12oz)',         cpm: 0.17, price: 3.39 },
-  { name: 'Ghost (16oz)',            cpm: 0.17, price: 3.49 },
-  { name: 'C4 Energy (16oz)',        cpm: 0.17, price: 3.49 },
-  { name: 'Ryse Fuel (16oz)',        cpm: 0.17, price: 3.49 },
-  { name: 'Celsius (12oz)',          cpm: 0.16, price: 3.29 },
-  { name: 'Prime (12oz)',            cpm: 0.16, price: 3.29 },
-  { name: 'Storm (12oz)',            cpm: 0.16, price: 3.29 },
-  { name: 'Reign (16oz)',            cpm: 0.12, price: 3.49 },
-  { name: 'Bang (16oz)',             cpm: 0.11, price: 3.29 },
-  { name: 'Red Thunder — ALDI',      cpm: 0.11, price: 0.91 },
-  { name: 'Summit Gridlock — ALDI',  cpm: 0.10, price: 1.45 },
-  /* ── Warehouse & discount channel ─────────────────────── */
-  { name: 'C4 Energy — Costco',      cpm: 0.08, price: 1.59, dividerBefore: true },
-  { name: 'Solimo — Amazon',         cpm: 0.08, price: 1.59 },
-  { name: 'Summit Waves — ALDI',     cpm: 0.07, price: 1.35 },
-  { name: 'Venom (16oz)',            cpm: 0.06, price: 0.99 },
-  { name: 'Dollar Tree Bang (12oz, DT only)', cpm: 0.06, price: 1.25 },
-  { name: 'Kirkland — Costco',       cpm: 0.04, price: 0.71 }
-];
-
-/* ── PURCHASING STRATEGIES ───────────────────────────────── */
-/* Normalize labels/order for the UI while leaving the source list intact above. */
-CAFFEINE_INDEX.splice(0, CAFFEINE_INDEX.length,
-  { name: 'Red Bull (8.4oz)', cpm: 0.40, price: 3.19 },
-  { name: 'Red Bull (12oz)', cpm: 0.35, price: 3.99 },
-  { name: 'Red Bull (16oz)', cpm: 0.32, price: 4.89 },
-  { name: 'Red Bull (20oz)', cpm: 0.26, price: 5.49 },
-  { name: 'Monster (16oz)', cpm: 0.22, price: 3.59 },
-  { name: 'NOS (16oz)', cpm: 0.21, price: 3.29 },
-  { name: 'Rockstar (16oz)', cpm: 0.21, price: 3.29 },
-  { name: 'Full Throttle (16oz)', cpm: 0.21, price: 3.29 },
-  { name: 'Bucked Up (16oz)', cpm: 0.17, price: 3.49 },
-  { name: 'Alani Nu (12oz)', cpm: 0.17, price: 3.39 },
-  { name: 'Ghost (16oz)', cpm: 0.17, price: 3.49 },
-  { name: 'C4 Energy (16oz)', cpm: 0.17, price: 3.49 },
-  { name: 'Ryse Fuel (16oz)', cpm: 0.17, price: 3.49 },
-  { name: 'Celsius (12oz)', cpm: 0.16, price: 3.29 },
-  { name: 'Prime (12oz)', cpm: 0.16, price: 3.29 },
-  { name: 'Storm (12oz)', cpm: 0.16, price: 3.29 },
-  { name: 'Reign (16oz)', cpm: 0.12, price: 3.49 },
-  { name: 'Bang (16oz)', cpm: 0.11, price: 3.29 },
-  { name: 'Red Thunder (12oz) - ALDI', cpm: 0.11, price: 0.91, dividerBefore: true },
-  { name: 'Summit Gridlock (16oz) - ALDI', cpm: 0.10, price: 1.45 },
-  { name: 'Solimo (16oz) - Amazon', cpm: 0.08, price: 1.59 },
-  { name: 'Summit Waves (12oz) - ALDI', cpm: 0.07, price: 1.35 },
-  { name: 'Venom (16oz)', cpm: 0.06, price: 0.99 },
-  { name: 'Bang (12oz, Dollar Tree only)', cpm: 0.06, price: 1.25 },
-  { name: 'Kirkland Energy (12oz) - Costco', cpm: 0.04, price: 0.71 }
-);
-
-const STRATEGIES = [
-  {
-    id: 'costco',
-    label: 'COSTCO',
-    options: [
-      { name: 'Kirkland Energy (12oz)',          price: 0.71 },
-      { name: 'Ghost (18-pack / 16oz)',          price: 1.53 }
-    ],
-    tip: 'Buy a pack once a month and you\'re done. Kirkland at $0.71 is the lowest per-can cost available anywhere.',
-    linkText: 'Find a Costco near you',
-    href: 'https://www.costco.com/s?keyword=energy%20drinks'
-  },
-  {
-    id: 'sams-club',
-    label: "SAM'S CLUB",
-    options: [
-      { name: 'Liquid Death Energy (12oz)',    price: 1.22 },
-      { name: 'Celsius (12oz)',                price: 1.33 },
-      { name: 'Alani Nu (12oz)',               price: 1.26 },
-      { name: 'Alani Nu Mini (8.4oz)',         price: 0.94 }
-    ],
-    tip: "Sam's Club carries a wide multi-brand lineup. Alani Mini at $0.94 is one of the sharpest value cans in the market.",
-    linkText: "Find a Sam's Club near you",
-    href: 'https://www.samsclub.com/search?q=energy+drink'
-  },
-  {
-    id: 'discount-grocery',
-    label: 'DISCOUNT GROCERY',
-    useAltPrices: true,
-    options: [
-      {
-        name: 'Summit Gridlock', size: '16oz', price: 1.45,
-        altOf: 'Monster',        altPrice: 3.59,
-        altNote: 'Name-brand Monster at ALDI itself: $2.95 — still cheaper than a c-store'
-      },
-      {
-        name: 'Summit Waves',    size: '12oz', price: 1.35,
-        altOf: 'Celsius / Alani Nu', altPrice: 3.29,
-        altNote: 'Celsius at ALDI: $2.15 vs up to $3.29 at convenience stores'
-      },
-      {
-        name: 'Red Thunder',     size: '12oz', price: 0.91,
-        altOf: 'Red Bull',       altPrice: 3.99,
-        altNote: "ALDI's Red Bull dupe — sold as a 4-pack ($3.65 total), best per-can value in this tier"
-      }
-    ],
-    tip: "ALDI private-label cans are consistent quality with no membership required. Prices are shelf-stable — no need to wait for a sale.",
-    linkText: 'Find an ALDI near you',
-    href: 'https://www.aldi.us/store-locator'
-  },
-  {
-    id: 'dollar-closeout',
-    label: 'DOLLAR TREE & CLOSEOUT',
-    options: [
-      { name: 'Dollar Tree Energy Closeouts', price: 1.25, note: 'Rotating name-brand closeouts — Celsius, Monster, Rockstar, Bang and others. Not a private label. Stock varies by location and week.' },
-      { name: 'Venom Energy',                 price: 0.99, note: 'Available at major grocery and convenience stores — $0.99 to $1.49 per can.',
-        optLink: { text: 'Find Venom at Walmart', href: 'https://www.walmart.com/search?q=venom+energy+drink' } }
-    ],
-    tip: 'Closeout stores and Grocery Outlet occasionally stock name brands at deep discount — worth a look every visit.',
-    linkText: 'Find Dollar Tree near you',
-    href: 'https://locations.dollartree.com/store-locator#?callerURL=www.dollartree.com&dest=/drinks/sport-energy-drinks'
-  }
-];
+/* ── CAFFEINE COST INDEX ───────────────────────────────── */
+const buildCaffeineIndex = globalThis.SiteData?.buildCaffeineIndex || (() => []);
+let caffeineIndex = buildCaffeineIndex(fallbackDrinks);
 
 /* ── SAVINGS IDEAS ───────────────────────────────────────── */
-/* Order determines 2-column pairing on desktop */
-const costcoStrategy = STRATEGIES.find(strategy => strategy.id === 'costco');
-if (costcoStrategy) {
-  costcoStrategy.options = [
-    { name: 'Kirkland Energy (12oz)', price: 0.71 },
-    { name: 'Ghost (18-pack / 16oz)', price: 1.53 }
-  ];
-  costcoStrategy.tip = 'Buy a pack once a month and you\'re done. Kirkland at $0.71 is the lowest per-can cost available anywhere. Costco also often runs a rotating monthly energy drink deal at 20%+ off.';
-}
-
-const samsStrategy = STRATEGIES.find(strategy => strategy.id === 'sams-club');
-if (samsStrategy) {
-  samsStrategy.options = [
-    { name: 'Liquid Death Energy (12oz)', price: 1.22 },
-    { name: 'Celsius (12oz)', price: 1.33 },
-    { name: 'Alani Nu (12oz)', price: 1.26 },
-    { name: 'Alani Nu Mini (8.4oz)', price: 0.94 }
-  ];
-}
-
-const dollarStrategy = STRATEGIES.find(strategy => strategy.id === 'dollar-closeout');
-if (dollarStrategy) {
-  dollarStrategy.options = [
-    { name: 'Dollar Tree Energy Closeouts', price: 1.25, note: 'Rotating name-brand closeouts - Celsius, Monster, Rockstar, Bang and others. Not a private label. Stock varies by location and week.' },
-    { name: 'Bang (12oz)', price: 1.25 },
-    { name: 'Rockstar (12oz)', price: 1.25 },
-    { name: 'Venom', price: 0.99, note: 'Available at Dollar General.' }
-  ];
-}
-
 const SAVINGS_IDEAS = [
   /* pair 1 */
   {
@@ -302,6 +126,80 @@ const fmt0 = n => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g
 const fmtN = (n, d) => n.toFixed(d);
 
 const isDesktop = () => window.matchMedia('(min-width: 900px)').matches;
+
+function applyStaticCopy() {
+  if (typeof siteCopy.pageTitle === 'string') {
+    document.title = siteCopy.pageTitle;
+  }
+
+  const metaDescription = document.getElementById('meta-description');
+  if (metaDescription && typeof siteCopy.metaDescription === 'string') {
+    metaDescription.setAttribute('content', siteCopy.metaDescription);
+  }
+
+  const ogTitle = document.getElementById('og-title');
+  if (ogTitle && typeof siteCopy.ogTitle === 'string') {
+    ogTitle.setAttribute('content', siteCopy.ogTitle);
+  }
+
+  const ogDescription = document.getElementById('og-description');
+  if (ogDescription && typeof siteCopy.ogDescription === 'string') {
+    ogDescription.setAttribute('content', siteCopy.ogDescription);
+  }
+
+  const textTargets = [
+    ['hero-eyebrow', siteCopy.heroEyebrow],
+    ['hero-scroll-hint', siteCopy.heroScrollHint],
+    ['calculator-label', siteCopy.calculatorLabel],
+    ['drink-label', siteCopy.drinkLabel],
+    ['stepper-label', siteCopy.cansPerDayLabel],
+    ['hourly-wage-label', siteCopy.hourlyWageLabel],
+    ['sales-tax-label', siteCopy.salesTaxLabel],
+    ['sales-tax-min-label', siteCopy.salesTaxMinLabel],
+    ['sales-tax-max-label', siteCopy.salesTaxMaxLabel],
+    ['sales-tax-note', siteCopy.salesTaxNote],
+    ['calculate-button-label', siteCopy.calculateButton],
+    ['results-label', siteCopy.resultsLabel],
+    ['per-can-register-label', siteCopy.perCanRegisterLabel],
+    ['per-week-label', siteCopy.perWeekLabel],
+    ['per-month-label', siteCopy.perMonthLabel],
+    ['per-year-label', siteCopy.perYearLabel],
+    ['annual-sub', siteCopy.annualSub],
+    ['hours-per-year-label', siteCopy.hoursPerYearLabel],
+    ['hours-unit-label', siteCopy.hoursUnit],
+    ['weeks-unit-label', siteCopy.weeksUnit],
+    ['weeks-label', siteCopy.weeksLabel],
+    ['income-tax-label', siteCopy.taxRateLabel],
+    ['income-tax-min-label', siteCopy.incomeTaxMinLabel],
+    ['income-tax-max-label', siteCopy.incomeTaxMaxLabel],
+    ['income-tax-note', siteCopy.incomeTaxNote],
+    ['caff-label', siteCopy.caffeineIndexLabel],
+    ['caff-subtitle', siteCopy.caffeineIndexSubtitle],
+    ['alt-label', siteCopy.alternativesLabel],
+    ['alt-subtitle', siteCopy.alternativesSubtitle],
+    ['ideas-label', siteCopy.savingsIdeasLabel],
+    ['ideas-subtitle', siteCopy.savingsIdeasSubtitle],
+    ['site-freshness', siteCopy.freshnessNote],
+    ['site-disclaimer', siteCopy.footerDisclaimer]
+  ];
+
+  textTargets.forEach(([id, value]) => {
+    const el = document.getElementById(id);
+    if (el && typeof value === 'string') {
+      el.textContent = value;
+    }
+  });
+
+  const heroHeadline = document.getElementById('hero-headline');
+  if (heroHeadline && typeof siteCopy.heroHeadlineHtml === 'string') {
+    heroHeadline.innerHTML = siteCopy.heroHeadlineHtml;
+  }
+
+  const heroSub = document.getElementById('hero-sub');
+  if (heroSub && typeof siteCopy.heroSubHtml === 'string') {
+    heroSub.innerHTML = siteCopy.heroSubHtml;
+  }
+}
 
 /* ── COUNTUP ANIMATION ───────────────────────────────────── */
 function animateValue(el, to, duration, formatter) {
@@ -514,9 +412,10 @@ function renderCaffeineIndex() {
   const chart   = document.getElementById('caff-chart');
   const callout = document.getElementById('caff-callout');
   if (!section) return;
+  if (!caffeineIndex.length) return;
 
-  const maxCpm = CAFFEINE_INDEX[0].cpm;
-  const minCpm = CAFFEINE_INDEX[CAFFEINE_INDEX.length - 1].cpm;
+  const maxCpm = caffeineIndex[0].cpm;
+  const minCpm = caffeineIndex[caffeineIndex.length - 1].cpm;
   const ratio  = maxCpm / minCpm;
 
   /* red (#FF1A1A) → green (#00ff87); fraction 0=expensive, 1=cheap */
@@ -528,11 +427,11 @@ function renderCaffeineIndex() {
   }
 
   callout.innerHTML =
-    `<span class="caff-callout-expensive">${CAFFEINE_INDEX[0].name}</span> costs ` +
+    `<span class="caff-callout-expensive">${caffeineIndex[0].name}</span> costs ` +
     `<span class="caff-callout-mult">${ratio.toFixed(1)}&times;</span> more per mg of caffeine than ` +
-    `<span class="caff-callout-cheap">${CAFFEINE_INDEX[CAFFEINE_INDEX.length - 1].name}</span>`;
+    `<span class="caff-callout-cheap">${caffeineIndex[caffeineIndex.length - 1].name}</span>`;
 
-  chart.innerHTML = CAFFEINE_INDEX.map(d => {
+  chart.innerHTML = caffeineIndex.map(d => {
     const fraction  = 1 - (d.cpm - minCpm) / (maxCpm - minCpm);
     const barPct    = (d.cpm / maxCpm) * 100;
     const color     = barColor(fraction);
@@ -576,8 +475,10 @@ async function loadDrinks() {
     if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     drinks = data.drinks;
+    caffeineIndex = buildCaffeineIndex(drinks);
   } catch (_) {
-    drinks = FALLBACK_DRINKS;
+    drinks = getFallbackDrinks();
+    caffeineIndex = buildCaffeineIndex(drinks);
   }
   populateDropdown();
 }
@@ -738,6 +639,7 @@ function recalcAll() {
 
 /* ── INIT ────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  applyStaticCopy();
   loadDrinks();
 
   document.getElementById('stepper-minus').addEventListener('click', () => {

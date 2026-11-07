@@ -1080,9 +1080,21 @@ body::before {
   font-size: 11px;
   color: #e0e0e0;
   font-weight: 300;
+  line-height: 1.6;
+}
+
+.site-freshness {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--yellow);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.site-footer p:last-child {
   border-top: 1px solid var(--border-dim);
   padding-top: 20px;
-  line-height: 1.6;
 }
 
 /* ── SELECTION ───────────────────────────────────────────── */
