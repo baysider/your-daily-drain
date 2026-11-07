@@ -7,8 +7,9 @@ Static website for `yourdailydrain.com`.
 - `index.html`: page structure and markup
 - `style.css`: site styling
 - `app.js`: calculator behavior, UI updates, and rendering logic
+- `drinks.json`: drink catalog and price data loaded by the calculator — this is the master price list
 - `site-data.js`: centralized editable copy, shared fallback drink data, and strategy data
-- `drinks.json`: drink catalog and price data loaded by the calculator
+- `PRICE_UPDATE_GUIDE.md`: how to update prices (about twice a year) — start here, it lists every place a price lives
 - `vercel.json`: Vercel headers and caching config
 - `data-helpers.test.js`: lightweight regression tests for shared data helpers
 

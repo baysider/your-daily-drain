@@ -19,12 +19,12 @@ test('getSiteCopy returns cloned homepage copy content', () => {
 
   assert.equal(copy.pageTitle, 'Your Daily Drain');
   assert.equal(copy.metaDescription, 'Calculate the true cost of your daily energy drink habit in hours worked.');
-  assert.equal(copy.ogDescription, 'That $4 Monster actually costs you $5+ to earn. Find out exactly how many hours you\'re working for caffeine.');
+  assert.equal(copy.ogDescription, 'That $3 Monster actually costs you nearly $5 to earn. Find out exactly how many hours you\'re working for caffeine.');
   assert.equal(copy.calculatorLabel, 'YOUR HABIT');
   assert.equal(copy.salesTaxNote, 'Applied to shelf price before all calculations');
   assert.equal(copy.hoursUnit, 'HRS');
   assert.equal(copy.heroEyebrow, 'YOUR DAILY DRAIN');
-  assert.equal(copy.freshnessNote, 'Retail price inputs last updated November 3, 2026.');
+  assert.equal(copy.freshnessNote, 'Retail price inputs last updated November 7, 2026.');
 
   copy.heroEyebrow = 'CHANGED';
   copy.pageTitle = 'Changed Title';
@@ -69,11 +69,65 @@ test('buildCaffeineIndex derives overlapping drink prices from the drinks datase
   assert.equal(monster.cpm, 0.22);
 });
 
-test('buildCaffeineIndex preserves static comparison rows and section break', () => {
-  const index = buildCaffeineIndex([]);
+test('buildCaffeineIndex derives cheap rows from the drink catalog, with section break', () => {
+  const index = buildCaffeineIndex(getFallbackDrinks());
   const divider = index.find(item => item.dividerBefore);
   const kirkland = index.find(item => item.name === 'Kirkland Energy (12oz) - Costco');
+  const redThunder = index.find(item => item.name === 'Red Thunder (12oz) - ALDI');
 
   assert.equal(divider.name, 'Red Thunder (12oz) - ALDI');
   assert.equal(kirkland.price, 0.71);
+  assert.equal(kirkland.caffeine_mg, 180);
+  assert.equal(redThunder.price, 0.91);
+  // No separate static rows: the index is the catalog, most to least expensive.
+  assert.ok(index.every(item => Number.isFinite(item.cpm)));
+});
+
+test('fallback drinks include the cheap swaps with caffeine mg', () => {
+  const drinks = getFallbackDrinks();
+  const kirkland = drinks.find(drink => drink.id === 'kirkland-energy');
+  const bang12 = drinks.find(drink => drink.id === 'bang-12oz');
+
+  assert.equal(kirkland.price, 0.71);
+  assert.equal(kirkland.caffeine_mg, 180);
+  assert.equal(bang12.caffeine_mg, 225);
+});
+
+test('discount grocery options no longer carry a fixed comparator price', () => {
+  const strategies = getStrategies();
+  const discount = strategies.find(strategy => strategy.id === 'discount-grocery');
+
+  assert.ok(discount.options.every(option => option.altPrice === undefined && option.altOf === undefined));
+});
+
+test('caffeine index entries carry caffeine mg', () => {
+  const index = buildCaffeineIndex(getFallbackDrinks());
+  const monster = index.find(item => item.name === 'Monster (16oz)');
+  const kirkland = index.find(item => item.name === 'Kirkland Energy (12oz) - Costco');
+
+  assert.equal(monster.caffeine_mg, 160);
+  assert.equal(kirkland.caffeine_mg, 180);
+});
+
+test('strategy prices match the drink catalog where they overlap', () => {
+  const drinks = getFallbackDrinks();
+  const priceByName = new Map(drinks.map(drink => [drink.name, drink.price]));
+  const strategies = getStrategies();
+
+  const checks = [
+    ['Kirkland Energy (12oz)', 0.71],
+    ['Summit Gridlock (16oz)', 1.45],
+    ['Summit Waves (12oz)', 1.35],
+    ['Red Thunder (12oz)', 0.91],
+    ['Venom (16oz)', 0.99],
+    ['Bang (12oz)', 1.25],
+    ['Solimo (16oz)', 1.59],
+  ];
+  for (const [name, price] of checks) {
+    assert.equal(priceByName.get(name), price, name);
+  }
+  // And the strategy cards themselves carry those same prices.
+  const allStrategyOptions = strategies.flatMap(strategy => strategy.options);
+  assert.equal(allStrategyOptions.find(o => o.name === 'Kirkland Energy (12oz)').price, 0.71);
+  assert.equal(allStrategyOptions.find(o => o.name === 'Red Thunder').price, 0.91);
 });

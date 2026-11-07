@@ -22,6 +22,13 @@
     { "id": "full-throttle",          "name": "Full Throttle (16oz)",          "brand": "Full Throttle",   "price": 3.29, "size_oz": 16,  "caffeine_mg": 160 },
     { "id": "ryse-fuel",              "name": "Ryse Fuel (16oz)",              "brand": "Ryse",            "price": 3.49, "size_oz": 16,  "caffeine_mg": 200 },
     { "id": "bucked-up",              "name": "Bucked Up (16oz)",              "brand": "Bucked Up",       "price": 3.49, "size_oz": 16,  "caffeine_mg": 300 },
-    { "id": "cstore-private-label",   "name": "C-Store Private Label (16oz)",  "brand": "Private Label",   "price": 2.39, "size_oz": 16,  "caffeine_mg": 160 }
+    { "id": "cstore-private-label",   "name": "C-Store Private Label (16oz)",  "brand": "Private Label",   "price": 2.39, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "kirkland-energy",        "name": "Kirkland Energy (12oz)",        "brand": "Kirkland",        "price": 0.71, "size_oz": 12,  "caffeine_mg": 180 },
+    { "id": "red-thunder",            "name": "Red Thunder (12oz)",            "brand": "Red Thunder",     "price": 0.91, "size_oz": 12,  "caffeine_mg": 80  },
+    { "id": "venom-energy",           "name": "Venom (16oz)",                  "brand": "Venom",           "price": 0.99, "size_oz": 16,  "caffeine_mg": 160 },
+    { "id": "bang-12oz",              "name": "Bang (12oz)",                   "brand": "Bang",            "price": 1.25, "size_oz": 12,  "caffeine_mg": 225 },
+    { "id": "summit-waves",           "name": "Summit Waves (12oz)",           "brand": "Summit",          "price": 1.35, "size_oz": 12,  "caffeine_mg": 200 },
+    { "id": "summit-gridlock",        "name": "Summit Gridlock (16oz)",        "brand": "Summit",          "price": 1.45, "size_oz": 16,  "caffeine_mg": 150 },
+    { "id": "solimo-energy",          "name": "Solimo (16oz)",                 "brand": "Solimo",          "price": 1.59, "size_oz": 16,  "caffeine_mg": 200 }
   ]
 }
