@@ -1235,3 +1235,49 @@ body::before {
     padding-right: var(--pad);
   }
 }
+
+/* ── PAGE NAV (US / INTERNATIONAL) ─────────────────────────
+   Two boxes at the top; the same nav goes on every page so
+   visitors can switch sections. world-prices.html does not
+   exist in the repo yet — it is the planned home of the
+   international prices page (currently a separate mockup). */
+.page-nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad) 28px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.page-nav-box {
+  display: block;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  color: var(--white);
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.page-nav-box:hover,
+.page-nav-box:focus-visible {
+  border-color: var(--border-bright);
+}
+.page-nav-box.is-active {
+  border-color: var(--border-bright);
+}
+.page-nav-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+.page-nav-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--grey);
+}
