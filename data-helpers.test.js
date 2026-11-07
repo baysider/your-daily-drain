@@ -131,3 +131,23 @@ test('strategy prices match the drink catalog where they overlap', () => {
   assert.equal(allStrategyOptions.find(o => o.name === 'Kirkland Energy (12oz)').price, 0.71);
   assert.equal(allStrategyOptions.find(o => o.name === 'Red Thunder').price, 0.91);
 });
+test('grocery prices exist only where verified, convenience price unchanged', () => {
+  const drinks = getFallbackDrinks();
+  const byId = new Map(drinks.map(drink => [drink.id, drink]));
+
+  // Target single-can prices, verified November 2026.
+  assert.equal(byId.get('monster-original').price, 3.59);
+  assert.equal(byId.get('monster-original').price_grocery, 2.89);
+  assert.equal(byId.get('monster-ultra').price_grocery, 2.89);
+  assert.equal(byId.get('monster-juice').price_grocery, 2.89);
+  assert.equal(byId.get('red-bull-regular').price, 2.99);
+  assert.equal(byId.get('red-bull-regular').price_grocery, 2.79);
+  assert.equal(byId.get('rockstar-original').price, 3.29);
+  assert.equal(byId.get('rockstar-original').price_grocery, 1.89);
+
+  // Every other drink has no separate grocery price yet, so the
+  // channel toggle leaves it unchanged.
+  assert.equal(byId.get('celsius-original').price_grocery, undefined);
+  assert.equal(byId.get('java-monster').price_grocery, undefined);
+  assert.equal(byId.get('kirkland-energy').price_grocery, undefined);
+});

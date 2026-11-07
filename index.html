@@ -59,6 +59,15 @@
       <div class="section-label-tab" id="calculator-label">YOUR HABIT</div>
 
       <div class="field-group">
+        <div class="field-label" id="store-label">WHERE DO YOU USUALLY BUY?</div>
+        <div class="store-toggle" role="group" aria-labelledby="store-label">
+          <button type="button" class="store-toggle-btn is-active" data-channel="convenience" aria-pressed="true">Convenience<br><span class="store-toggle-sub">Gas station · 7-Eleven · QT</span></button>
+          <button type="button" class="store-toggle-btn" data-channel="grocery" aria-pressed="false">Grocery &amp; big stores<br><span class="store-toggle-sub">Walmart · Target</span></button>
+        </div>
+        <p class="tax-note" id="store-note">Same can, different price depending on where you buy it. Grocery prices are Target single cans, checked November 2026.</p>
+      </div>
+
+      <div class="field-group">
         <label for="drink-select" class="field-label" id="drink-label">YOUR POISON</label>
         <div class="select-wrap">
           <select id="drink-select" name="drink" aria-label="Select your drink"></select>

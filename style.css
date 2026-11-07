@@ -1281,3 +1281,37 @@ body::before {
   line-height: 1.4;
   color: var(--grey);
 }
+
+/* ── STORE CHANNEL TOGGLE ──────────────────────────────── */
+.store-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.store-toggle-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-dim);
+  color: var(--grey);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+.store-toggle-btn:hover,
+.store-toggle-btn:focus-visible {
+  border-color: var(--border-bright);
+}
+.store-toggle-btn.is-active {
+  border-color: var(--border-bright);
+  color: var(--green);
+}
+.store-toggle-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--grey);
+}

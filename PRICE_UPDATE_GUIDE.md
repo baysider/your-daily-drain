@@ -9,6 +9,30 @@ Last updated: November 7, 2026.
 Everything else that matters follows from it automatically, or is listed
 in step 2 below so you don't miss a copy.
 
+## Two price channels (added Nov 7, 2026)
+
+The same can costs different amounts depending on where you buy it, so
+each drink can carry two prices:
+
+- **`price`** — the convenience-store price (gas station, 7-Eleven, QT,
+  RaceTrac, Circle K). This is the default the site shows.
+- **`price_grocery`** — the grocery / big-store single-can price
+  (Target / Walmart). Only add one where you have verified a single-can
+  shelf price. If a drink has no `price_grocery`, the toggle leaves it
+  unchanged.
+
+Verified grocery prices (Target single cans, Nov 7, 2026):
+Monster Original / Ultra / Juice $2.89, Red Bull (8.4oz) $2.79,
+Rockstar Original $1.89. Every other drink is unverified for grocery —
+do not guess one; check Target or Walmart first.
+
+Open item: the Rockstar convenience price ($3.29) was never verified
+at a gas station — research in Nov 2026 found no source near $3.29.
+Check a gas-station shelf price before trusting it.
+
+When you update prices, update both channels where you have both, and
+update `price_grocery` in `site-data.js` `FALLBACK_DRINKS` too.
+
 ## Step 1 — Update the master list: `drinks.json`
 
 Each drink has: `id`, `name`, `brand`, `price` (shelf price, before tax),

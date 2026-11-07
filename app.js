@@ -120,6 +120,14 @@ let taxRate       = 0.25;
 let salesTaxRate  = 0.06;
 let resultsVisible = false;
 
+/* ── STORE CHANNEL ───────────────────────────────────────── */
+/* price = convenience store (gas station, 7-Eleven, QT...).
+   price_grocery = grocery / big-store single can (Target, Nov 2026),
+   only where verified; otherwise the grocery price is the same. */
+let storeChannel = 'convenience';
+const drinkPrice = d => (storeChannel === 'grocery' && typeof d.price_grocery === 'number') ? d.price_grocery : d.price;
+const channelDrinks = () => drinks.map(d => ({ ...d, price: drinkPrice(d) }));
+
 /* ── HELPERS ─────────────────────────────────────────────── */
 const fmt2 = n => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const fmt0 = n => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -238,7 +246,7 @@ function computeCosts() {
   const wageValid   = Number.isFinite(wageInput) && wageInput > 0;
   const wage        = wageValid ? wageInput : 0;
   const afterTaxWage = wageValid ? wage * (1 - taxRate) : 0;
-  const canPrice    = currentDrink.price * (1 + salesTaxRate);
+  const canPrice    = drinkPrice(currentDrink) * (1 + salesTaxRate);
   const daily       = canPrice * cansPerDay;
   const annual      = daily * 365;
   /* Reconciled: weekly and monthly are derived from the annual figure,
@@ -259,9 +267,9 @@ function buildSubline(canPrice, truePerCan) {
   }
   if (salesTaxRate > 0) {
     const pct = (salesTaxRate * 100).toFixed(0);
-    return `$${currentDrink.price.toFixed(2)} shelf + ${pct}% sales tax = $${canPrice.toFixed(2)} at the register. After income tax, each can costs you $${truePerCan.toFixed(2)} to earn.`;
+    return `$${drinkPrice(currentDrink).toFixed(2)} shelf + ${pct}% sales tax = $${canPrice.toFixed(2)} at the register. After income tax, each can costs you $${truePerCan.toFixed(2)} to earn.`;
   }
-  return `At your wage & tax rate, that $${currentDrink.price.toFixed(2)} can actually costs you $${truePerCan.toFixed(2)} to earn.`;
+  return `At your wage & tax rate, that $${drinkPrice(currentDrink).toFixed(2)} can actually costs you $${truePerCan.toFixed(2)} to earn.`;
 }
 
 /* ── WEEKS CONTEXT ───────────────────────────────────────── */
@@ -327,7 +335,7 @@ function renderStrategies(annualCost) {
          after sales tax — the same basis as the other cards.
          The old static comparators (vs Monster / vs Red Bull 12oz)
          are gone; the altNote is kept only as extra context. */
-      const savingsArr       = strategy.options.map(o => (currentDrink.price - o.price) * (1 + salesTaxRate));
+      const savingsArr       = strategy.options.map(o => (drinkPrice(currentDrink) - o.price) * (1 + salesTaxRate));
       const maxSavingsPerCan = Math.max(...savingsArr);
       const maxAnnualSavings = maxSavingsPerCan * cansPerDay * 365;
       const bestOption       = strategy.options[savingsArr.indexOf(maxSavingsPerCan)];
@@ -348,7 +356,7 @@ function renderStrategies(annualCost) {
         : `You're already in this price range with ${currentDrink.name}.`;
 
       optionsHTML = strategy.options.map(o => {
-        const perCanSavings  = (currentDrink.price - o.price) * (1 + salesTaxRate);
+        const perCanSavings  = (drinkPrice(currentDrink) - o.price) * (1 + salesTaxRate);
         const annualSavings  = perCanSavings * cansPerDay * 365;
         const noteHtml       = o.altNote
           ? `<div class="strategy-item-note">${o.altNote}</div>`
@@ -368,7 +376,7 @@ function renderStrategies(annualCost) {
     } else {
       /* Standard mode: savings vs the currently selected drink */
       const bestPrice      = Math.min(...strategy.options.map(o => o.price));
-      const savingsPerCan  = (currentDrink.price - bestPrice) * (1 + salesTaxRate);
+      const savingsPerCan  = (drinkPrice(currentDrink) - bestPrice) * (1 + salesTaxRate);
       const savingsPerYear = savingsPerCan * cansPerDay * 365;
 
       if (savingsPerCan <= 0) {
@@ -556,10 +564,10 @@ async function loadDrinks() {
     if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     drinks = data.drinks;
-    caffeineIndex = buildCaffeineIndex(drinks);
+    caffeineIndex = buildCaffeineIndex(channelDrinks());
   } catch (_) {
     drinks = getFallbackDrinks();
-    caffeineIndex = buildCaffeineIndex(drinks);
+    caffeineIndex = buildCaffeineIndex(channelDrinks());
   }
   populateDropdown();
 }
@@ -609,7 +617,7 @@ function populateDropdown() {
       if (!d) return;
       const opt = document.createElement('option');
       opt.value = d.id;
-      opt.textContent = `${d.name} — $${d.price.toFixed(2)}`;
+      opt.textContent = `${d.name} — $${drinkPrice(d).toFixed(2)}`;
       optgroup.appendChild(opt);
       if (!firstDrink) firstDrink = d;
     });
@@ -626,8 +634,8 @@ function populateDropdown() {
 
 function updateDrinkMeta() {
   if (!currentDrink) return;
-  const base = `${currentDrink.size_oz}oz · ${currentDrink.caffeine_mg}mg caffeine · $${currentDrink.price.toFixed(2)}/can`;
-  const canPrice = currentDrink.price * (1 + salesTaxRate);
+  const base = `${currentDrink.size_oz}oz · ${currentDrink.caffeine_mg}mg caffeine · $${drinkPrice(currentDrink).toFixed(2)}/can`;
+  const canPrice = drinkPrice(currentDrink) * (1 + salesTaxRate);
   const taxPart  = salesTaxRate > 0
     ? ` · $${canPrice.toFixed(2)} w/ ${(salesTaxRate * 100).toFixed(0)}% tax`
     : '';
@@ -743,6 +751,31 @@ function recalcAll() {
   renderSavingsIdeas(annual);
 }
 
+/* ── STORE CHANNEL TOGGLE ────────────────────────────────── */
+function updateDropdownPrices() {
+  const sel = document.getElementById('drink-select');
+  if (!sel) return;
+  [...sel.options].forEach(opt => {
+    const d = drinks.find(drink => drink.id === opt.value);
+    if (d) opt.textContent = `${d.name} — $${drinkPrice(d).toFixed(2)}`;
+  });
+}
+
+function setStoreChannel(channel) {
+  if (channel !== 'convenience' && channel !== 'grocery') return;
+  storeChannel = channel;
+  document.querySelectorAll('.store-toggle-btn').forEach(btn => {
+    const active = btn.dataset.channel === channel;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+  caffeineIndex = buildCaffeineIndex(channelDrinks());
+  updateDrinkMeta();
+  updateDropdownPrices();
+  if (isDesktop()) liveUpdate();
+  else if (resultsVisible) recalcAll();
+}
+
 /* ── INIT ────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   applyStaticCopy();
@@ -771,6 +804,10 @@ document.addEventListener('DOMContentLoaded', () => {
     currentDrink = drinks.find(d => d.id === e.target.value) || null;
     updateDrinkMeta();
     if (isDesktop()) liveUpdate();
+  });
+
+  document.querySelectorAll('.store-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => setStoreChannel(btn.dataset.channel));
   });
 
   document.getElementById('hourly-wage').addEventListener('input', () => {
