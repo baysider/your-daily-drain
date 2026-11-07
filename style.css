@@ -842,9 +842,10 @@ body::before {
 
 .strategy-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px 16px;
   margin-bottom: 16px;
 }
 
@@ -854,6 +855,7 @@ body::before {
   letter-spacing: 0.04em;
   color: var(--white);
   line-height: 1;
+  min-width: 0;
 }
 
 .strategy-savings-badge {
@@ -863,8 +865,14 @@ body::before {
   font-size: 14px;
   letter-spacing: 0.04em;
   padding: 4px 12px;
-  white-space: nowrap;
-  flex-shrink: 0;
+  /* Was white-space: nowrap + flex-shrink: 0: the long Discount Grocery
+     badge ("Up to $2.84/can saved vs Monster Original (16oz)") ran off
+     the right edge on phones. Let it wrap and let the header wrap the
+     badge below the label on narrow screens. */
+  white-space: normal;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
   line-height: 1.4;
   align-self: flex-start;
 }

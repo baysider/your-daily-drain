@@ -332,8 +332,16 @@ function renderStrategies(annualCost) {
       const maxAnnualSavings = maxSavingsPerCan * cansPerDay * 365;
       const bestOption       = strategy.options[savingsArr.indexOf(maxSavingsPerCan)];
 
+      /* Comparator label: just "Monster" when a Monster is selected —
+         Original, Ultra and Juice are all $3.59 for 16oz (Java is the
+         only pricier one, $3.99), so "vs Monster Original (16oz)" is
+         needlessly specific and made the badge overflow on phones.
+         Other brands keep the full drink name, since e.g. Red Bull
+         varies by size ($2.99–$4.99) and "vs Red Bull" would be vague. */
+      const vsLabel = currentDrink.brand === 'Monster' ? 'Monster' : currentDrink.name;
+
       badgeText  = maxSavingsPerCan > 0
-        ? `Up to ${fmt2(maxSavingsPerCan)}/can saved vs ${currentDrink.name}`
+        ? `Up to ${fmt2(maxSavingsPerCan)}/can saved vs ${vsLabel}`
         : 'Already cheaper';
       annualText = maxSavingsPerCan > 0
         ? `Best deal: ${bestOption.name} saves you ${fmt0(maxAnnualSavings)}/yr at your pace`
@@ -349,7 +357,7 @@ function renderStrategies(annualCost) {
           <div class="strategy-item strategy-item--detailed">
             <div class="strategy-item-info">
               <div class="strategy-item-name">${o.name} <span class="strategy-item-size">${o.size}</span></div>
-              <div class="strategy-item-vs">Saves ${fmt2(perCanSavings)}/can vs ${currentDrink.name} · ${fmt0(annualSavings)}/yr</div>
+              <div class="strategy-item-vs">Saves ${fmt2(perCanSavings)}/can vs ${vsLabel} · ${fmt0(annualSavings)}/yr</div>
               ${noteHtml}
             </div>
             <div class="strategy-item-price">$${o.price.toFixed(2)}<span class="strategy-item-unit">/can</span></div>
