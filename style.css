@@ -1228,6 +1228,12 @@ body::before {
   /* Hide button — results update live on desktop */
   .calc-btn { display: none; }
 
+  /* Page nav: five tiles in one row on desktop, like the other pages */
+  .page-nav {
+    max-width: 1440px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
   /* Footer: match container width */
   .site-footer {
     max-width: 1440px;
@@ -1236,11 +1242,12 @@ body::before {
   }
 }
 
-/* ── PAGE NAV (US / INTERNATIONAL) ─────────────────────────
-   Two boxes at the top; the same nav goes on every page so
-   visitors can switch sections. world-prices.html does not
-   exist in the repo yet — it is the planned home of the
-   international prices page (currently a separate mockup). */
+/* ── PAGE NAV (FIVE SECTIONS) ─────────────────────────────
+   Five boxes at the top; the same nav goes on every page so
+   visitors can switch sections. Each box is its own page
+   (index.html, world-prices.html, caffeine-alternatives.html,
+   how-expensive.html, market-share.html) so Google can index
+   them separately. */
 .page-nav {
   max-width: var(--max-w);
   margin: 0 auto;
