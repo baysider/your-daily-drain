@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" href="data:," />
+<title>Energy Drink Market Share — Your Daily Drain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0A0A0A; --surface:#111111; --surface2:#1a1a1a; --ink:#F2F2F2; --muted:#cccccc; --line:#222222;
+  --volt:#00ff87; --volt-dark:#00cc6a; --blue:#00ff87;
+  --c-redbull:#e5323e; --c-monster:#7cc24a; --c-celsius:#ef7d1a; --c-kdp:#4a90e2; --c-5hour:#f2c94c; --c-starbucks:#14b8a6; --c-others:#8a877c;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;line-height:1.5}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 56px;width:100%}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;flex-wrap:wrap}
+.topbar a{text-decoration:none;border-bottom:2px solid var(--volt);color:var(--ink)}
+.badge-mock{display:inline-block;background:var(--volt);color:#0A0A0A;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em}
+
+/* ---------- Top nav: the five pages ---------- */
+.page-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:16px 0 2px}
+.page-box{position:relative;display:flex;flex-direction:column;gap:2px;text-decoration:none;border-radius:16px;padding:14px 12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-height:132px;justify-content:center;min-width:0}
+.page-box-title{overflow-wrap:anywhere}
+.page-box:hover{border-color:var(--volt)}
+.page-box:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.page-box-kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--volt)}
+.page-box-title{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:26px;line-height:.95;text-transform:uppercase;letter-spacing:.03em}
+.page-box-sub{font-size:12.5px;line-height:1.3;color:var(--muted)}
+.page-box-cta{font-size:13px;font-weight:700;margin-top:6px;color:var(--ink)}
+.page-box.is-active{background:#F2F2F2;color:#0A0A0A;border-color:#F2F2F2}
+.page-box.is-active .page-box-kicker{color:#0A0A0A}
+.page-box.is-active .page-box-sub{color:#333333}
+.page-box.is-active .page-box-cta{color:#0A0A0A}
+.page-box.is-active::after{content:"You're here";position:absolute;top:10px;right:10px;background:#0A0A0A;color:var(--volt);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:999px}
+
+/* ---------- Hero ---------- */
+.hero{padding:28px 0 8px}
+.hero-kicker{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--volt)}
+.hero h1{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:clamp(52px,14vw,68px);line-height:.92;text-transform:uppercase;margin:10px 0 12px;letter-spacing:.02em;color:var(--ink)}
+.hero h1 em{font-style:normal;background:var(--volt);padding:0 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:#0A0A0A}
+.hero p.lede{font-size:17px;color:var(--muted);margin:0}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.stat b{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:40px;display:block;line-height:1;color:var(--volt);letter-spacing:.02em}
+.stat span{font-size:13.5px;color:var(--muted)}
+.stat span em{color:var(--ink)}
+
+h2{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:38px;text-transform:uppercase;margin:38px 0 4px;line-height:1;letter-spacing:.02em;color:var(--ink)}
+.sub{color:var(--muted);margin:0 0 14px}
+
+/* ---------- Pie chart ---------- */
+.chart-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.chart-grid{display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:28px;align-items:center}
+.pie-wrap{position:relative;max-width:440px;width:100%;margin:0 auto}
+.pie-wrap svg{width:100%;height:auto;display:block}
+.slice{cursor:pointer;stroke:var(--bg);stroke-width:2.5;transition:transform .25s ease, opacity .2s ease}
+.slice:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.pie-wrap.has-selection .slice{opacity:.38}
+.pie-wrap.has-selection .slice.is-selected{opacity:1}
+.center-share{font-family:"Bebas Neue",sans-serif;font-weight:400;fill:var(--ink)}
+.center-name{font-family:"DM Sans",sans-serif;font-weight:700;fill:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.company-list{display:flex;flex-direction:column;gap:8px}
+.company-btn{display:grid;grid-template-columns:16px 1fr auto 22px;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px 14px;cursor:pointer}
+.company-btn:hover{border-color:var(--volt)}
+.company-btn:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.company-btn[aria-expanded="true"]{background:var(--surface);border-color:var(--volt)}
+.dot{width:16px;height:16px;border-radius:5px;flex:none}
+.company-name{font-weight:700;font-size:17px;line-height:1.2;color:var(--ink)}
+.company-name small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+.company-share{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:32px;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink);letter-spacing:.02em}
+.chev{font-size:18px;color:var(--muted);transition:transform .2s ease;text-align:center}
+.company-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.share-basis{margin:16px 0 0;font-size:13.5px;color:var(--muted)}
+.share-basis b{color:var(--ink)}
+
+/* ---------- Brand detail ---------- */
+.detail{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.detail-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px}
+.detail-head h3{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:36px;margin:0;text-transform:uppercase;line-height:1;letter-spacing:.02em;color:var(--ink)}
+.detail-head .d-share{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:32px;line-height:1;font-variant-numeric:tabular-nums;color:var(--volt);letter-spacing:.02em}
+.detail p.intro{margin:12px 0 0;color:var(--ink)}
+.brand-group{margin-top:18px}
+.brand-group h4{margin:0 0 8px;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--volt)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-block;padding:7px 13px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:15px}
+.chip.lead{border-color:var(--volt);color:var(--volt);font-weight:700}
+.detail .note{margin:16px 0 0;font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px}
+.detail .note b{color:var(--ink)}
+
+/* ---------- US vs world ---------- */
+.stack-row{margin-top:16px}
+.stack-label{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px;margin-bottom:6px;color:var(--ink);flex-wrap:wrap}
+.stack-label span{color:var(--muted);font-weight:500;font-size:13.5px}
+.stack{display:flex;height:44px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.stack div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12.5px;min-width:0;white-space:nowrap;overflow:hidden;padding:0 4px}
+.stack .s-other{background:var(--c-others);color:#0A0A0A}
+.stack-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin-top:10px}
+.stack-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.world-note{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px}
+.world-note p{margin:0;color:var(--muted)}
+.world-note p + p{margin-top:10px}
+.world-note b{color:var(--ink)}
+
+/* ---------- Dollar / unit toggle ---------- */
+.basis-toggle{display:inline-flex;gap:4px;background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:18px}
+.basis-toggle button{font:inherit;font-weight:700;font-size:14px;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:8px 18px;cursor:pointer}
+.basis-toggle button:hover{color:var(--ink)}
+.basis-toggle button:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.basis-toggle button[aria-pressed="true"]{background:var(--volt);color:#0A0A0A}
+
+/* ---------- Global blocks ---------- */
+.global-block{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px}
+.global-block h3{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:30px;margin:0 0 4px;text-transform:uppercase;letter-spacing:.02em;line-height:1;color:var(--ink)}
+.global-block .gb-sub{margin:0 0 16px;color:var(--muted);font-size:14.5px}
+.vol-row{margin-top:14px}
+.vol-row:first-of-type{margin-top:0}
+.vol-label{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700;font-size:15px;margin-bottom:6px;color:var(--ink)}
+.vol-label span{color:var(--volt);font-variant-numeric:tabular-nums}
+.vol-track{position:relative;height:34px;background:var(--surface2);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.vol-fill{position:absolute;top:0;left:0;bottom:0}
+.vol-range{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(45deg,rgba(229,50,62,.45) 0 6px,rgba(229,50,62,.18) 6px 12px)}
+.global-block p.gb-text{margin:14px 0 0;color:var(--muted)}
+.global-block p.gb-text b{color:var(--ink)}
+.global-block p.gb-src{margin:10px 0 0;font-size:13.5px;color:var(--muted)}
+.global-block p.gb-src b{color:var(--ink)}
+
+/* ---------- Global: big asterisk + toggle panels ---------- */
+.big-ast{display:inline-block;font-family:"DM Sans",sans-serif;font-weight:800;font-style:normal;color:var(--volt);font-size:2em;line-height:0;vertical-align:baseline;position:relative;top:.16em;margin-left:1px}
+h2 .big-ast{top:.1em}
+.global-block h3 .big-ast{top:.12em}
+.global-panel[hidden]{display:none}
+.global-footnote{margin:16px 0 0;padding:16px 20px 18px;background:var(--surface);border:1px solid var(--line);border-radius:18px;color:var(--muted);font-size:15px}
+.global-footnote .big-ast{float:left;margin:0 10px 0 0;top:.32em}
+.global-footnote b{color:var(--ink)}
+
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer p{margin:0 0 8px}
+footer b{color:var(--ink)}
+
+/* ---------- Narrow screens: fall back to stacking ---------- */
+@media(max-width:900px){
+  .page-nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .page-box:last-child{grid-column:1 / -1}
+  .hero-stats{grid-template-columns:1fr}
+  .chart-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .page-box{padding:13px 11px;min-height:108px}
+  .page-box-title{font-size:22px;overflow-wrap:break-word}
+  .page-box.is-active::after{position:static;align-self:flex-start;margin-top:6px}
+  .company-btn{grid-template-columns:14px 1fr auto 18px;gap:9px;padding:12px}
+  .company-share{font-size:28px}
+  .detail-head .d-share{font-size:28px}
+  .detail-head h3{font-size:30px}
+  .stack div{font-size:11.5px}
+  .chart-card{padding:14px}
+  .detail{padding:16px}
+}
+@media(prefers-reduced-motion: reduce){ *{scroll-behavior:auto!important;transition:none!important} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><a href="index.html">← Your Daily Drain</a><span class="badge-mock">Mockup • Nielsen US snapshot, Nov 2025</span></div>
+
+  <nav class="page-nav" aria-label="Your Daily Drain pages">
+    <a class="page-box" href="index.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">US</span>
+      <span class="page-box-sub">Calculator &amp; US prices — what your habit costs you to earn</span>
+      <span class="page-box-cta">Go to US page →</span>
+    </a>
+    <a class="page-box" href="world-prices.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">International</span>
+      <span class="page-box-sub">Energy drink prices around the world — Europe &amp; Asia</span>
+      <span class="page-box-cta">See world prices →</span>
+    </a>
+    <a class="page-box" href="caffeine-alternatives.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Caffeine Alternatives</span>
+      <span class="page-box-sub">NoDoz, Mio, gum, coffee &amp; tea — the cheapest caffeine, ranked</span>
+      <span class="page-box-cta">See alternatives →</span>
+    </a>
+    <a class="page-box" href="how-expensive.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">How Expensive</span>
+      <span class="page-box-sub">Energy drinks vs Coke, soda, seltzer, water &amp; coffee — the research</span>
+      <span class="page-box-cta">See the comparison →</span>
+    </a>
+    <div class="page-box is-active" aria-current="page">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Market Share</span>
+      <span class="page-box-sub">Who actually sells America's energy drinks — and every brand they own</span>
+      <span class="page-box-cta">The pie is below ↓</span>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-kicker">Page 5 of Your Daily Drain — who owns the shelf</div>
+    <h1>Two companies take <em>67¢ of every $1</em> of US energy drinks</h1>
+    <p class="lede">The cooler looks like it holds dozens of competing brands. Mostly, it doesn't. This is the US energy drink market split by the company behind the can, from one consistent Nielsen snapshot — tap any slice to see every brand that company actually owns.</p>
+    <div class="hero-stats">
+      <div class="stat"><b>34.3%</b><span>Monster Beverage Co. family — the largest US dollar share in the snapshot below</span></div>
+      <div class="stat"><b>66.9%</b><span>Monster family + Red Bull combined — two of every three US energy drink dollars</span></div>
+      <div class="stat"><b>25–30%</b><span>Red Bull's estimated share of <em>global</em> retail dollars, 2024 — an estimate, method shown below</span></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="pieH">
+    <h2 id="pieH">The US pie</h2>
+    <p class="sub">One snapshot, one source — no mixing of years. Nielsen Total US xAOC + Convenience, 13 weeks ending Nov 15, 2025, via Monster Beverage Form 8-K (SEC). Tap a slice, or pick a company, to open up its brands.</p>
+
+    <div class="chart-card">
+      <div class="basis-toggle" role="group" aria-label="Share basis">
+        <button type="button" id="btnDollar" aria-pressed="true">Dollar share</button>
+        <button type="button" id="btnUnit" aria-pressed="false">Unit share</button>
+      </div>
+      <div class="chart-grid">
+        <div class="pie-wrap" id="pieWrap">
+          <svg id="pie" viewBox="0 0 400 400" role="img" aria-label="Pie chart of US energy drink dollar share, Nielsen, 13 weeks ending Nov 15, 2025: Monster Beverage family 34.3 percent, Red Bull 32.6 percent, Celsius Holdings 17.5 percent, Keurig Dr Pepper energy 7.1 percent, 5-Hour Energy 2.5 percent, Starbucks 2.0 percent, all other 4.0 percent"></svg>
+        </div>
+        <div class="company-list" id="companyList" role="group" aria-label="Companies in the chart"></div>
+      </div>
+      <p class="share-basis"><b>Source:</b> Nielsen Total US xAOC + Convenience, 13 weeks ending Nov 15, 2025, via Monster Beverage Form 8-K (SEC). Dollar and unit shares both come from that same table — use the toggle above to switch. <b>Later update, not in this pie:</b> Keurig Dr Pepper energy has since grown to 10.1% in Q3 2026 (KDP earnings call, Nov 3, 2026). That is a later quarter, so it is not part of this Nov 2025 snapshot.</p>
+    </div>
+
+    <div class="detail" id="detail" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="worldH">
+    <h2 id="worldH">The world, two ways — no global pie<sup class="big-ast" aria-hidden="true">*</sup></h2>
+    <p class="sub">There is no single honest global pie. Measured in litres, Monster is bigger; measured in dollars, Red Bull is bigger — because Red Bull charges about twice as much per litre. So instead of one chart, flip between the two ways of counting.</p>
+
+    <div class="basis-toggle" role="group" aria-label="Global share basis">
+      <button type="button" id="btnGlobalDollar" aria-pressed="true">Dollar share</button>
+      <button type="button" id="btnGlobalUnit" aria-pressed="false">Unit share</button>
+    </div>
+
+    <div class="global-panel" id="globalDollarPanel">
+      <div class="global-block" style="margin-top:0">
+        <h3>By dollars — value, 2024 estimate<sup class="big-ast" aria-hidden="true">*</sup></h3>
+        <p class="gb-sub">Estimated share of global retail dollars. These are ranges, not a published figure — the bar is drawn at the middle of each range.</p>
+        <div class="stack" role="img" aria-label="Estimated global retail dollar share ranges, approximate: Red Bull 25 to 30 percent, Monster 15 to 20 percent, all others 50 to 60 percent">
+          <div style="width:27.5%;background:var(--c-redbull)">Red Bull 25–30%</div>
+          <div style="width:17.5%;background:var(--c-monster)">Monster 15–20%</div>
+          <div class="s-other" style="width:55%">All others ~50–60%</div>
+        </div>
+        <div class="stack-legend">
+          <span><i style="background:var(--c-redbull)"></i>Red Bull ~25–30%</span>
+          <span><i style="background:var(--c-monster)"></i>Monster ~15–20%</span>
+          <span><i style="background:var(--c-others)"></i>All others ~50–60%</span>
+        </div>
+        <p class="gb-text"><b>This is a Juno estimate, not a published Euromonitor figure.</b> Method, short version: Red Bull charges about <b>$3.18 per litre</b> at manufacturer level vs Monster's about <b>$1.56</b> — roughly 2x. So dividing manufacturer revenue by the ~$80B retail market understates retail share by about 2x. The 25–30% range applies a US-observed retail/manufacturer markup (~1.8x) instead.</p>
+      </div>
+    </div>
+
+    <div class="global-panel" id="globalUnitPanel" hidden>
+      <div class="global-block" style="margin-top:0">
+        <h3>By units — litres, 2023–24<sup class="big-ast" aria-hidden="true">*</sup></h3>
+        <p class="gb-sub">Share of the actual liquid sold worldwide. Flip the ranking from the dollar view: Monster sells more of it, Red Bull charges more for it. The bar is drawn at the middle of each range.</p>
+        <div class="stack" role="img" aria-label="Approximate global share of litres sold, 2023 to 2024: Red Bull about 13 percent, Monster 16 to 17 percent, all others about 70 percent">
+          <div style="width:13%;background:var(--c-redbull)">Red Bull ~13%</div>
+          <div style="width:16.5%;background:var(--c-monster)">Monster 16–17%</div>
+          <div class="s-other" style="width:70.5%">All others ~70%</div>
+        </div>
+        <div class="stack-legend">
+          <span><i style="background:var(--c-redbull)"></i>Red Bull ~13%</span>
+          <span><i style="background:var(--c-monster)"></i>Monster ~16–17%</span>
+          <span><i style="background:var(--c-others)"></i>All others ~70%</span>
+        </div>
+        <p class="gb-text">On volume, the best-available shares are roughly <b>Red Bull ~13%</b> and <b>Monster ~16–17%</b> of global litres (2023–24, secondary summaries). Euromonitor Passport — the source behind most global share figures — is paywalled, so treat these as approximate.</p>
+      </div>
+
+      <div class="global-block">
+        <h3>The litres behind it — volume, 2024</h3>
+        <p class="gb-sub">How much liquid each company actually sold worldwide. No market denominator needed — these are company-reported volumes.</p>
+        <div class="vol-row">
+          <div class="vol-label">Monster Beverage <span>~4.8B litres</span></div>
+          <div class="vol-track" role="img" aria-label="Monster Beverage bar: about 4.8 billion litres in 2024"><div class="vol-fill" style="width:100%;background:var(--c-monster)"></div></div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-label">Red Bull <span>~3.5–4.0B litres</span></div>
+          <div class="vol-track" role="img" aria-label="Red Bull bar: about 3.5 to 4.0 billion litres in 2024, shown as a range"><div class="vol-fill" style="width:72.9%;background:var(--c-redbull)"></div><div class="vol-range" style="left:72.9%;width:10.4%"></div></div>
+        </div>
+        <p class="gb-src"><b>Sources:</b> Monster ~4.8B litres from 846.7M 192-oz cases, 2024, Monster Beverage 10-K. Red Bull ~3.5–4.0B litres from 12.67B cans sold, 2024, company-reported — litres estimated from the can mix, so a range is shown.</p>
+      </div>
+    </div>
+
+    <p class="global-footnote"><span class="big-ast" aria-hidden="true">*</span><b>Approximate — these global figures are estimates, not precise published shares.</b> Unlike the US pie above, which comes from one Nielsen table, no single published source splits the whole world this way: the dollar ranges are a Juno estimate (method shown in the dollar view) and the litre shares are best-available approximations from secondary summaries. Read them as “about this big,” not as exact numbers.</p>
+
+    <div class="world-note">
+      <p><b>Where 43% came from:</b> You will see “Red Bull 43% of the global market” everywhere. That was Red Bull's share of world value in 2011 (Euromonitor). The same source had it at 21.5% of world volume, and Monster at 16% — not 39%. The 43/39 pair is a US list from around 2015–2020 that got relabelled “global”.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>How to read this page:</b> US shares are from one snapshot — Nielsen Total US xAOC + Convenience, 13 weeks ending Nov 15, 2025, via Monster Beverage Form 8-K (SEC): dollar share Monster family 34.3%, Red Bull 32.6%, Celsius Holdings 17.5%, Keurig Dr Pepper energy 7.1%, 5-Hour Energy 2.5%, Starbucks 2.0%, all other 4.0%; unit shares are in the toggle above. KDP's 10.1% is Q3 2026 (KDP earnings call, Nov 3, 2026), a later quarter, and is not in this pie. Globally there is no pie: volume shares are roughly Red Bull ~13% and Monster ~16–17% of litres (approximate), and the dollar ranges (Red Bull ~25–30%, Monster ~15–20%) are a Juno estimate with the method shown above, not a published Euromonitor figure.</p>
+    <p><b>Ownership notes:</b> the panels above keep it simple — they list the brands each company distributes. Who actually owns them is messier. <b>Ghost Energy</b> is 60% owned by Keurig Dr Pepper. <b>Venom Energy</b> is 100% owned by Keurig Dr Pepper. <b>C4 Energy</b> is owned by Nutrabolt — Keurig Dr Pepper owns about 36% of Nutrabolt and distributes C4. <b>Bloom Sparkling Energy</b> is owned by Bloom Nutrition; Keurig Dr Pepper distributes it, and its stake in Bloom is indirect, through Nutrabolt. <b>Black Rifle Energy</b> is owned by Black Rifle Coffee Company, and Keurig Dr Pepper distributes it. <b>Rockstar</b> is owned by Celsius Holdings in the US and Canada only — PepsiCo owns Rockstar everywhere else.</p>
+  </footer>
+</div>
+
+<script>
+var COMPANIES = [
+  {
+    id: "monster", name: "Monster Beverage", dollar: 34.3, unit: 33.9, color: "var(--c-monster)",
+    tagline: "The biggest brand stable in the category",
+    intro: "Monster is the opposite of Red Bull: one company wearing a lot of different cans. Its US lineup and its international brands are kept separate here, because most of the international names never appear on a US shelf.",
+    groups: [
+      { label: "United States", brands: ["Monster Energy", "Bang", "Reign", "Reign Storm", "FLRT", "NOS", "Full Throttle"], lead: 0 },
+      { label: "International", brands: ["Burn", "Nalu", "Predator", "Fury", "Mother", "Relentless"], lead: -1 }
+    ],
+    note: null
+  },
+  {
+    id: "redbull", name: "Red Bull", dollar: 32.6, unit: 30.0, color: "var(--c-redbull)",
+    tagline: "A giant share — one brand",
+    intro: "Red Bull is the exception in this market: a giant share built on a single product line. There is no stable of side brands underneath it — Red Bull is just Red Bull.",
+    groups: [ { label: "Brands", brands: ["Red Bull"], lead: 0 } ],
+    note: null
+  },
+  {
+    id: "celsius", name: "Celsius Holdings", dollar: 17.5, unit: 18.9, color: "var(--c-celsius)",
+    tagline: "Celsius, Alani Nu — and Rockstar",
+    intro: "The fastest-growing of the big four. Celsius Holdings now covers three distinct shelves: its own fitness-positioned Celsius line, Alani Nu, and Rockstar, which Celsius distributes.",
+    groups: [ { label: "Brands", brands: ["Celsius", "Alani Nu", "Rockstar"], lead: 0 } ],
+    note: "Who actually owns Rockstar is in the ownership notes at the bottom of the page."
+  },
+  {
+    id: "kdp", name: "Keurig Dr Pepper", dollar: 7.1, unit: 7.8, color: "var(--c-kdp)",
+    tagline: "Ghost, Bloom, C4, Venom and Black Rifle",
+    intro: "The fourth-largest slice in this snapshot. Keurig Dr Pepper's energy drink business runs through the brands it distributes — including Ghost, which looks nothing like a Dr Pepper product on the shelf.",
+    groups: [ { label: "Brands KDP distributes", brands: ["Ghost Energy", "Bloom Sparkling Energy", "C4 Energy", "Venom Energy", "Black Rifle Energy"], lead: -1 } ],
+    note: "Who actually owns each of these brands is in the ownership notes at the bottom of the page. KDP energy has since grown to 10.1% in Q3 2026 — a later quarter, not part of this Nov 2025 pie."
+  },
+  {
+    id: "fivehour", name: "5-Hour Energy", dollar: 2.5, unit: 1.8, color: "var(--c-5hour)",
+    tagline: "The energy shot, counted on its own",
+    intro: "The little shot bottle gets its own line in the Nielsen table. It takes a bigger share of dollars than of units — each unit is small, but it sells at a shot's price, not a can's.",
+    groups: [ { label: "Brands", brands: ["5-Hour Energy"], lead: 0 } ],
+    note: null
+  },
+  {
+    id: "starbucks", name: "Starbucks", dollar: 2.0, unit: 1.8, color: "var(--c-starbucks)",
+    tagline: "Coffee-chain energy, its own Nielsen line",
+    intro: "Starbucks' ready-to-drink energy products are counted separately in the same Nielsen table — a coffee name holding a small, steady slice of the energy category.",
+    groups: [ { label: "Brands", brands: ["Starbucks"], lead: 0 } ],
+    note: null
+  },
+  {
+    id: "others", name: "All other", dollar: 4.0, unit: 5.7, color: "var(--c-others)",
+    tagline: "Every remaining brand, combined",
+    intro: "Everything the Nielsen table doesn't name individually, combined into one slice: all the smaller and regional brands together. On units they add up to more than on dollars — the leftovers skew cheap.",
+    groups: [],
+    note: "This is the slice that changes most around the world — see the global blocks below the chart."
+  }
+];
+
+var basis = "dollar";
+function shareOf(c) { return basis === "dollar" ? c.dollar : c.unit; }
+function basisWord() { return basis === "dollar" ? "dollars" : "units"; }
+
+var selectedId = null;
+var pie = document.getElementById("pie");
+var pieWrap = document.getElementById("pieWrap");
+var listEl = document.getElementById("companyList");
+var detailEl = document.getElementById("detail");
+var CX = 200, CY = 200, R = 178, IR = 104;
+
+function polar(cx, cy, r, angleDeg) {
+  var a = (angleDeg - 90) * Math.PI / 180;
+  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+}
+function slicePath(start, end) {
+  var large = (end - start) > 180 ? 1 : 0;
+  var p1 = polar(CX, CY, R, start), p2 = polar(CX, CY, R, end);
+  var p3 = polar(CX, CY, IR, end), p4 = polar(CX, CY, IR, start);
+  return "M" + p1[0].toFixed(2) + "," + p1[1].toFixed(2) +
+    " A" + R + "," + R + " 0 " + large + " 1 " + p2[0].toFixed(2) + "," + p2[1].toFixed(2) +
+    " L" + p3[0].toFixed(2) + "," + p3[1].toFixed(2) +
+    " A" + IR + "," + IR + " 0 " + large + " 0 " + p4[0].toFixed(2) + "," + p4[1].toFixed(2) + " Z";
+}
+function cssColor(varRef) {
+  var tmp = document.createElement("span");
+  tmp.style.color = varRef;
+  document.body.appendChild(tmp);
+  var c = getComputedStyle(tmp).color;
+  tmp.remove();
+  return c;
+}
+
+var sliceEls = {};
+var shareEls = {};
+function buildPie() {
+  var svgNS = "http://www.w3.org/2000/svg";
+  COMPANIES.forEach(function (c) {
+    var path = document.createElementNS(svgNS, "path");
+    path.setAttribute("fill", cssColor(c.color));
+    path.setAttribute("class", "slice");
+    path.setAttribute("data-id", c.id);
+    path.setAttribute("tabindex", "0");
+    path.setAttribute("role", "button");
+    path.addEventListener("click", function () { selectCompany(c.id, true); });
+    path.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectCompany(c.id, true); }
+    });
+    pie.appendChild(path);
+    sliceEls[c.id] = path;
+  });
+  var shareText = document.createElementNS(svgNS, "text");
+  shareText.setAttribute("id", "centerShare");
+  shareText.setAttribute("x", CX); shareText.setAttribute("y", CY - 2);
+  shareText.setAttribute("text-anchor", "middle");
+  shareText.setAttribute("class", "center-share");
+  shareText.setAttribute("font-size", "58");
+  pie.appendChild(shareText);
+  var nameText = document.createElementNS(svgNS, "text");
+  nameText.setAttribute("id", "centerName");
+  nameText.setAttribute("x", CX); nameText.setAttribute("y", CY + 30);
+  nameText.setAttribute("text-anchor", "middle");
+  nameText.setAttribute("class", "center-name");
+  nameText.setAttribute("font-size", "14");
+  pie.appendChild(nameText);
+}
+
+function layoutPie() {
+  var total = 0;
+  COMPANIES.forEach(function (c) { total += shareOf(c); });
+  var angle = 0;
+  COMPANIES.forEach(function (c) {
+    var sweep = shareOf(c) / total * 360;
+    var el = sliceEls[c.id];
+    el.setAttribute("d", slicePath(angle, angle + sweep));
+    el.setAttribute("data-mid", angle + sweep / 2);
+    el.setAttribute("aria-label", c.name + ", " + shareOf(c).toFixed(1) + " percent of US " + basisWord() + ". Activate to see its brands.");
+    angle += sweep;
+  });
+  var parts = COMPANIES.map(function (c) { return c.name + " " + shareOf(c).toFixed(1) + " percent"; }).join(", ");
+  pie.setAttribute("aria-label", "Pie chart of US energy drink " + basis + " share, Nielsen Total US xAOC + Convenience, 13 weeks ending Nov 15, 2025: " + parts);
+}
+
+function buildList() {
+  COMPANIES.forEach(function (c) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "company-btn";
+    btn.id = "btn-" + c.id;
+    btn.setAttribute("aria-expanded", "false");
+    btn.innerHTML = '<span class="dot" style="background:' + c.color + '"></span>' +
+      '<span class="company-name">' + c.name + '<small>' + c.tagline + '</small></span>' +
+      '<span class="company-share" id="share-' + c.id + '"></span>' +
+      '<span class="chev" aria-hidden="true">▾</span>';
+    btn.addEventListener("click", function () { selectCompany(c.id, true); });
+    listEl.appendChild(btn);
+    shareEls[c.id] = btn.querySelector(".company-share");
+  });
+}
+
+function updateListShares() {
+  COMPANIES.forEach(function (c) {
+    shareEls[c.id].textContent = shareOf(c).toFixed(1) + "%";
+  });
+}
+
+function renderDetail(c) {
+  var html = '<div class="detail-head"><h3>' + c.name + '</h3><span class="d-share">' + shareOf(c).toFixed(1) + '% of US ' + basisWord() + '</span></div>';
+  html += '<p class="intro">' + c.intro + '</p>';
+  c.groups.forEach(function (g) {
+    html += '<div class="brand-group"><h4>' + g.label + '</h4><div class="chips">';
+    g.brands.forEach(function (b, i) {
+      html += '<span class="chip' + (i === g.lead ? ' lead' : '') + '">' + b + '</span>';
+    });
+    html += '</div></div>';
+  });
+  if (c.note) html += '<p class="note">' + c.note + '</p>';
+  detailEl.innerHTML = html;
+}
+
+function selectCompany(id, scroll) {
+  selectedId = id;
+  pieWrap.classList.add("has-selection");
+  COMPANIES.forEach(function (c) {
+    var el = sliceEls[c.id];
+    var on = c.id === id;
+    el.classList.toggle("is-selected", on);
+    if (on) {
+      var mid = parseFloat(el.getAttribute("data-mid"));
+      var a = (mid - 90) * Math.PI / 180;
+      el.style.transform = "translate(" + (Math.cos(a) * 10).toFixed(1) + "px," + (Math.sin(a) * 10).toFixed(1) + "px)";
+    } else {
+      el.style.transform = "";
+    }
+    document.getElementById("btn-" + c.id).setAttribute("aria-expanded", on ? "true" : "false");
+  });
+  var c = COMPANIES.filter(function (x) { return x.id === id; })[0];
+  document.getElementById("centerShare").textContent = shareOf(c).toFixed(1) + "%";
+  var nameEl = document.getElementById("centerName");
+  nameEl.textContent = c.name.length > 18 ? c.name.split(" ")[0] : c.name;
+  renderDetail(c);
+  if (scroll) detailEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function setBasis(next) {
+  if (basis === next) return;
+  basis = next;
+  document.getElementById("btnDollar").setAttribute("aria-pressed", basis === "dollar" ? "true" : "false");
+  document.getElementById("btnUnit").setAttribute("aria-pressed", basis === "unit" ? "true" : "false");
+  layoutPie();
+  updateListShares();
+  if (selectedId) selectCompany(selectedId, false);
+}
+document.getElementById("btnDollar").addEventListener("click", function () { setBasis("dollar"); });
+document.getElementById("btnUnit").addEventListener("click", function () { setBasis("unit"); });
+
+/* ---------- Global dollar / unit toggle ---------- */
+var globalBasis = "dollar";
+function setGlobalBasis(next) {
+  if (globalBasis === next) return;
+  globalBasis = next;
+  document.getElementById("btnGlobalDollar").setAttribute("aria-pressed", globalBasis === "dollar" ? "true" : "false");
+  document.getElementById("btnGlobalUnit").setAttribute("aria-pressed", globalBasis === "unit" ? "true" : "false");
+  document.getElementById("globalDollarPanel").hidden = globalBasis !== "dollar";
+  document.getElementById("globalUnitPanel").hidden = globalBasis !== "unit";
+}
+document.getElementById("btnGlobalDollar").addEventListener("click", function () { setGlobalBasis("dollar"); });
+document.getElementById("btnGlobalUnit").addEventListener("click", function () { setGlobalBasis("unit"); });
+
+buildPie();
+buildList();
+layoutPie();
+updateListShares();
+selectCompany("monster", false);
+</script>
+</body>
+</html>

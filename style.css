@@ -1265,7 +1265,12 @@ body::before {
   border-color: var(--border-bright);
 }
 .page-nav-box.is-active {
-  border-color: var(--border-bright);
+  background: var(--white);
+  border-color: var(--white);
+  color: #000;
+}
+.page-nav-box.is-active .page-nav-sub {
+  color: #333;
 }
 .page-nav-title {
   display: block;

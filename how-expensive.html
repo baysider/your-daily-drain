@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="dark"/>
+<link rel="icon" href="data:,"/>
+<title>How Expensive Are Energy Drinks, Really? — Your Daily Drain</title>
+<meta name="description" content="Energy drinks vs Coca-Cola, soda, seltzer, bottled water and coffee — same-size prices per ounce, what the extra money actually buys, and the research behind it."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0A0A0A; --surface:#111111; --surface2:#1a1a1a; --ink:#F2F2F2; --muted:#cccccc; --line:#222222;
+  --volt:#00ff87; --volt-dark:#00ff87; --red:#00ff87; --red-soft:rgba(0,255,135,.09); --blue:#00ff87; --amber:#cccccc;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;line-height:1.5}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px 72px;width:100%}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;flex-wrap:wrap}
+.topbar a{text-decoration:none;border-bottom:2px solid var(--volt)}
+.badge-mock{display:inline-block;background:var(--ink);color:#0A0A0A;padding:4px 10px;border-radius:999px;font-size:11px;letter-spacing:.08em;font-weight:700}
+.page-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:20px 0 8px}
+.page-box{position:relative;display:flex;flex-direction:column;gap:3px;text-decoration:none;border-radius:16px;padding:18px 16px 16px;border:1.5px solid var(--line);background:var(--surface);min-height:148px;justify-content:flex-start;min-width:0}
+.page-box-title{overflow-wrap:anywhere}
+.page-box:hover{border-color:var(--volt)}
+.page-box:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.page-box-kicker{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.page-box-title{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:28px;line-height:.95;text-transform:uppercase;letter-spacing:.03em}
+.page-box-sub{font-size:13px;line-height:1.35;color:var(--muted)}
+.page-box-cta{font-size:13px;font-weight:700;margin-top:6px}
+.page-box.is-active{background:#F2F2F2;color:#0A0A0A;border-color:#F2F2F2;padding-top:34px}
+.page-box.is-active .page-box-kicker,.page-box.is-active .page-box-sub{color:rgba(10,10,10,.68)}
+.page-box.is-active .page-box-cta{color:#0A0A0A}
+.page-box.is-active::after{content:"You're here";position:absolute;top:10px;right:10px;background:#0A0A0A;color:var(--volt);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:999px}
+.hero{padding:36px 0 12px}
+.hero h1{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:clamp(52px,6.2vw,84px);line-height:.95;text-transform:uppercase;margin:12px 0 16px;letter-spacing:.02em;max-width:900px}
+.hero h1 em{font-style:normal;background:var(--volt);color:#0A0A0A;padding:0 10px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero p.lede{font-size:19px;line-height:1.55;max-width:820px;color:var(--muted);margin:0}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:28px 0 8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.stat b{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:42px;display:block;line-height:1;letter-spacing:.03em}
+.stat span{font-size:13px;color:var(--muted)}
+.stat.hot{border-color:var(--volt);background:var(--surface)}
+.stat.hot b{color:var(--volt)}
+h2{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:40px;text-transform:uppercase;margin:48px 0 6px;line-height:1;letter-spacing:.03em}
+.sub{color:var(--muted);margin:0 0 18px;max-width:780px;font-size:16px;line-height:1.55}
+.controls{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.seg{display:flex;background:var(--surface2);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--volt);color:#0A0A0A}
+.controls label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 28px}
+.bar-row{display:grid;grid-template-columns:200px 1fr 92px;gap:16px;align-items:center;padding:11px 0;border-bottom:1px dashed var(--line)}
+.bar-row:last-child{border-bottom:0}
+.bar-name{font-weight:700;font-size:15px;line-height:1.2}
+.bar-name small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+.bar-track{height:26px;background:var(--surface2);border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:8px;background:#4a4a4a;min-width:3px;transition:width .35s ease}
+.bar-fill.energy{background:var(--volt)}
+.bar-fill.coffee{background:#cccccc}
+.bar-fill.water{background:#777777}
+.bar-val{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:24px;text-align:right;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:.03em}
+.bar-val small{display:block;font-family:"DM Sans",sans-serif;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0}
+.chart-note{font-size:13.5px;color:var(--muted);margin-top:12px}
+.chart-note b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr.energy-row{background:var(--red-soft)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;background:var(--surface2)}
+.pill.hot{background:var(--volt);color:#0A0A0A}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.card .verdict{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--surface2)}
+.card .verdict.real{background:var(--volt);color:#0A0A0A}
+.card .verdict.thin{background:#222222;color:var(--muted)}
+.quote{background:#F2F2F2;color:#0A0A0A;border:1px solid #F2F2F2;border-radius:18px;padding:32px 36px;margin-top:14px}
+.quote blockquote{margin:0;font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:clamp(32px,3.6vw,48px);line-height:1.05;text-transform:uppercase;letter-spacing:.02em}
+.quote blockquote em{font-style:normal;background:var(--volt);color:#0A0A0A;padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.quote p{color:#333333;margin:12px 0 0;font-size:15px;max-width:760px}
+.quote a{color:#0A0A0A}
+.research{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.calc{background:var(--surface);border:1.5px solid var(--volt);border-radius:18px;padding:28px;margin-top:14px}
+.calc-grid{display:grid;grid-template-columns:1.1fr 1fr 1.3fr;gap:24px;align-items:end}
+.calc select{width:100%;padding:12px;border-radius:10px;font:inherit;font-size:16px;background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.calc input[type=range]{width:100%}
+.calc label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:block;margin-bottom:6px}
+.calc .out{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:.03em;color:var(--volt)}
+.calc .vs{font-size:14px;color:var(--muted);margin-top:6px}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13.5px}
+footer a{text-decoration:underline}
+footer li{margin-bottom:5px}
+
+button.page-box{font:inherit;color:var(--ink);text-align:left;cursor:pointer;width:100%}
+#viewFrameWrap{margin-top:4px}
+#pageFrame{width:100%;border:0;display:block;background:var(--bg);min-height:640px}
+/* Desktop-first: keep the 5-tile row and multi-column grids at desktop widths.
+   Below desktop the tiles compress (smaller type/padding) rather than stacking,
+   so the horizontal nav the user asked for stays intact. */
+@media(max-width:1020px){
+  .page-box{padding:14px 12px 12px;min-height:136px}
+  .page-box-title{font-size:23px}
+  .page-box-sub{font-size:12px}
+  .page-box-cta{font-size:12px}
+  .page-box.is-active::after{font-size:9px;padding:3px 6px;top:8px;right:8px}
+  .bar-row{grid-template-columns:160px 1fr 84px}
+}
+@media(max-width:760px){
+  .wrap{padding:0 16px 56px}
+  .page-nav{gap:6px}
+  .page-box{padding:10px 8px 9px;min-height:118px;border-radius:12px}
+  .page-box-kicker{font-size:8.5px;letter-spacing:.04em}
+  .page-box-title{font-size:17px;overflow-wrap:break-word}
+  .page-box-sub{font-size:10.5px;line-height:1.3}
+  .page-box-cta{font-size:10.5px}
+  .page-box.is-active{padding-top:10px}
+  .page-box.is-active::after{position:static;align-self:flex-start;margin-top:4px;font-size:8.5px}
+  .hero h1{font-size:44px}
+  .hero-stats{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .research{grid-template-columns:1fr}
+  .calc-grid{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:118px 1fr 74px;gap:8px}
+  .bar-name{font-size:13.5px}
+  .bar-val{font-size:20px}
+  .chart{padding:16px}
+  .quote{padding:22px}
+  th.hide-m,td.hide-m{display:none}
+  .controls{position:static}
+}
+@media(prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><a href="index.html">← Your Daily Drain</a><span class="badge-mock">Mockup • Nov 2026 prices</span></div>
+
+  <nav class="page-nav" aria-label="Your Daily Drain pages">
+    <a class="page-box" href="index.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">US</span>
+      <span class="page-box-sub">Calculator &amp; US prices — what your habit costs you to earn</span>
+      <span class="page-box-cta">Go to US page →</span>
+    </a>
+    <a class="page-box" href="world-prices.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">International</span>
+      <span class="page-box-sub">Energy drink prices around the world — Europe &amp; Asia</span>
+      <span class="page-box-cta">See world prices →</span>
+    </a>
+    <a class="page-box" href="caffeine-alternatives.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Caffeine Alternatives</span>
+      <span class="page-box-sub">NoDoz, Mio, gum, coffee &amp; tea — the cheapest caffeine, ranked</span>
+      <span class="page-box-cta">See alternatives →</span>
+    </a>
+    <div class="page-box is-active" aria-current="page">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">How Expensive</span>
+      <span class="page-box-sub">Energy drinks vs Coke, soda, seltzer, water &amp; coffee — the research</span>
+      <span class="page-box-cta">The comparison is below ↓</span>
+    </a>
+    <a class="page-box" href="market-share.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Market Share</span>
+      <span class="page-box-sub">US market share pie — Red Bull, Monster, Celsius &amp; more</span>
+      <span class="page-box-cta">See market share →</span>
+    </div>
+  </nav>
+
+  <div id="viewMain">
+  <header class="hero">
+    <div style="font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px">Page 4 of Your Daily Drain — the research page</div>
+    <h1>Per ounce, energy drinks are the <em>priciest soda</em> in the store</h1>
+    <p class="lede">Different cans, different sizes, different stores — so everything on this page is converted to the same measures: price per ounce, and the cost of a standard 12oz serving. This page puts energy drinks next to a normal Coca-Cola, a regular soda, a seltzer, bottled water, Topo Chico and coffee, all measured the same way, and then asks the obvious question: what is the extra money actually buying?</p>
+    <div class="hero-stats">
+      <div class="stat hot"><b>22.4¢ / oz</b><span>Monster, single 16oz can at $3.59 — Red Bull is worse at 35.6¢/oz</span></div>
+      <div class="stat"><b>10.4¢ / oz</b><span>Coca-Cola, single 12oz can at $1.25 (unverified) — less than half Monster's rate, and it drops to 6.2¢/oz from a Target 12-pack</span></div>
+      <div class="stat"><b>8.2¢ / oz</b><span>Bottled water, single 16.9oz bottle at $1.39 (convenience price) — and just 1.5¢/oz from a 24-pack. Like-for-like, Monster costs 3.8× as much per ounce single-for-single and 7.6× as much multipack-for-multipack</span></div>
+    </div>
+  </header>
+
+  <div class="controls" role="group" aria-label="Chart options">
+    <label>Buying style</label>
+    <div class="seg" id="styleSeg">
+      <button aria-pressed="true" data-style="single">Single can</button><button aria-pressed="false" data-style="multi">Multipack / grocery</button>
+    </div>
+  </div>
+
+  <section aria-labelledby="chartH">
+    <h2 id="chartH">The bar chart — price per ounce</h2>
+    <p class="sub">Every drink converted to the same measure, so can size can't hide the price. Energy drinks are the green bars. Flip to “Multipack / grocery” above and everything gets cheaper — but the energy drinks stay on top by a wide margin.</p>
+    <div class="chart" id="chart" aria-live="polite"></div>
+    <p class="chart-note" id="chartNote"></p>
+  </section>
+
+  <section aria-labelledby="tableH">
+    <h2 id="tableH">Every drink, same-size maths</h2>
+    <p class="sub">The full table behind the chart. “Per 12oz” shows what a standard soda-can's worth of each drink costs — the fairest single number to compare a 16oz Monster or an 8.4oz Red Bull against a 12oz Coke.</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>Drink</th><th class="hide-m">Size used</th><th class="num">Price</th><th class="num">¢ / oz</th><th class="num hide-m">Cost of 12oz</th><th class="num hide-m">Caffeine</th><th class="num">Cost per 100mg caffeine</th>
+      </tr></thead>
+      <tbody id="priceBody"></tbody>
+    </table>
+    </div>
+    <p class="chart-note">Prices checked November 2026. Energy drink singles and the US baseline are Your Daily Drain's own list (Monster 16oz $3.59, Red Bull 8.4oz $2.99; Celsius has no verified single price, so only its multipack price is shown, and regular soda's single price is omitted as unsourced). Multipack per-can prices, Coke 12-pack pricing and seltzer / water pack pricing are from current Walmart, Target and grocery listings summarised in the sources at the bottom of this page. The Coca-Cola single price ($1.25) is unverified and is labelled as such. Bottled water's single price is the $1.39 convenience price, not a supermarket single. Café coffee is a Starbucks tall (12oz) brewed coffee, shown as a $2.95–$3.45 range, not a point price; home coffee is drip coffee brewed from a bag of beans (143mg caffeine per 12oz). Caffeine figures are the standard label / published values for each drink.</p>
+  </section>
+
+  <section aria-labelledby="caffH">
+    <h2 id="caffH">Same caffeine, different price</h2>
+    <p class="sub">A 16oz Monster has 160mg of caffeine. Here's what it costs to get that same 160mg five other ways — this is the comparison the experts keep coming back to.</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Way to get 160mg of caffeine</th><th>How much you need</th><th class="num">Cost (single / register)</th><th class="num">Cost (multipack / home)</th></tr></thead>
+      <tbody>
+        <tr><td><b>Home-brewed coffee</b></td><td>About 13½oz of drip coffee (143mg per 12oz)</td><td class="num">—</td><td class="num"><b>≈ $0.45</b></td></tr>
+        <tr><td><b>NoDoz caffeine tablet</b></td><td>Most of one 200mg tablet</td><td class="num"><b>≈ $0.18</b></td><td class="num">—</td></tr>
+        <tr><td><b>Celsius</b></td><td>Less than one 12oz can (200mg per can)</td><td class="num">— (no verified single price)</td><td class="num">$1.34</td></tr>
+        <tr><td><b>Monster</b></td><td>One 16oz can</td><td class="num">$3.59</td><td class="num">$1.80</td></tr>
+        <tr><td><b>Coca-Cola</b></td><td>About 4.7 cans — 56oz of Coke (34mg per 12oz)</td><td class="num">$5.88 (unverified)</td><td class="num">$3.48</td></tr>
+        <tr><td><b>Red Bull</b></td><td>Two 8.4oz cans (80mg each)</td><td class="num">$5.98</td><td class="num">$3.84</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="chart-note">The NoDoz figure here uses the current tablet price: about $0.18 for 160mg (160/200 × the current $0.22 per 200mg tablet), not the 2013 price. The famous figure from the research below is the 2013 one: a 16oz energy drink at $2.99 then held about the same caffeine as a NoDoz tablet costing about 30¢ at the time. Tablet prices have moved since, but the shape of the gap hasn't — caffeine itself is cheap; the can is what you're paying for. Coke looks expensive on this one measure only because it's a weak caffeine source — you'd have to drink 56 ounces of it.</p>
+  </section>
+
+  <section aria-labelledby="buysH">
+    <h2 id="buysH">So what does the extra money actually buy?</h2>
+    <p class="sub">An energy drink costs about $2.80–$3.40 more per serving than the caffeine inside it needs to cost — for a Monster, that premium is $3.59 − $0.18 = $3.41. Here's where that premium goes, ingredient by ingredient — and what the evidence says each part is worth.</p>
+    <div class="cards">
+      <div class="card"><h3>Caffeine — 80–200mg</h3><p>The one ingredient every expert agrees actually works. It increases alertness and is the entire measurable effect of the drink. On its own it costs cents, not dollars.</p><span class="verdict real">This is the product</span></div>
+      <div class="card"><h3>Taurine</h3><p>An amino acid your body already makes and gets from food. Scientific American's review notes the amounts in a can appear superfluous — studies don't show an added energy effect at these doses.</p><span class="verdict thin">Mostly window dressing</span></div>
+      <div class="card"><h3>B vitamins (B12, niacin…)</h3><p>Often listed at thousands of percent of the daily value. If you aren't deficient, the excess is simply excreted. It makes the label look engineered; it doesn't make you more awake.</p><span class="verdict thin">Label decoration</span></div>
+      <div class="card"><h3>Sugar — or sweetener</h3><p>A full-sugar Monster carries 54g of sugar and 230 calories — a fast glucose hit and a crash after it. Sugar-free versions swap this for sweeteners and keep the same price.</p><span class="verdict">Real, but it's just sugar</span></div>
+      <div class="card"><h3>Guarana, ginseng &amp; “blends”</h3><p>Guarana is itself a caffeine source, so it partly just adds more of ingredient #1 under a more exotic name. For ginseng and proprietary blends, human evidence at can-sized doses is thin.</p><span class="verdict thin">Evidence is thin</span></div>
+      <div class="card"><h3>The brand, the can &amp; the fridge</h3><p>Sponsorships, extreme-sports marketing, the slim can, and a cold drink ready right now at the register. This is genuinely part of what you get — convenience and identity — and it's where most of the premium lives.</p><span class="verdict">You're paying for this</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="researchH">
+    <h2 id="researchH">What the research says</h2>
+    <div class="quote">
+      <blockquote>“These are <em>caffeine delivery systems</em>. They don't want to say this is equivalent to a NoDoz because that is not a very sexy sales message.”</blockquote>
+      <p>— Dr. Roland Griffiths, Johns Hopkins University researcher, quoted in the New York Times investigation and in Scientific American's <a href="https://www.scientificamerican.com/blog/the-curious-wavefunction/energy-drinks-glorified-caffeine-delivery-systems/" target="_blank" rel="noopener">“Energy drinks: Glorified caffeine delivery systems?”</a> (January 2013). The article's conclusion, echoed by the experts it cites: caffeine is basically the only ingredient that matters, and the rest is largely window dressing and advertising.</p>
+    </div>
+    <div class="research" style="margin-top:10px">
+      <div class="card"><h3>The 2013 price check that still stings</h3><p>That same reporting priced a 16oz energy drink at $2.99 with about the same caffeine as a 30¢ NoDoz tablet — and noted even a $1.85 Starbucks coffee had more caffeine for less money. Thirteen years on, the single can is $3.59 and, at about $0.18 for the same caffeine from a NoDoz tablet today, the gap is roughly 20-to-1 against the tablet.</p></div>
+      <div class="card"><h3>High margins are the business model</h3><p>Food Technology's review of the category put it plainly: at about $2 for a small can even back then, energy drinks were “relatively expensive compared to soft drinks and bottled water, and have high profit margins” — and concluded the only constituent with a proven energy effect is caffeine.</p></div>
+      <div class="card"><h3>How much caffeine is the reference point?</h3><p>The FDA cites 400mg a day as an amount not generally associated with negative effects for most healthy adults — about 2½ Monsters, or 5 Red Bulls. That makes the cost-per-100mg column above the honest way to compare a habit against the daily ceiling.</p></div>
+      <div class="card"><h3>Why per-ounce is the only fair fight</h3><p>Can sizes run from 8.4oz (Red Bull) to 16oz (Monster) against soda's standard 12oz, so a flat “price per can” always flatters the big cans and hides Red Bull's premium. Per ounce, Red Bull is the most expensive mainstream drink on this page at single-can prices. That does not hold as an absolute in multipack terms: café coffee at $2.95–$3.45 for 12oz (about 24.6–28.8¢/oz) costs more per ounce than Red Bull from a Target 12-pack (about 22.9¢/oz).</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="calcH">
+    <h2 id="calcH">What the premium adds up to</h2>
+    <p class="sub">Pick a drink and a daily habit. The comparison uses single-can prices — how most energy drinks are actually bought. Celsius and regular soda are not in this list because they have no verified single price; café coffee is calculated from the midpoint of its $2.95–$3.45 range.</p>
+    <div class="calc">
+      <div class="calc-grid">
+        <div><label for="calcDrink">Your drink</label><select id="calcDrink"></select></div>
+        <div><label for="calcPerDay">Per day: <span id="perDayLabel">1</span></label><input type="range" id="calcPerDay" min="0" max="4" step="1" value="1"></div>
+        <div><div class="out" id="calcOut">$1,310 / year</div><div class="vs" id="calcVs"></div></div>
+      </div>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:0">Want what that habit costs you <i>to earn</i>, after tax, in hours of work? That's the main calculator: <a href="index.html">Your Daily Drain (US) →</a> · Cheaper ways to get the same caffeine: <a href="caffeine-alternatives.html">Caffeine Alternatives →</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>How these prices were built (November 2026 check):</strong> All figures are US retail, before tax. Single = one can/bottle/cup at the register or listed single price; Multipack = the per-can price inside the stated grocery pack. Cost per 100mg caffeine = price ÷ caffeine mg × 100, and is blank where a drink has no caffeine.</p>
+    <ul>
+      <li>Energy drinks: Your Daily Drain US list, Nov 7 2026 (Monster 16oz $3.59, Red Bull 8.4oz $2.99; Celsius single price dropped — unsourced, multipack only). Multipack per-can: Monster 12-pack $21.58 ($1.80/can, 11.2¢/oz), Red Bull 8.4oz 12-pack $22.99 at Target ($1.92/can, 22.9¢/oz), Celsius 12-pack $19.98 ($1.67/can) — via <a href="https://www.thepricer.org/the-cost-of-energy-drinks/" target="_blank" rel="noopener">ThePricer, “How Much Does an Energy Drink Cost?”</a></li>
+      <li>Coca-Cola: Target 12-pack per-can price $0.74 used for the multipack style; 12-pack $7.47 — via <a href="https://www.thepricer.org/how-much-does-a-can-or-bottle-of-coke-cost/" target="_blank" rel="noopener">ThePricer, “How Much Does Coca-Cola Cost?”</a> The Coca-Cola single price of $1.25 is unverified and is labelled as unverified wherever it appears. Regular soda uses a comparable 12-pack lemon-lime / store soda at about $5.49 per 12-pack ($0.46/can); its single price is omitted — unsourced.</li>
+      <li>Seltzer: LaCroix single 12oz can $0.99; LaCroix 8-pack of 12oz cans $4.39 at Target ($0.55/can); store-brand Great Value (Walmart) 8-pack of 12oz cans $3.68 ($0.46/can, sold in packs only, so the same per-can price is used for both buying styles). Bottled water: Dasani 16.9oz 24-pack about $5.99 ($0.25/bottle); a single bottle is $1.39 at the convenience price (not a supermarket single). Topo Chico: $1.76 for a single 12oz bottle; 12-pack $14.89 ($1.24/bottle).</li>
+      <li>Coffee: home drip at about $0.12–$0.50 a cup depending on beans (about $0.40 used here for 12oz, 143mg caffeine); Starbucks tall brewed coffee $2.95–$3.45 (a range, not a point price).</li>
+      <li>Research: <a href="https://www.scientificamerican.com/blog/the-curious-wavefunction/energy-drinks-glorified-caffeine-delivery-systems/" target="_blank" rel="noopener">Scientific American, “Energy drinks: Glorified caffeine delivery systems?” (Jan 2013)</a>, summarising the New York Times investigation and Johns Hopkins' Dr. Roland Griffiths; FDA consumer guidance citing 400mg of caffeine a day for most adults; Institute of Food Technologists, Food Technology, “Energy Drinks: A Lot of ‘Bull’.”</li>
+    </ul>
+    <p>The International, Caffeine Alternatives and Market Share boxes at the top switch to those pages right here, so the whole review set can be read in one place; the US box opens the live calculator on yourdailydrain.com. These review pages are design mockups — not live on yourdailydrain.com yet. Prices move with promotions and region, so re-check shelf prices before publishing.</p>
+  </footer>
+  </div><!-- /viewMain -->
+  
+</div>
+<script>
+var DRINKS=[
+{id:"water",name:"Bottled water",sub:"Dasani 16.9oz — convenience single",cat:"water",oz:16.9,ml:500,single:1.39,multi:0.25,caff:0},
+{id:"homecoffee",name:"Coffee — home brewed",sub:"Drip, 12oz mug",cat:"coffee",oz:12,ml:355,single:0.40,multi:0.40,caff:143},
+{id:"seltzer",name:"Seltzer",sub:"LaCroix 12oz",cat:"other",oz:12,ml:355,single:0.99,multi:0.55,caff:0},
+{id:"storeseltzer",name:"Store-brand seltzer",sub:"Great Value (Walmart) 12oz",cat:"other",oz:12,ml:355,single:0.46,multi:0.46,caff:0},
+{id:"soda",name:"Regular soda",sub:"Lemon-lime / store soda 12oz — no verified single price",cat:"other",oz:12,ml:355,single:null,multi:0.46,caff:0,noSingle:true},
+{id:"coke",name:"Coca-Cola",sub:"Classic 12oz — Target 12-pack (multi) · single unverified",cat:"other",oz:12,ml:355,single:1.25,multi:0.74,caff:34,unverifiedSingle:true},
+{id:"topo",name:"Topo Chico",sub:"Sparkling mineral water 12oz",cat:"water",oz:12,ml:355,single:1.76,multi:1.24,caff:0},
+{id:"celsius",name:"Celsius",sub:"Energy drink 12oz — no verified single price",cat:"energy",oz:12,ml:355,single:null,multi:1.67,caff:200,noSingle:true},
+{id:"monster",name:"Monster",sub:"Energy drink 16oz",cat:"energy",oz:16,ml:473,single:3.59,multi:1.80,caff:160},
+{id:"cafecoffee",name:"Coffee — café",sub:"Starbucks tall brewed 12oz — $2.95–$3.45 range",cat:"coffee",oz:12,ml:355,single:3.20,multi:3.20,caff:235,range:[2.95,3.45]},
+{id:"redbull",name:"Red Bull",sub:"Energy drink 8.4oz — Target 12-pack (multi)",cat:"energy",oz:8.4,ml:250,single:2.99,multi:1.92,caff:80}
+];
+var state={style:"single"};
+function price(d){return state.style==="single"?d.single:d.multi}
+function perOz(d){var p=price(d); return p===null?null:p/d.oz*100}
+function priceDisplay(d){var p=price(d); if(p===null) return "—"; if(d.range) return "$"+d.range[0].toFixed(2)+"–$"+d.range[1].toFixed(2); if(state.style==="single"&&d.unverifiedSingle) return money(p)+" (unverified)"; return money(p)}
+function perOzRange(d){return (d.range[0]/d.oz*100).toFixed(1)+"–"+(d.range[1]/d.oz*100).toFixed(1)+"¢"}
+function fmtC(v){return v<10? v.toFixed(1)+"¢" : Math.round(v)+"¢"}
+function money(v){return "$"+v.toFixed(2)}
+function renderChart(){
+  var rows=DRINKS.slice().sort(function(a,b){var pa=perOz(a),pb=perOz(b); if(pa===null&&pb===null) return 0; if(pa===null) return 1; if(pb===null) return -1; return pa-pb;});
+  var vals=rows.map(function(d){return perOz(d)}).filter(function(v){return v!==null});
+  var max=Math.max.apply(null,vals);
+  var html="";
+  rows.forEach(function(d){
+    var v=perOz(d);
+    if(v===null){ html+='<div class="bar-row"><div class="bar-name">'+d.name+'<small>'+d.sub+'</small></div><div class="bar-track"><div class="bar-fill '+d.cat+'" style="width:0%"></div></div><div class="bar-val">—<small>no verified single</small></div></div>'; return; }
+    var pct=Math.max(2,Math.round(v/max*100));
+    var label=d.range?perOzRange(d):fmtC(v);
+    html+='<div class="bar-row"><div class="bar-name">'+d.name+'<small>'+d.sub+'</small></div><div class="bar-track"><div class="bar-fill '+d.cat+'" style="width:'+pct+'%"></div></div><div class="bar-val">'+label+'<small>per oz</small></div></div>';
+  });
+  document.getElementById("chart").innerHTML=html;
+  var rb=DRINKS.filter(function(d){return d.id==="redbull"})[0];
+  var ck=DRINKS.filter(function(d){return d.id==="coke"})[0];
+  var ce=DRINKS.filter(function(d){return d.id==="celsius"})[0];
+  var ratio=(perOz(rb)/perOz(ck)).toFixed(1);
+  var ceRatio=perOz(ce)===null?"":(perOz(ce)/perOz(ck)).toFixed(1);
+  document.getElementById("chartNote").innerHTML = state.style==="single"
+    ? "At single-can prices, <b>Red Bull costs "+ratio+"× as much per ounce as Coca-Cola</b> (Coke's single price is unverified). Celsius and regular soda have no verified single price, so they show no single-can bar here — see Multipack for their verified pack prices. Home-brewed coffee is the plot twist: more caffeine than any soda on this chart, at the lowest price per ounce of anything caffeinated here."
+    : "Buying multipacks roughly halves Monster ($1.80 vs $3.59 a can) — but <b>Red Bull in a Target 12-pack still costs "+ratio+"× as much per ounce as Coca-Cola in a Target 12-pack</b>, and Celsius about "+ceRatio+"×. Café coffee (24.6–28.8¢/oz) costs more per ounce than Red Bull multipack (22.9¢/oz). The premium shrinks; it never goes away.";
+}
+function renderTable(){
+  var body=document.getElementById("priceBody"); body.innerHTML="";
+  DRINKS.slice().sort(function(a,b){var pa=perOz(a),pb=perOz(b); if(pa===null&&pb===null) return 0; if(pa===null) return 1; if(pb===null) return -1; return pa-pb;}).forEach(function(d){
+    var p=price(d);
+    var perOzTxt=p===null?"—":(d.range?perOzRange(d):perOz(d).toFixed(1)+"¢");
+    var per12Txt=p===null?"—":(d.range?"$"+(d.range[0]/d.oz*12).toFixed(2)+"–$"+(d.range[1]/d.oz*12).toFixed(2):money(p/d.oz*12));
+    var c100=(d.caff>0&&p!==null)?(d.range?"$"+(d.range[0]/d.caff*100).toFixed(2)+"–$"+(d.range[1]/d.caff*100).toFixed(2):money(p/d.caff*100)):"—";
+    var tr=document.createElement("tr"); if(d.cat==="energy") tr.className="energy-row";
+    tr.innerHTML="<td><b>"+d.name+"</b>"+(d.cat==="energy"?' <span class="pill hot">Energy</span>':"")+"<br><small style='color:var(--muted)'>"+d.sub+"</small></td>"
+      +'<td class="hide-m">'+d.oz+" oz<br><small style='color:var(--muted)'>"+d.ml+"ml</small></td>"
+      +'<td class="num"><b>'+priceDisplay(d)+"</b></td>"
+      +'<td class="num">'+perOzTxt+"</td>"
+      +'<td class="num hide-m">'+per12Txt+"</td>"
+      +'<td class="num hide-m">'+(d.caff>0? d.caff+"mg":"0mg")+"</td>"
+      +'<td class="num"><b>'+c100+"</b></td>";
+    body.appendChild(tr);
+  });
+}
+function renderCalc(){
+  var sel=document.getElementById("calcDrink");
+  var d=DRINKS.filter(function(x){return x.id===sel.value})[0]||DRINKS.filter(function(x){return x.id==="monster"})[0];
+  var n=parseInt(document.getElementById("calcPerDay").value,10);
+  document.getElementById("perDayLabel").textContent=n;
+  var yearly=d.single*n*365;
+  document.getElementById("calcOut").textContent=d.range&&n>0 ? "$"+Math.round(d.range[0]*n*365).toLocaleString()+"–$"+Math.round(d.range[1]*n*365).toLocaleString()+" / year" : "$"+Math.round(yearly).toLocaleString()+" / year";
+  var coke=DRINKS.filter(function(x){return x.id==="coke"})[0];
+  var home=DRINKS.filter(function(x){return x.id==="homecoffee"})[0];
+  var cokeYear=coke.single/coke.oz*d.oz*n*365;
+  var homeYear=d.caff>0 ? (d.caff*n*365/home.caff)*home.single : home.single*n*365;
+  document.getElementById("calcVs").textContent = n===0
+    ? "Zero a day — you keep the whole amount, whatever the drink."
+    : "The same volume of Coca-Cola would cost about $"+Math.round(cokeYear).toLocaleString()+" a year."+(d.caff>0 ? " The same amount of caffeine as home-brewed coffee: about $"+Math.round(homeYear).toLocaleString()+" a year — a difference of $"+Math.round(Math.max(0,yearly-homeYear)).toLocaleString()+"." : "");
+}
+(function init(){
+  var sel=document.getElementById("calcDrink");
+  DRINKS.forEach(function(d){ if(d.single===null) return; var o=document.createElement("option"); o.value=d.id; o.textContent=d.range? d.name+" — $"+d.range[0].toFixed(2)+"–$"+d.range[1].toFixed(2)+" range" : (d.unverifiedSingle? d.name+" — "+money(d.single)+" single (unverified)" : (d.id==="water"? d.name+" — "+money(d.single)+" single (convenience)" : d.name+" — "+money(d.single)+" single")); if(d.id==="monster") o.selected=true; sel.appendChild(o); });
+  sel.addEventListener("change",renderCalc);
+  document.getElementById("calcPerDay").addEventListener("input",renderCalc);
+  document.querySelectorAll("#styleSeg button").forEach(function(b){ b.addEventListener("click",function(){ document.querySelectorAll("#styleSeg button").forEach(function(x){x.setAttribute("aria-pressed","false")}); b.setAttribute("aria-pressed","true"); state.style=b.getAttribute("data-style"); renderChart(); renderTable(); }); });
+  renderChart(); renderTable(); renderCalc();
+})();
+</script>
+
+
+</body>
+</html>
