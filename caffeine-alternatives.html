@@ -54,7 +54,8 @@
         gap: 10px;
         padding: 20px 0 6px;
       }
-      .pagenav a {
+      .pagenav a,
+      .pagenav div.active {
         display: block;
         text-decoration: none;
         color: var(--ink);
@@ -65,7 +66,8 @@
         box-shadow: none;
       }
       .pagenav a:hover { border-color: var(--accent); }
-      .pagenav a .nav-kicker {
+      .pagenav a .nav-kicker,
+      .pagenav div.active .nav-kicker {
         display: block;
         font-family: "DM Sans", sans-serif;
         font-size: 11px;
@@ -73,17 +75,23 @@
         text-transform: uppercase;
         color: var(--ink-soft);
       }
-      .pagenav a .nav-name { display: block; font-weight: 400; font-size: 20px; line-height: 1.1; margin-top: 2px; }
-      .pagenav a .nav-sub { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 2px; line-height: 1.4; }
-      .pagenav a.active {
+      .pagenav a .nav-name,
+      .pagenav div.active .nav-name { display: block; font-weight: 400; font-size: 20px; line-height: 1.1; margin-top: 2px; }
+      .pagenav a .nav-sub,
+      .pagenav div.active .nav-sub { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 2px; line-height: 1.4; }
+      .pagenav a.active,
+      .pagenav div.active {
         border-color: #F2F2F2;
         background: #F2F2F2;
         color: #0A0A0A;
         position: relative;
       }
       .pagenav a.active .nav-kicker,
-      .pagenav a.active .nav-sub { color: #333333; }
-      .pagenav a.active .nav-name { color: #0A0A0A; }
+      .pagenav a.active .nav-sub,
+      .pagenav div.active .nav-kicker,
+      .pagenav div.active .nav-sub { color: #333333; }
+      .pagenav a.active .nav-name,
+      .pagenav div.active .nav-name { color: #0A0A0A; }
       .here-badge {
         display: inline-block;
         margin-top: 6px;
@@ -305,7 +313,7 @@
           <span class="nav-sub">Energy drink prices around the world</span>
         </a>
         <div class="active" aria-current="page">
-          <span class="nav-kicker">Page 3</span>
+          <span class="nav-kicker">PAGE 3</span>
           <span class="nav-name">Caffeine Alternatives</span>
           <span class="nav-sub">The same caffeine, a fraction of the price</span>
           <span class="here-badge">You're here</span>

@@ -1228,12 +1228,6 @@ body::before {
   /* Hide button — results update live on desktop */
   .calc-btn { display: none; }
 
-  /* Page nav: five tiles in one row on desktop, like the other pages */
-  .page-nav {
-    max-width: 1440px;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
   /* Footer: match container width */
   .site-footer {
     max-width: 1440px;
@@ -1251,7 +1245,7 @@ body::before {
 .page-nav {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 var(--pad) 28px;
+  padding: 20px var(--pad) 28px;
   position: relative;
   z-index: 1;
   display: grid;
@@ -1292,6 +1286,20 @@ body::before {
   font-size: 12px;
   line-height: 1.4;
   color: var(--grey);
+}
+
+/* ── PAGE NAV ON DESKTOP ───────────────────────────────────
+   Five tiles in one row, like the other pages. This block MUST
+   stay after the base .page-nav rules above: same specificity,
+   so source order decides — the base rule (2 columns, 480px
+   max-width) would otherwise beat the min-width:900px block
+   that used to live earlier in this file, which is why the
+   homepage showed a 2-2-1 grid on desktop. */
+@media (min-width: 900px) {
+  .page-nav {
+    max-width: 1440px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 /* ── STORE CHANNEL TOGGLE ──────────────────────────────── */
