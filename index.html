@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta id="meta-description" name="description" content="Calculate the true cost of your daily energy drink habit in hours worked.">
-  <meta id="og-title" property="og:title" content="Your Daily Drain - The True Cost of Your Energy Habit">
+  <meta id="meta-description" name="description" content="One Monster a day costs $1,389 a year to earn after tax. Calculate the true cost of your energy drink habit — per can, per week, per year, in hours of work.">
+  <meta id="og-title" property="og:title" content="Your Daily Drain – How Much Does Your Energy Drink Habit Really Cost?">
   <meta id="og-description" property="og:description" content="That $3 Monster actually costs you nearly $5 to earn. Find out exactly how many hours you're working for caffeine.">
-  <title id="page-title">Your Daily Drain</title>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.yourdailydrain.com/">
+  <link rel="canonical" href="https://www.yourdailydrain.com/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title id="page-title">Your Daily Drain – How Much Does Your Energy Drink Habit Really Cost?</title>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YTZ2W7XXN"></script>
   <script>
@@ -20,6 +24,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Your Daily Drain",
+    "url": "https://www.yourdailydrain.com/",
+    "description": "Calculate the true cost of your energy drink habit — per can, per week, per year, in hours of work. One Monster a day costs $1,389 a year to earn after tax."
+  }
+  </script>
 </head>
 <body>
 
@@ -164,27 +177,27 @@
     <!-- RESULTS -->
     <section class="results-section hidden" id="results" aria-label="Results" aria-live="polite">
       <div class="section-label-tab" id="results-label">THE DAMAGE</div>
-      <p class="results-subline" id="results-subline"></p>
+      <p class="results-subline" id="results-subline">$3.59 shelf + 6% sales tax = $3.81 at the register. After income tax, each can costs you $5.07 to earn.</p>
 
       <div class="price-per-can-row">
         <span class="ppc-label" id="per-can-register-label">PER CAN AT REGISTER</span>
-        <span class="ppc-value" id="price-per-can">$0.00</span>
+        <span class="ppc-value" id="price-per-can">$3.81</span>
       </div>
 
       <div class="results-row-grid">
         <div class="result-cell">
           <div class="result-cell-label" id="per-week-label">PER WEEK</div>
-          <div class="result-cell-value" id="weekly-cost">$0.00</div>
+          <div class="result-cell-value" id="weekly-cost">$26.71</div>
         </div>
         <div class="result-cell">
           <div class="result-cell-label" id="per-month-label">PER MONTH</div>
-          <div class="result-cell-value" id="monthly-cost">$0.00</div>
+          <div class="result-cell-value" id="monthly-cost">$115.75</div>
         </div>
       </div>
 
       <div class="result-annual-block">
         <div class="annual-label" id="per-year-label">PER YEAR</div>
-        <div class="annual-number" id="annual-cost" aria-label="Annual cost">$0</div>
+        <div class="annual-number" id="annual-cost" aria-label="Annual cost">$1,389</div>
         <div class="annual-sub" id="annual-sub">gone. every single year.</div>
       </div>
 
@@ -192,12 +205,12 @@
         <div class="hours-label" id="hours-per-year-label">HOURS OF WORK / YEAR</div>
         <div class="hours-conversion-row" aria-live="polite">
           <div class="hcr-left">
-            <div class="hours-number" id="hours-worked">0.0</div>
+            <div class="hours-number" id="hours-worked">92.6</div>
             <div class="hcr-unit" id="hours-unit-label">HRS</div>
           </div>
           <div class="hcr-arrow" aria-hidden="true"></div>
           <div class="hcr-right">
-            <div class="weeks-count" id="weeks-count">—</div>
+            <div class="weeks-count" id="weeks-count">2.3</div>
             <div class="hcr-weeks-unit" id="weeks-unit-label">WKS</div>
           </div>
         </div>
