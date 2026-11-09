@@ -1149,14 +1149,16 @@ body::before {
    for a heading the form doesn't have) — the rule below zeroes it.
    The input is near-black (#141414) so it recedes into the card
    instead of reading as a light patch; its border stays visible
-   so the field is still findable. */
+   so the field is still findable.
+   The section spans the full width of the container like the
+   sibling sections (results, Cheaper Hits, Redirect) — no max-width,
+   so its left/right edges line up with theirs. */
 .signup-section {
   background: #1c1c1c;
   border: 2px solid var(--border-dim);
   padding: 16px 16px 12px;
   position: relative;
-  max-width: 360px;
-  margin: 24px auto 0;
+  margin-top: 32px;
 }
 
 .signup-section .section-subtitle {
