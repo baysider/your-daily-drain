@@ -1138,12 +1138,94 @@ body::before {
 }
 
 /* ── EMAIL SIGNUP (Kit form renders its own styles) ─────── */
+/* ── EMAIL SIGNUP (Kit form) ─────────────────────────────────
+   Compact, quiet card: the Kit form renders with its own bright
+   defaults (white input, blue button), so these overrides — scoped
+   under .signup-section and using [data-uid] for specificity —
+   pull it back into the dark theme. Kit also sets a few inline
+   styles on the input/button, which is why color/background need
+   !important there; everything else wins on specificity alone. */
 .signup-section {
-  background: var(--bg-card);
+  background: #1c1c1c;
   border: 2px solid var(--border-dim);
-  padding: 28px;
+  padding: 22px 20px 16px;
   position: relative;
-  margin-top: 32px;
+  max-width: 420px;
+  margin: 32px auto 0;
+}
+
+.signup-section .section-subtitle {
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+/* Kit form shell: never wider than the card */
+.signup-section .formkit-form[data-uid="93db58418c"] {
+  max-width: 100%;
+}
+
+/* Tighter stacking, smaller gaps between input / button.
+   Kit's min-width~700 rules (always on for this form) set
+   0 5px 15px with higher specificity, so this selector goes one
+   further to win while keeping the 5px side margins. */
+.signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-field,
+.signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-submit {
+  margin: 0 5px 10px;
+}
+
+/* Gray input, light text, smaller type */
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-input {
+  background: #2a2a2a;
+  color: #f2f2f2 !important;
+  border-color: #3a3a3a !important;
+  font-size: 13px;
+  padding: 9px 12px;
+}
+
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-input:focus {
+  border-color: var(--green);
+}
+
+/* Green button to match the theme, smaller */
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-submit {
+  background-color: var(--green) !important;
+  color: #000 !important;
+  font-size: 13px;
+  font-weight: 600 !important;
+}
+
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-submit > span {
+  padding: 9px 18px;
+}
+
+/* "Built with Kit" badge: smaller and quieter */
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-powered-by-convertkit-container {
+  margin: 4px 0 0;
+}
+
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-powered-by-convertkit {
+  height: 28px;
+  width: 105px;
+  background-size: contain;
+  opacity: 0.55;
+}
+
+/* Success / error messages in dark-theme colors */
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-alert {
+  font-size: 13px;
+  padding: 10px;
+}
+
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-alert-success {
+  background: #0e2a1c;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.signup-section .formkit-form[data-uid="93db58418c"] .formkit-alert-error {
+  background: #2a1a1a;
+  border-color: #5c2a1e;
+  color: #f0b0a0;
 }
 
 /* ── SELECTION ───────────────────────────────────────────── */
