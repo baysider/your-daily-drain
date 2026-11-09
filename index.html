@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta id="meta-description" name="description" content="Calculate the true cost of your daily energy drink habit in hours worked.">
   <meta id="og-title" property="og:title" content="Your Daily Drain - The True Cost of Your Energy Habit">
-  <meta id="og-description" property="og:description" content="That $4 Monster actually costs you $5+ to earn. Find out exactly how many hours you're working for caffeine.">
+  <meta id="og-description" property="og:description" content="That $3 Monster actually costs you nearly $5 to earn. Find out exactly how many hours you're working for caffeine.">
   <title id="page-title">Your Daily Drain</title>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YTZ2W7XXN"></script>
@@ -25,12 +25,46 @@
 
   <div class="noise-overlay" aria-hidden="true"></div>
 
+  <!-- ░░ PAGE NAV: FIVE SECTIONS ── -->
+  <nav class="page-nav" aria-label="Site sections">
+    <div class="page-box is-active" aria-current="page">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">US</span>
+      <span class="page-box-sub">Calculator &amp; US prices — what your habit costs you to earn</span>
+      <span class="page-box-cta">The calculator is below ↓</span>
+    </div>
+    <a class="page-box" href="world-prices.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">International</span>
+      <span class="page-box-sub">Energy drink prices around the world — Europe &amp; Asia</span>
+      <span class="page-box-cta">See world prices →</span>
+    </a>
+    <a class="page-box" href="caffeine-alternatives.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Caffeine Alternatives</span>
+      <span class="page-box-sub">NoDoz, Mio, gum, coffee &amp; tea — the cheapest caffeine, ranked</span>
+      <span class="page-box-cta">See alternatives →</span>
+    </a>
+    <a class="page-box" href="how-expensive.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">How Expensive</span>
+      <span class="page-box-sub">Energy drinks vs Coke, soda, seltzer, water &amp; coffee — the research</span>
+      <span class="page-box-cta">See the comparison →</span>
+    </a>
+    <a class="page-box" href="market-share.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Market Share</span>
+      <span class="page-box-sub">US market share pie — Red Bull, Monster, Celsius &amp; more</span>
+      <span class="page-box-cta">See market share →</span>
+    </a>
+  </nav>
+
   <!-- ░░ HERO ░░ -->
   <header class="hero">
     <div class="hero-eyebrow" id="hero-eyebrow">YOUR DAILY DRAIN</div>
     <h1 class="hero-headline" id="hero-headline">
-      That <span class="hl">$4</span> Monster<br>
-      actually costs you <span class="hl">$5+</span><br>
+      That <span class="hl">$3</span> Monster<br>
+      actually costs you <span class="hl">nearly $5</span><br>
       to earn.
     </h1>
     <p class="hero-sub" id="hero-sub">Every can costs more than the price tag.<br>Find out what your habit is really taking from you.</p>
@@ -45,6 +79,15 @@
     <div class="col-left">
     <section class="calc-card" id="calculator" aria-label="Calculator">
       <div class="section-label-tab" id="calculator-label">YOUR HABIT</div>
+
+      <div class="field-group">
+        <div class="field-label" id="store-label">WHERE DO YOU USUALLY BUY?</div>
+        <div class="store-toggle" role="group" aria-labelledby="store-label">
+          <button type="button" class="store-toggle-btn is-active" data-channel="convenience" aria-pressed="true">Convenience<br><span class="store-toggle-sub">Gas station · 7-Eleven · QT</span></button>
+          <button type="button" class="store-toggle-btn" data-channel="grocery" aria-pressed="false">Grocery &amp; big stores<br><span class="store-toggle-sub">Walmart · Target</span></button>
+        </div>
+        <p class="tax-note" id="store-note">Same can, different price depending on where you buy it. Grocery prices are Target single cans, checked November 2026.</p>
+      </div>
 
       <div class="field-group">
         <label for="drink-select" class="field-label" id="drink-label">YOUR POISON</label>
@@ -62,6 +105,7 @@
           <output class="stepper-value" id="stepper-value" for="stepper-minus stepper-plus">1</output>
           <button class="stepper-btn" id="stepper-plus" aria-label="Increase cans per day">+</button>
         </div>
+        <p class="tax-note" id="stepper-note">0 to 6 cans a day — set to 0 to see the cost of quitting.</p>
       </div>
 
       <div class="field-group">
@@ -72,7 +116,7 @@
             type="number"
             id="hourly-wage"
             name="hourly-wage"
-            min="1"
+            min="0"
             max="9999"
             step="0.50"
             value="20"
@@ -80,6 +124,7 @@
             aria-label="Hourly wage in dollars"
           >
         </div>
+        <p class="tax-note" id="wage-note" hidden>Enter a wage above $0 to see hours.</p>
       </div>
 
       <div class="field-group">
@@ -144,7 +189,7 @@
       </div>
 
       <div class="result-hours-block">
-        <div class="hours-label" id="hours-per-year-label">HOURS OF YOUR LIFE / YEAR</div>
+        <div class="hours-label" id="hours-per-year-label">HOURS OF WORK / YEAR</div>
         <div class="hours-conversion-row" aria-live="polite">
           <div class="hcr-left">
             <div class="hours-number" id="hours-worked">0.0</div>
@@ -156,12 +201,12 @@
             <div class="hcr-weeks-unit" id="weeks-unit-label">WKS</div>
           </div>
         </div>
-        <div class="hcr-weeks-label" id="weeks-label">of your working life every year</div>
+        <div class="hcr-weeks-label" id="weeks-label">of work every year — 40 hrs/week, at your after-tax wage</div>
       </div>
 
       <div class="tax-block">
         <div class="tax-row">
-          <label for="tax-slider" class="tax-label" id="income-tax-label">TAX RATE</label>
+          <label for="tax-slider" class="tax-label" id="income-tax-label">INCOME TAX RATE</label>
           <span class="tax-pct" id="tax-display" aria-live="polite">25%</span>
         </div>
         <input
@@ -185,19 +230,12 @@
 
     </section>
 
-    <!-- CAFFEINE COST INDEX -->
-    <section class="caff-section hidden" id="caffeine-index" aria-label="Caffeine Cost Index">
-      <div class="section-label-tab" id="caff-label">CAFFEINE COST INDEX</div>
-      <p class="section-subtitle" id="caff-subtitle">Cost per 10mg of caffeine for every drink — sorted most to least expensive.</p>
-      <div class="caff-callout" id="caff-callout"></div>
-      <div class="caff-chart" id="caff-chart"></div>
-    </section>
-
     <!-- CHEAPER ALTERNATIVES -->
     <section class="alt-section hidden" id="alternatives" aria-label="Smarter buying strategies">
       <div class="section-label-tab" id="alt-label">CHEAPER HITS</div>
       <p class="section-subtitle" id="alt-subtitle">Four ways to buy smarter and keep the caffeine.</p>
       <div class="alt-grid" id="alt-grid"></div>
+      <p class="tax-note" id="alt-warehouse-note">Warehouse club prices shown are the online prices — in-store warehouse prices are often lower.</p>
     </section>
 
     <!-- WHAT YOU COULD DO -->
@@ -207,13 +245,23 @@
       <div class="ideas-grid" id="ideas-grid"></div>
     </section>
 
+    <!-- CAFFEINE COST INDEX — kept, but last: most people just want the
+         caffeine boost, not the most caffeine per dollar. -->
+    <section class="caff-section hidden" id="caffeine-index" aria-label="Caffeine Cost Index">
+      <div class="section-label-tab" id="caff-label">CAFFEINE COST INDEX</div>
+      <p class="section-subtitle" id="caff-subtitle">Cost per 10mg of caffeine for every drink — sorted most to least expensive.</p>
+      <div class="caff-callout" id="caff-callout"></div>
+      <div class="caff-chart" id="caff-chart"></div>
+      <p class="tax-note" id="caff-health-note">Caffeine check: 6 Monsters a day is 960mg of caffeine — FDA guidance is 400mg/day max for most adults.</p>
+    </section>
+
     </div><!-- /col-right -->
   </div><!-- /app-grid -->
   </main>
 
   <footer class="site-footer">
-    <p class="site-freshness" id="site-freshness">Retail price inputs last updated November 3, 2026.</p>
-    <p id="site-disclaimer">Prices are US retail averages. Results are estimates for illustrative purposes. Affiliate links may earn a commission.</p>
+    <p class="site-freshness" id="site-freshness">Retail price inputs last updated November 7, 2026.</p>
+    <p id="site-disclaimer">Prices are US retail list prices. Results are estimates for illustrative purposes. Affiliate links may earn a commission.</p>
   </footer>
 
   <script src="site-data.js"></script>

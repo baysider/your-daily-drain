@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>Caffeine Alternatives — Your Daily Drain</title>
+    <meta name="description" content="NoDoz, bulk caffeine pills, gum, coffee and tea ranked by cost per 100mg — the cheapest caffeine vs a $3.59 Monster."/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0A0A0A;
+        --surface: #111111;
+        --surface-2: #1a1a1a;
+        --ink: #F2F2F2;
+        --ink-soft: #cccccc;
+        --line: #222222;
+        --accent: #00ff87;
+        --accent-ink: #00ff87;
+        --save: #00ff87;
+        --save-bg: rgba(0,255,135,0.12);
+        --gold: #00ff87;
+        --bar-track: #222222;
+        --quote-bg: #111111;
+        --quote-ink: #F2F2F2;
+        --shadow: none;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "DM Sans", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1, h2, h3 {
+        font-family: "Bebas Neue", "DM Sans", sans-serif;
+        letter-spacing: 0.04em;
+        font-weight: 400;
+      }
+      .wrap { max-width: 1440px; margin: 0 auto; padding: 0 40px 72px; width: 100%; }
+      .mono { font-family: "DM Sans", system-ui, sans-serif; }
+
+      /* ---------- Top nav: the five pages ----------
+         One shared nav on all five pages: same full width, same
+         five tiles, same size and position, so switching pages only
+         changes the content below. */
+      .page-nav {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        margin: 16px 0 28px;
+      }
+      .page-box {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        justify-content: flex-start;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 16px 14px 14px;
+        background: #111111;
+        border: 1px solid #222222;
+        border-radius: 14px;
+        color: var(--ink);
+        text-decoration: none;
+        min-height: 196px;
+      }
+      .page-box:hover { border-color: var(--accent); }
+      .page-box:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+      .page-box-kicker {
+        display: block;
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 1.2;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+      .page-box-title {
+        display: block;
+        font-family: "Bebas Neue", "DM Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+      .page-box-sub {
+        display: block;
+        font-size: 13px;
+        line-height: 1.35;
+        color: var(--ink-soft);
+        margin-top: 2px;
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+      .page-box-cta {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-top: 6px;
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+      .page-box.is-active {
+        background: #F2F2F2;
+        border-color: #F2F2F2;
+        color: #0A0A0A;
+        padding-top: 36px;
+      }
+      .page-box.is-active .page-box-kicker,
+      .page-box.is-active .page-box-sub { color: #333333; }
+      .page-box.is-active .page-box-cta { color: #0A0A0A; }
+      .page-box.is-active::after {
+        content: "You're here";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #0A0A0A;
+        color: #00ff87;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 28px 0 8px; }
+      .hero h1 {
+        font-size: clamp(44px, 11vw, 64px);
+        line-height: 0.95;
+        margin: 10px 0 14px;
+      }
+      .hero h1 .hl { color: var(--accent); }
+      .hero p.lede { font-size: 17px; color: var(--ink-soft); margin: 0; line-height: 1.6; max-width: 780px; }
+      .hero p.lede strong { color: var(--ink); }
+
+      .quote {
+        margin: 24px 0 8px;
+        background: var(--quote-bg);
+        color: var(--quote-ink);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 22px 20px;
+      }
+      .quote blockquote {
+        margin: 0;
+        font-family: "Bebas Neue", "DM Sans", sans-serif;
+        font-size: clamp(28px, 7vw, 36px);
+        line-height: 1.05;
+        letter-spacing: 0.03em;
+        font-weight: 400;
+      }
+      .quote blockquote::before { content: "\201C"; color: var(--accent); }
+      .quote blockquote::after { content: "\201D"; color: var(--accent); }
+      .quote figcaption { margin-top: 14px; font-size: 14px; color: var(--ink-soft); }
+      .quote figcaption a { color: var(--accent); }
+      .quote p.frame { margin: 16px 0 0; font-size: 15px; color: var(--ink-soft); }
+
+      /* ---------- Sections ---------- */
+      section { margin-top: 40px; }
+      h2 {
+        font-size: clamp(32px, 8vw, 40px);
+        line-height: 1;
+        margin: 0 0 8px;
+      }
+      .section-sub { color: var(--ink-soft); margin: 0 0 18px; font-size: 15.5px; max-width: 820px; }
+
+      /* ---------- Comparison table ---------- */
+      .table-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { padding: 13px 16px; text-align: left; vertical-align: middle; }
+      thead th {
+        font-family: "DM Sans", sans-serif;
+        font-size: 11.5px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        border-bottom: 1px solid var(--line);
+        background: var(--surface-2);
+      }
+      tbody tr { border-bottom: 1px solid var(--line); }
+      tbody tr:last-child { border-bottom: none; }
+      td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+      .prod-name { font-weight: 700; font-size: 16.5px; color: var(--ink); }
+      .prod-form { display: block; font-size: 13px; color: var(--ink-soft); font-weight: 400; }
+      .big-num { font-family: "DM Sans", sans-serif; font-weight: 700; font-size: 17px; color: var(--ink); }
+      .baseline-row { background: rgba(0,255,135,0.07); }
+      .baseline-tag {
+        display: inline-block; font-family: "DM Sans", sans-serif;
+        font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+        color: var(--accent); border: 1px solid var(--accent);
+        border-radius: 999px; padding: 1px 7px; margin-left: 6px; vertical-align: 2px;
+      }
+      .bar-cell { min-width: 120px; }
+      .bar-track { background: var(--bar-track); border-radius: 999px; height: 10px; overflow: hidden; }
+      .bar-fill { height: 100%; border-radius: 999px; background: var(--accent); }
+      .bar-fill.hot { background: #F2F2F2; }
+      .bar-fill.mid { background: #888888; }
+      .save-pill {
+        display: inline-block; background: var(--save-bg); color: var(--save);
+        font-family: "DM Sans", sans-serif; font-weight: 700; font-size: 13.5px;
+        border-radius: 8px; padding: 3px 9px; white-space: nowrap;
+      }
+      .table-note { font-size: 13.5px; color: var(--ink-soft); padding: 12px 16px; background: var(--surface-2); }
+      /* Desktop: the comparison stays a real, wide table */
+      .bar-cell { min-width: 180px; }
+      /* Narrow screens: table becomes stacked cards */
+      @media (max-width: 720px) {
+        thead { display: none; }
+        table, tbody, tr, td { display: block; width: 100%; }
+        tbody tr { padding: 14px 16px; }
+        td { padding: 2px 0; border: none; }
+        td.num { text-align: left; }
+        td::before {
+          content: attr(data-label);
+          display: inline-block; min-width: 128px;
+          font-family: "DM Sans", sans-serif; font-size: 11px;
+          letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft);
+        }
+        .bar-cell { min-width: 0; padding-top: 8px; }
+        .bar-cell::before { display: block; margin-bottom: 5px; }
+      }
+
+      /* ---------- Product cards ---------- */
+      .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 18px;
+        display: flex; flex-direction: column;
+      }
+      .card h3 { margin: 0 0 2px; font-size: 24px; line-height: 1; }
+      .card .form { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 12px; }
+      .card .stats { display: flex; gap: 18px; margin-bottom: 12px; flex-wrap: wrap; }
+      .card .stat .v { font-family: "DM Sans", sans-serif; font-weight: 700; font-size: 19px; display: block; color: var(--ink); }
+      .card .stat .k { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-family: "DM Sans", sans-serif; }
+      .card p { margin: 0 0 10px; font-size: 15px; color: var(--ink-soft); }
+      .card p strong, .card .catch { color: var(--ink); }
+      .card .catch { margin-top: auto; font-size: 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; color: var(--ink-soft); }
+      .card .catch strong { color: var(--accent); }
+
+      /* ---------- Calculator ---------- */
+      .calc {
+        background: var(--surface);
+        border: 1px solid var(--accent);
+        border-radius: 12px;
+        padding: 20px;
+      }
+      .calc-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+      .stepper { display: flex; align-items: center; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface-2); }
+      .stepper button {
+        width: 52px; height: 52px; font-size: 26px; font-weight: 700;
+        background: var(--surface-2); border: none; color: var(--ink); cursor: pointer;
+      }
+      .stepper button:disabled { opacity: 0.35; cursor: default; }
+      .stepper .val {
+        min-width: 64px; text-align: center;
+        font-family: "DM Sans", sans-serif; font-weight: 700; font-size: 22px; color: var(--ink);
+      }
+      .calc label { font-weight: 700; font-size: 16px; font-family: "Bebas Neue", sans-serif; letter-spacing: 0.04em; font-size: 20px; }
+      .calc .now { font-size: 15.5px; color: var(--ink-soft); }
+      .calc .now strong { color: var(--ink); font-family: "DM Sans", sans-serif; }
+      .swap-list { list-style: none; margin: 14px 0 0; padding: 0; }
+      @media (min-width: 900px) {
+        .swap-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
+        .swap-list li { border-top: 1px solid var(--line); }
+      }
+      .swap-list li {
+        display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+        padding: 10px 0; border-top: 1px solid var(--line); flex-wrap: wrap;
+      }
+      .swap-list .who { font-weight: 700; color: var(--ink); }
+      .swap-list .amt { font-family: "DM Sans", sans-serif; font-weight: 700; color: var(--save); font-size: 17px; white-space: nowrap; }
+      .swap-list .per { font-size: 13px; color: var(--ink-soft); font-family: "DM Sans", sans-serif; }
+
+      /* ---------- In the can ---------- */
+      .can-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      @media (min-width: 600px) { .can-grid { grid-template-columns: 1fr 1fr; } }
+      @media (min-width: 900px) { .can-grid { grid-template-columns: 1fr 1fr 1fr; } }
+      .can-item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+      .can-item h3 { margin: 0 0 6px; font-size: 21px; line-height: 1; }
+      .can-item p { margin: 0; font-size: 14.5px; color: var(--ink-soft); }
+      .verdict {
+        display: inline-block; margin-bottom: 8px;
+        font-family: "DM Sans", sans-serif; font-size: 11px; font-weight: 700;
+        letter-spacing: 0.06em; text-transform: uppercase;
+        padding: 2px 8px; border-radius: 999px;
+        background: var(--save-bg); color: var(--save);
+      }
+      .verdict.works { background: var(--accent); color: #0A0A0A; }
+
+      .fda-note {
+        margin-top: 18px; border: 1px dashed var(--line); border-radius: 12px;
+        padding: 16px; font-size: 15px; color: var(--ink-soft); background: var(--surface);
+      }
+      .fda-note strong { color: var(--ink); }
+
+      footer { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 20px; font-size: 13.5px; color: var(--ink-soft); }
+      footer h3 { font-size: 20px; color: var(--ink); margin: 0 0 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+      footer ul { margin: 0 0 14px; padding-left: 18px; }
+      footer li { margin-bottom: 4px; }
+      a { color: var(--accent); }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      /* Narrow screens: nav tiles fall back to two columns */
+      @media (max-width: 760px) {
+        .page-nav { grid-template-columns: 1fr 1fr; }
+        .page-box:last-child { grid-column: span 2; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <!-- Five-page navigation -->
+      <nav class="page-nav" aria-label="Your Daily Drain pages">
+        <a class="page-box" href="index.html">
+          <span class="page-box-kicker">Your Daily Drain</span>
+          <span class="page-box-title">US</span>
+          <span class="page-box-sub">Calculator &amp; US prices — what your habit costs you to earn</span>
+          <span class="page-box-cta">Go to US page →</span>
+        </a>
+        <a class="page-box" href="world-prices.html">
+          <span class="page-box-kicker">Your Daily Drain</span>
+          <span class="page-box-title">International</span>
+          <span class="page-box-sub">Energy drink prices around the world — Europe &amp; Asia</span>
+          <span class="page-box-cta">See world prices →</span>
+        </a>
+        <div class="page-box is-active" aria-current="page">
+          <span class="page-box-kicker">Your Daily Drain</span>
+          <span class="page-box-title">Caffeine Alternatives</span>
+          <span class="page-box-sub">NoDoz, Mio, gum, coffee &amp; tea — the cheapest caffeine, ranked</span>
+          <span class="page-box-cta">The ranking is below ↓</span>
+        </div>
+        <a class="page-box" href="how-expensive.html">
+          <span class="page-box-kicker">Your Daily Drain</span>
+          <span class="page-box-title">How Expensive</span>
+          <span class="page-box-sub">Energy drinks vs Coke, soda, seltzer, water &amp; coffee — the research</span>
+          <span class="page-box-cta">See the comparison →</span>
+        </a>
+        <a class="page-box" href="market-share.html">
+          <span class="page-box-kicker">Your Daily Drain</span>
+          <span class="page-box-title">Market Share</span>
+          <span class="page-box-sub">US market share pie — Red Bull, Monster, Celsius &amp; more</span>
+          <span class="page-box-cta">See market share →</span>
+        </a>
+      </nav>
+
+      <header class="hero">
+        <div style="font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px">Page 3 of Your Daily Drain — the cheapest caffeine, ranked</div>
+        <h1>It's all just <span class="hl">caffeine delivery.</span></h1>
+        <p class="lede">
+          Strip the branding off an energy drink and what's left is caffeine, sugar water, and a
+          marketing budget. The caffeine itself is one of the cheapest substances in the store —
+          <strong>how you choose to take it changes the price enormously: a NoDoz tablet is about 20× cheaper
+          per 100mg than a Monster, and the cheapest bulk pill is ~118× cheaper.</strong>
+          Here are the other delivery systems, priced out.
+        </p>
+      </header>
+
+      <figure class="quote">
+        <blockquote>These are caffeine delivery systems.</blockquote>
+        <figcaption>
+          A Johns Hopkins researcher, quoted in
+          <a href="https://www.scientificamerican.com/blog/the-curious-wavefunction/energy-drinks-glorified-caffeine-delivery-systems/">“Energy drinks: Glorified caffeine delivery systems?”</a>
+          — Ashutosh Jogalekar, <em>Scientific American</em>, January 2013.
+        </figcaption>
+        <p class="frame">
+          The article's point, made over a decade ago and still true: caffeine is basically the only
+          ingredient in an energy drink proven to have an effect. Back then it noted a 16oz energy drink
+          at about $2.99 carried roughly the caffeine of a NoDoz tablet costing about 30 cents.
+          The gap has only widened since — the can got more expensive, the tablet didn't.
+        </p>
+      </figure>
+
+      <!-- Comparison table -->
+      <section aria-labelledby="table-h">
+        <h2 id="table-h">Every way to buy caffeine, ranked by price</h2>
+        <p class="section-sub">
+          The fair way to compare is <strong>cost per 100mg of caffeine</strong> — the same molecule,
+          whatever carries it. The last column shows what a year looks like if you get one Monster's
+          worth of caffeine (160mg) every day, each way. US retail prices compiled November 2026 from sources checked September–November 2026.
+        </p>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Delivery system</th>
+                <th class="num">Caffeine</th>
+                <th class="num">Price per serving</th>
+                <th class="num">Cost per 100mg</th>
+                <th>Relative cost</th>
+                <th class="num">A year at 160mg/day</th>
+              </tr>
+            </thead>
+            <tbody id="rank-body"></tbody>
+          </table>
+          <p class="table-note">
+            Serving = one tablet, one piece of gum, one squeeze, one shot, one cup, or one can, as sold.
+            Year = 160mg of caffeine a day for 365 days. Prices are typical US retail; the five cheapest rows
+            are bulk packs, and buying in bulk pushes most of these lower still.
+          </p>
+        </div>
+      </section>
+
+      <!-- Product cards -->
+      <section aria-labelledby="cards-h">
+        <h2 id="cards-h">The alternatives, one by one</h2>
+        <p class="section-sub">What each one is, what it really costs, and the catch — because each one has a catch.</p>
+        <div class="cards" id="cards"></div>
+      </section>
+
+      <!-- Calculator -->
+      <section aria-labelledby="calc-h">
+        <h2 id="calc-h">Run your own swap</h2>
+        <p class="section-sub">How many energy drinks a day is your habit? See what the same caffeine costs each other way.</p>
+        <div class="calc">
+          <div class="calc-controls">
+            <label for="cans-val">Energy drinks per day</label>
+            <div class="stepper" role="group" aria-label="Energy drinks per day">
+              <button type="button" id="minus" aria-label="One fewer per day">−</button>
+              <span class="val" id="cans-val">1</span>
+              <button type="button" id="plus" aria-label="One more per day">+</button>
+            </div>
+            <p class="now" id="now-line"></p>
+          </div>
+          <ul class="swap-list" id="swap-list"></ul>
+        </div>
+      </section>
+
+      <!-- What's in the can -->
+      <section aria-labelledby="can-h">
+        <h2 id="can-h">So what does the extra money buy?</h2>
+        <p class="section-sub">
+          A Monster costs about $2.24 per 100mg of caffeine; a NoDoz tablet costs about $0.11 per 100mg (bulk generic pills are ~$0.02 per 100mg).
+          That difference isn't buying more energy — it's buying the stuff around the caffeine.
+          Here's what the science says about the supporting cast, following the Scientific American rundown:
+        </p>
+        <div class="can-grid">
+          <div class="can-item">
+            <span class="verdict works">The one that works</span>
+            <h3>Caffeine</h3>
+            <p>The only ingredient with solid evidence behind it. It blocks adenosine, you feel alert. Everything on this page delivers the same molecule.</p>
+          </div>
+          <div class="can-item">
+            <span class="verdict">Mostly decoration</span>
+            <h3>Taurine</h3>
+            <p>An amino acid your body already makes and gets from food. Reviews have repeatedly failed to find an energy effect at the doses in a can.</p>
+          </div>
+          <div class="can-item">
+            <span class="verdict">Mostly decoration</span>
+            <h3>B vitamins</h3>
+            <p>B12 and friends help turn food into energy <em>if you're deficient</em>. If you're not, the excess is simply excreted — expensive urine, as the saying goes.</p>
+          </div>
+          <div class="can-item">
+            <span class="verdict">Mostly decoration</span>
+            <h3>Ginseng &amp; guarana</h3>
+            <p>Ginseng's evidence for alertness is weak at can-sized doses. Guarana is real, but only because it's just more caffeine — from a plant instead of a lab.</p>
+          </div>
+          <div class="can-item">
+            <span class="verdict">Real, but a rollercoaster</span>
+            <h3>Sugar</h3>
+            <p>54g in a regular 16oz Monster. It does give quick energy — and a quick crash. Sugar-free versions skip it, but then the can is even more plainly just caffeine.</p>
+          </div>
+          <div class="can-item">
+            <span class="verdict">The honest extra</span>
+            <h3>The ritual</h3>
+            <p>A cold can, a flavor you like, a break in your day. That's genuinely worth something to a lot of people — just know it's the part you're paying roughly 20× the caffeine's price for.</p>
+          </div>
+        </div>
+        <p class="fda-note">
+          <strong>Keep the total in view:</strong> the FDA cites 400mg of caffeine a day as the amount
+          not generally associated with negative effects for healthy adults. That's 2½ Monsters —
+          or, at NoDoz tablet prices, about 44 cents' worth. However you take it in, the ceiling is the same.
+        </p>
+      </section>
+
+      <footer>
+        <h3>Sources &amp; price notes</h3>
+        <ul>
+          <li>Framing: <a href="https://www.scientificamerican.com/blog/the-curious-wavefunction/energy-drinks-glorified-caffeine-delivery-systems/">Scientific American, “Energy drinks: Glorified caffeine delivery systems?”</a> (Jan 2013).</li>
+          <li>Caffeine tablets: NoDoz Maximum Strength, 200mg per caplet. 60-caplet packs listed at $13.49 at CVS and $13.54 on Amazon; the $13.49 pack price is the one used here (≈ $0.22 per caplet). Comparison data via <a href="https://www.takeroon.com/blog/caffeine-pills-vs-coffee-vs-pouches">Takeroon, “Caffeine Pills vs Coffee vs Pouches”</a> (prices checked Oct 2026).</li>
+          <li>Bulk caffeine pills (200mg per pill): Nutricost Caffeine Pills 500ct $0.019 per 100mg, Vitamatic 250ct $0.020 per 100mg, Jet-Alert Double Strength 90ct $0.023 per 100mg, Equate Stay Awake 80ct $0.036 per 100mg, and Nutricost 120ct $0.042 per 100mg — from the November 2026 reconciliation research.</li>
+          <li>MiO Energy: 90mg caffeine per serving, ~12 servings per 1.62oz bottle, $2.99 at Target (≈ $0.25 per serving, $0.28 per 100mg).</li>
+          <li>Caffeinated gum: Military Energy Gum (formerly Stay Alert), 100mg per piece, $28.99 for 90 pieces on Amazon — via <a href="https://usefulvitamins.com/best-caffeine-gum/">Useful Vitamins gum comparison</a> (checked Sep 2026) and <a href="https://www.caffeineinformer.com/caffeine-content/stay-alert-us-army">Caffeine Informer</a>.</li>
+          <li>Energy shots: 5-hour Energy Extra Strength, 230mg per 1.93oz shot, $3.39 per single bottle ($1.47 per 100mg).</li>
+          <li>Home coffee: drip coffee brewed from BLS average ground-coffee prices works out to ~$0.27 per cup at ~96mg caffeine — <a href="https://www.dailyvitality.com/a/ground-instant-or-bottled-coffee-costed-per-cup-and-per-100-mg-of-caffeine-1980-to-2026">Daily Vitality coffee costing</a> (Aug 2026 BLS data). A café drip instead runs about $2.95–$3.45 at the counter.</li>
+          <li>Tea: black tea ~55mg caffeine per cup, bagged tea about 5¢ per cup at home — <a href="https://bestteabags.com/journal/tea-vs-coffee">Best Tea Bags, “Tea vs Coffee”</a>.</li>
+          <li>Energy drink baseline: Monster, $3.59 per 16oz can with 160mg caffeine — the same price the <a href="index.html">Your Daily Drain calculator</a> uses.</li>
+        </ul>
+        <p>
+          Prices are a November 2026 snapshot from the sources above. Nothing here is medical advice; caffeine affects
+          everyone differently.
+        </p>
+      </footer>
+
+    </div>
+
+    <script>
+      // One row per delivery system. per100 = USD per 100mg of caffeine.
+      var SYSTEMS = [
+        {
+          id: "nutricost500", name: "Nutricost Caffeine Pills (500ct)", form: "Bulk caffeine pills, 200mg per pill",
+          caffeine: 200, servingPrice: 0.038, per100: 0.019,
+          what: "The cheapest delivery system on this page: a bulk bottle of 500 generic caffeine pills at $0.019 per 100mg — about 118× cheaper per 100mg than a Monster. Same 200mg dose per pill as a NoDoz, bought in bulk.",
+          catch: "You have to buy 500 at a time, and there is no drink, no flavor, and no ritual — just the pill. The exact, cheap dose also makes it easy to overdo."
+        },
+        {
+          id: "vitamatic", name: "Vitamatic Caffeine Pills (250ct)", form: "Bulk caffeine pills, 200mg per pill",
+          caffeine: 200, servingPrice: 0.04, per100: 0.02,
+          what: "Another bulk generic option: 250 pills at $0.020 per 100mg, essentially tied with the cheapest bottle on the page in a smaller upfront pack.",
+          catch: "Still a bulk buy, and still just a pill — no drink to enjoy and no half-dose flexibility."
+        },
+        {
+          id: "jetalert", name: "Jet-Alert Double Strength (90ct)", form: "Caffeine pills, 200mg per pill",
+          caffeine: 200, servingPrice: 0.046, per100: 0.023,
+          what: "A smaller-count double-strength pill pack at $0.023 per 100mg — bulk-pill pricing without committing to a 250- or 500-count bottle.",
+          catch: "Per pill it costs a little more than the big bulk bottles, and it is the same no-frills tablet experience."
+        },
+        {
+          id: "equate", name: "Equate Stay Awake (80ct)", form: "Store-brand caffeine pills, 200mg per pill",
+          caffeine: 200, servingPrice: 0.072, per100: 0.036,
+          what: "Walmart's store-brand stay-awake pill: 80 pills at $0.036 per 100mg, well under NoDoz's price per 100mg and easy to pick up with regular shopping.",
+          catch: "Cheaper than NoDoz, pricier than the big online bulk bottles — and again, just a tablet."
+        },
+        {
+          id: "nutricost120", name: "Nutricost Caffeine Pills (120ct)", form: "Caffeine pills, 200mg per pill",
+          caffeine: 200, servingPrice: 0.084, per100: 0.042,
+          what: "The 120-count Nutricost bottle at $0.042 per 100mg — the same pill as the 500-count, in a smaller bottle, so it lands between the bulk deals and NoDoz.",
+          catch: "The smaller bottle is the convenience premium: same pill, higher cost per 100mg than the 500-count."
+        },
+        {
+          id: "nodoz", name: "NoDoz Maximum Strength", form: "NoDoz Maximum Strength tablet",
+          caffeine: 200, servingPrice: 0.22, per100: 0.11,
+          what: "A tablet that is basically pure caffeine and binder — the delivery system with nothing else in it. 200mg per caplet, and the dose is exact every time. At $0.11 per 100mg it is about 20× cheaper than Monster, but the bulk generic pills above undercut it several times over.",
+          catch: "No drink, no ritual, no taste. And because it's so cheap and easy, it's also easy to overdo — the dose being exact cuts both ways."
+        },
+        {
+          id: "tea", name: "Black tea", form: "A tea bag, brewed at home",
+          caffeine: 55, servingPrice: 0.05, per100: 0.09,
+          what: "The oldest caffeine delivery system on the page. A bag costs about 5 cents, and tea brings L-theanine along with the caffeine, which many people find makes the lift feel smoother and less jittery.",
+          catch: "It's a light dose — you'd need about 3 cups to match one Monster (160mg / 55mg ≈ 2.9). Great for a gentle nudge, but slow when you need a hard start."
+        },
+        {
+          id: "coffee", name: "Coffee, brewed at home", form: "Drip coffee from ground beans",
+          caffeine: 96, servingPrice: 0.27, per100: 0.28,
+          what: "The benchmark everything else gets compared to. Brewed at home from grocery ground coffee, a cup lands near 27 cents. Buy it at a café instead and the same cup runs about $2.95–$3.45 — coffee has a delivery-system problem of its own.",
+          catch: "Needs a machine, filters, and five minutes. The caffeine per cup also swings a lot with how strong you brew it."
+        },
+        {
+          id: "gum", name: "Caffeinated gum", form: "Military Energy Gum (formerly Stay Alert)",
+          caffeine: 100, servingPrice: 0.32, per100: 0.32,
+          what: "Developed for the US military and packed in rations for two decades. Caffeine absorbs through the lining of the mouth while you chew, so it hits noticeably faster than anything you swallow — the Army's own research found it worked several times faster.",
+          catch: "You have to like gum, and the dose comes in fixed 100mg chunks — no half-measures. It contains sugar, and the flavor fades long before the caffeine does."
+        },
+        {
+          id: "mio", name: "MiO Energy", form: "Liquid water enhancer, one serving",
+          caffeine: 90, servingPrice: 0.252, per100: 0.28,
+          what: "A pocket-sized bottle you squeeze into water: 90mg of caffeine per serving, about 12 servings per bottle, zero sugar. $2.99 at Target — about $0.25 per serving. It's the closest thing here to an energy drink experience — flavored, sweet, cold — without buying the can.",
+          catch: "A Monster habit still means nearly two servings a day. And you're flavoring water yourself, which some people love and some people stop doing by week two."
+        },
+        {
+          id: "shot", name: "Energy shots — Extra Strength", form: "5-hour Energy Extra Strength, 1.93oz bottle",
+          caffeine: 230, servingPrice: 3.39, per100: 1.47,
+          what: "The energy drink with the drink taken out: the Extra Strength shot packs 230mg of caffeine in two swallows, no sugar, at $3.39 a bottle. Proof that shrinking the can doesn't shrink the price — you're still paying mostly for branding and convenience.",
+          catch: "Better value than a can per milligram, but still about 13× the cost per 100mg of a NoDoz tablet for the same caffeine. The taste is nobody's favorite part."
+        },
+        {
+          id: "monster", name: "Monster (the baseline)", form: "16oz energy drink can",
+          caffeine: 160, servingPrice: 3.59, per100: 2.24, baseline: true,
+          what: "What the whole site is about: $3.59 a can, 160mg of caffeine, and at one a day that's $1,310 a year in cans — before the tax and cost-to-earn math the calculator does. Every row above is the same molecule, delivered cheaper.",
+          catch: "You're paying for the can, the brand, the sugar rush, and the ritual. The caffeine itself is about 18 cents of it."
+        }
+      ];
+
+      var MG_PER_DAY = 160; // one Monster's worth
+      // Year cost derived from the serving price and dose, so the table,
+      // cards and calculator always agree to the cent.
+      function yearCost(s) { return (s.servingPrice / s.caffeine) * MG_PER_DAY * 365; }
+      function money(n) {
+        if (n >= 100) return "$" + Math.round(n).toLocaleString("en-US");
+        return "$" + n.toFixed(2);
+      }
+      function moneyExact(n) { return "$" + n.toFixed(2); }
+
+      // ---- Ranked table ----
+      var maxPer100 = Math.max.apply(null, SYSTEMS.map(function (s) { return s.per100; }));
+      var monster = SYSTEMS.filter(function (s) { return s.baseline; })[0];
+      var monsterYear = yearCost(monster);
+      var tbody = document.getElementById("rank-body");
+      SYSTEMS.slice().sort(function (a, b) { return a.per100 - b.per100; }).forEach(function (s) {
+        var yr = yearCost(s);
+        var pct = Math.max(2.5, (s.per100 / maxPer100) * 100);
+        var barClass = s.baseline ? "bar-fill hot" : (s.per100 > 1 ? "bar-fill mid" : "bar-fill");
+        var yearCell = s.baseline
+          ? "<strong>" + money(yr) + "</strong>"
+          : "<strong>" + money(yr) + "</strong><br><span class=\"save-pill\">save " + money(monsterYear - yr) + "/yr</span>";
+        var tr = document.createElement("tr");
+        if (s.baseline) tr.className = "baseline-row";
+        tr.innerHTML =
+          "<td><span class=\"prod-name\">" + s.name + (s.baseline ? "<span class=\"baseline-tag\">The can</span>" : "") + "</span>" +
+          "<span class=\"prod-form\">" + s.form + "</span></td>" +
+          "<td class=\"num\" data-label=\"Caffeine\"><span class=\"big-num\">" + s.caffeine + "mg</span></td>" +
+          "<td class=\"num\" data-label=\"Per serving\"><span class=\"big-num\">" + moneyExact(s.servingPrice) + "</span></td>" +
+          "<td class=\"num\" data-label=\"Per 100mg\"><span class=\"big-num\">" + moneyExact(s.per100) + "</span></td>" +
+          "<td class=\"bar-cell\" data-label=\"Relative cost\"><div class=\"bar-track\"><div class=\"" + barClass + "\" style=\"width:" + pct + "%\"></div></div></td>" +
+          "<td class=\"num\" data-label=\"Year at 160mg/day\">" + yearCell + "</td>";
+        tbody.appendChild(tr);
+      });
+
+      // ---- Product cards ----
+      var cardsEl = document.getElementById("cards");
+      SYSTEMS.forEach(function (s) {
+        var card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML =
+          "<h3>" + s.name + "</h3>" +
+          "<p class=\"form\">" + s.form + "</p>" +
+          "<div class=\"stats\">" +
+            "<div class=\"stat\"><span class=\"v\">" + s.caffeine + "mg</span><span class=\"k\">Caffeine</span></div>" +
+            "<div class=\"stat\"><span class=\"v\">" + moneyExact(s.servingPrice) + "</span><span class=\"k\">Per serving</span></div>" +
+            "<div class=\"stat\"><span class=\"v\">" + moneyExact(s.per100) + "</span><span class=\"k\">Per 100mg</span></div>" +
+          "</div>" +
+          "<p>" + s.what + "</p>" +
+          "<p class=\"catch\"><strong>The catch:</strong> " + s.catch + "</p>";
+        cardsEl.appendChild(card);
+      });
+
+      // ---- Swap calculator ----
+      var cans = 1;
+      var cansVal = document.getElementById("cans-val");
+      var nowLine = document.getElementById("now-line");
+      var swapList = document.getElementById("swap-list");
+      var minusBtn = document.getElementById("minus");
+      var plusBtn = document.getElementById("plus");
+
+      function renderCalc() {
+        cansVal.textContent = cans;
+        minusBtn.disabled = cans <= 0;
+        var monsterYr = 3.59 * cans * 365;
+        var mgDay = 160 * cans;
+        if (cans === 0) {
+          nowLine.innerHTML = "No cans, no drain — <strong>$0 a year</strong>. Every alternative below is also $0. This is the cheapest option there is.";
+        } else {
+          nowLine.innerHTML = "That's <strong>" + mgDay + "mg a day</strong>, costing <strong>" +
+            money(monsterYr) + " a year</strong> in cans. The same caffeine, other ways:";
+        }
+        swapList.innerHTML = "";
+        SYSTEMS.filter(function (s) { return !s.baseline; })
+          .sort(function (a, b) { return a.per100 - b.per100; })
+          .forEach(function (s) {
+            var altYr = (s.servingPrice / s.caffeine) * mgDay * 365;
+            var li = document.createElement("li");
+            li.innerHTML =
+              "<span class=\"who\">" + s.name + "</span>" +
+              "<span><span class=\"per\">costs " + money(altYr) + "/yr · </span>" +
+              "<span class=\"amt\">you keep " + money(monsterYr - altYr) + "</span></span>";
+            swapList.appendChild(li);
+          });
+      }
+      minusBtn.addEventListener("click", function () { if (cans > 0) { cans--; renderCalc(); } });
+      plusBtn.addEventListener("click", function () { if (cans < 6) { cans++; renderCalc(); } });
+      renderCalc();
+    </script>
+  </body>
+</html>

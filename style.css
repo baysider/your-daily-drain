@@ -261,6 +261,13 @@ body::before {
 
 .stepper-btn:hover  { background: var(--yellow); color: #000; }
 .stepper-btn:active { opacity: 0.8; }
+.stepper-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.stepper-btn:disabled:hover { background: var(--bg-input); color: var(--yellow); }
+
+#stepper-note { margin-top: 8px; }
 
 .stepper-value {
   font-family: var(--font-display);
@@ -770,8 +777,8 @@ body::before {
 .tax-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   background: var(--yellow);
   cursor: pointer;
   border: 3px solid #000;
@@ -783,8 +790,8 @@ body::before {
 .tax-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
 .tax-slider::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   background: var(--yellow);
   cursor: pointer;
   border: 3px solid #000;
@@ -835,9 +842,10 @@ body::before {
 
 .strategy-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px 16px;
   margin-bottom: 16px;
 }
 
@@ -847,6 +855,7 @@ body::before {
   letter-spacing: 0.04em;
   color: var(--white);
   line-height: 1;
+  min-width: 0;
 }
 
 .strategy-savings-badge {
@@ -856,8 +865,14 @@ body::before {
   font-size: 14px;
   letter-spacing: 0.04em;
   padding: 4px 12px;
-  white-space: nowrap;
-  flex-shrink: 0;
+  /* Was white-space: nowrap + flex-shrink: 0: the long Discount Grocery
+     badge ("Up to $2.84/can saved vs Monster Original (16oz)") ran off
+     the right edge on phones. Let it wrap and let the header wrap the
+     badge below the label on narrow screens. */
+  white-space: normal;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
   line-height: 1.4;
   align-self: flex-start;
 }
@@ -1219,4 +1234,160 @@ body::before {
     padding-left: var(--pad);
     padding-right: var(--pad);
   }
+}
+
+/* ── PAGE NAV (FIVE SECTIONS) ─────────────────────────────
+   Five boxes at the top; the same nav goes on every page so
+   visitors can switch sections. Each box is its own page
+   (index.html, world-prices.html, caffeine-alternatives.html,
+   how-expensive.html, market-share.html) so Google can index
+   them separately. */
+.page-nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 16px var(--pad) 28px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+/* One shared tile spec — the same rules live in the four other
+   pages' inline styles, so the five tiles are the same size,
+   shape and position on every page. */
+.page-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: flex-start;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 16px 14px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 14px;
+  color: var(--white);
+  text-decoration: none;
+  min-height: 196px;
+  transition: border-color 0.2s ease;
+}
+.page-box:hover,
+.page-box:focus-visible {
+  border-color: var(--border-bright);
+}
+.page-box-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--grey);
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.page-box-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.page-box-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--grey);
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.page-box-cta {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.page-box.is-active {
+  background: var(--white);
+  border-color: var(--white);
+  color: #000;
+  padding-top: 36px;
+}
+.page-box.is-active .page-box-kicker,
+.page-box.is-active .page-box-sub {
+  color: #333;
+}
+.page-box.is-active .page-box-cta {
+  color: #0A0A0A;
+}
+.page-box.is-active::after {
+  content: "You're here";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #0A0A0A;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+/* ── PAGE NAV ON DESKTOP ───────────────────────────────────
+   Five tiles in one row, like the other pages. This block MUST
+   stay after the base .page-nav rules above: same specificity,
+   so source order decides — the base rule (2 columns, 480px
+   max-width) would otherwise beat the min-width:900px block
+   that used to live earlier in this file, which is why the
+   homepage showed a 2-2-1 grid on desktop. */
+@media (min-width: 900px) {
+  .page-nav {
+    max-width: 1440px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* ── STORE CHANNEL TOGGLE ──────────────────────────────── */
+.store-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.store-toggle-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-dim);
+  color: var(--grey);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+.store-toggle-btn:hover,
+.store-toggle-btn:focus-visible {
+  border-color: var(--border-bright);
+}
+.store-toggle-btn.is-active {
+  border-color: var(--border-bright);
+  color: var(--green);
+}
+.store-toggle-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--grey);
 }

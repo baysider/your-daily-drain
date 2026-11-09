@@ -11,9 +11,9 @@
     pageTitle: 'Your Daily Drain',
     metaDescription: 'Calculate the true cost of your daily energy drink habit in hours worked.',
     ogTitle: 'Your Daily Drain - The True Cost of Your Energy Habit',
-    ogDescription: 'That $4 Monster actually costs you $5+ to earn. Find out exactly how many hours you\'re working for caffeine.',
+    ogDescription: 'That $3 Monster actually costs you nearly $5 to earn. Find out exactly how many hours you\'re working for caffeine.',
     heroEyebrow: 'YOUR DAILY DRAIN',
-    heroHeadlineHtml: 'That <span class="hl">$4</span> Monster<br>actually costs you <span class="hl">$5+</span><br>to earn.',
+    heroHeadlineHtml: 'That <span class="hl">$3</span> Monster<br>actually costs you <span class="hl">nearly $5</span><br>to earn.',
     heroSubHtml: 'Every can costs more than the price tag.<br>Find out what your habit is really taking from you.',
     heroScrollHint: '↓ CALCULATE BELOW',
     calculatorLabel: 'YOUR HABIT',
@@ -31,11 +31,11 @@
     perMonthLabel: 'PER MONTH',
     perYearLabel: 'PER YEAR',
     annualSub: 'gone. every single year.',
-    hoursPerYearLabel: 'HOURS OF YOUR LIFE / YEAR',
+    hoursPerYearLabel: 'HOURS OF WORK / YEAR',
     hoursUnit: 'HRS',
     weeksUnit: 'WKS',
-    weeksLabel: 'of your working life every year',
-    taxRateLabel: 'TAX RATE',
+    weeksLabel: 'of work every year — 40 hrs/week, at your after-tax wage',
+    taxRateLabel: 'INCOME TAX RATE',
     incomeTaxMinLabel: '15%',
     incomeTaxMaxLabel: '40%',
     incomeTaxNote: 'Drag to match your bracket',
@@ -45,34 +45,41 @@
     alternativesSubtitle: 'Four ways to buy smarter and keep the caffeine.',
     savingsIdeasLabel: 'REDIRECT THE CASH',
     savingsIdeasSubtitle: 'What your savings could actually buy you.',
-    freshnessNote: 'Retail price inputs last updated November 3, 2026.',
-    footerDisclaimer: 'Prices are US retail averages. Results are estimates for illustrative purposes. Affiliate links may earn a commission.'
+    freshnessNote: 'Retail price inputs last updated November 7, 2026.',
+    footerDisclaimer: 'Prices are US retail list prices. Results are estimates for illustrative purposes. Affiliate links may earn a commission.'
   };
 
   const FALLBACK_DRINKS = [
     { id: 'red-bull-20oz', name: 'Red Bull (20oz)', brand: 'Red Bull', price: 4.99, size_oz: 20, caffeine_mg: 189 },
     { id: 'red-bull-16oz', name: 'Red Bull (16oz)', brand: 'Red Bull', price: 3.99, size_oz: 16, caffeine_mg: 160 },
     { id: 'red-bull-12oz', name: 'Red Bull (12oz)', brand: 'Red Bull', price: 3.99, size_oz: 12, caffeine_mg: 114 },
-    { id: 'red-bull-regular', name: 'Red Bull (8.4oz)', brand: 'Red Bull', price: 2.99, size_oz: 8.4, caffeine_mg: 80 },
-    { id: 'monster-original', name: 'Monster Original (16oz)', brand: 'Monster', price: 3.59, size_oz: 16, caffeine_mg: 160 },
-    { id: 'monster-ultra', name: 'Monster Ultra (16oz)', brand: 'Monster', price: 3.59, size_oz: 16, caffeine_mg: 150 },
-    { id: 'monster-juice', name: 'Monster Juice (16oz)', brand: 'Monster', price: 3.59, size_oz: 16, caffeine_mg: 160 },
+    { id: 'red-bull-regular', name: 'Red Bull (8.4oz)', brand: 'Red Bull', price: 2.99, price_grocery: 2.79, size_oz: 8.4, caffeine_mg: 80 },
+    { id: 'monster-original', name: 'Monster Original (16oz)', brand: 'Monster', price: 3.59, price_grocery: 2.89, size_oz: 16, caffeine_mg: 160 },
+    { id: 'monster-ultra', name: 'Monster Ultra (16oz)', brand: 'Monster', price: 3.59, price_grocery: 2.89, size_oz: 16, caffeine_mg: 150 },
+    { id: 'monster-juice', name: 'Monster Juice (16oz)', brand: 'Monster', price: 3.59, price_grocery: 2.89, size_oz: 16, caffeine_mg: 160 },
     { id: 'java-monster', name: 'Java Monster (15oz)', brand: 'Monster', price: 3.99, size_oz: 15, caffeine_mg: 188 },
-    { id: 'celsius-original', name: 'Celsius Original (12oz)', brand: 'Celsius', price: 3.29, size_oz: 12, caffeine_mg: 200 },
-    { id: 'celsius-essentials', name: 'Celsius Essentials (16oz)', brand: 'Celsius', price: 3.49, size_oz: 16, caffeine_mg: 200 },
+    { id: 'celsius-original', name: 'Celsius Original (12oz)', brand: 'Celsius', price: 3.29, price_grocery: 2.59, size_oz: 12, caffeine_mg: 200 },
+    { id: 'celsius-essentials', name: 'Celsius Essentials (16oz)', brand: 'Celsius', price: 3.59, size_oz: 16, caffeine_mg: 200 },
     { id: 'alani-nu', name: 'Alani Nu (12oz)', brand: 'Alani Nu', price: 3.39, size_oz: 12, caffeine_mg: 200 },
     { id: 'ghost-energy', name: 'Ghost Energy (16oz)', brand: 'Ghost', price: 3.49, size_oz: 16, caffeine_mg: 200 },
     { id: 'prime-energy', name: 'Prime Energy (12oz)', brand: 'Prime', price: 3.29, size_oz: 12, caffeine_mg: 200 },
     { id: 'c4-energy', name: 'C4 Energy (16oz)', brand: 'C4', price: 3.49, size_oz: 16, caffeine_mg: 200 },
     { id: 'reign-total-body', name: 'Reign Total Body (16oz)', brand: 'Reign', price: 3.49, size_oz: 16, caffeine_mg: 300 },
-    { id: 'reign-storm', name: 'Storm (12oz)', brand: 'Reign', price: 3.29, size_oz: 12, caffeine_mg: 130 },
+    { id: 'reign-storm', name: 'Reign Storm (12oz)', brand: 'Reign', price: 3.29, size_oz: 12, caffeine_mg: 130 },
     { id: 'bang-energy', name: 'Bang Energy (16oz)', brand: 'Bang', price: 3.29, size_oz: 16, caffeine_mg: 300 },
-    { id: 'rockstar-original', name: 'Rockstar Original (16oz)', brand: 'Rockstar', price: 3.29, size_oz: 16, caffeine_mg: 160 },
+    { id: 'rockstar-original', name: 'Rockstar Original (16oz)', brand: 'Rockstar', price: 3.29, price_grocery: 1.89, size_oz: 16, caffeine_mg: 160 },
     { id: 'nos-original', name: 'NOS Original (16oz)', brand: 'NOS', price: 3.29, size_oz: 16, caffeine_mg: 160 },
     { id: 'full-throttle', name: 'Full Throttle (16oz)', brand: 'Full Throttle', price: 3.29, size_oz: 16, caffeine_mg: 160 },
     { id: 'ryse-fuel', name: 'Ryse Fuel (16oz)', brand: 'Ryse', price: 3.49, size_oz: 16, caffeine_mg: 200 },
     { id: 'bucked-up', name: 'Bucked Up (16oz)', brand: 'Bucked Up', price: 3.49, size_oz: 16, caffeine_mg: 300 },
-    { id: 'cstore-private-label', name: 'C-Store Private Label (16oz)', brand: 'Private Label', price: 2.39, size_oz: 16, caffeine_mg: 160 }
+    { id: 'cstore-private-label', name: 'C-Store Private Label (16oz)', brand: 'Private Label', price: 2.39, size_oz: 16, caffeine_mg: 160 },
+    { id: 'kirkland-energy', name: 'Kirkland Energy (12oz)', brand: 'Kirkland', price: 0.71, size_oz: 12, caffeine_mg: 180 },
+    { id: 'red-thunder', name: 'Red Thunder (12oz)', brand: 'Red Thunder', price: 0.91, size_oz: 12, caffeine_mg: 80 },
+    { id: 'venom-energy', name: 'Venom (16oz)', brand: 'Venom', price: 0.99, size_oz: 16, caffeine_mg: 160 },
+    { id: 'bang-12oz', name: 'Bang (12oz)', brand: 'Bang', price: 1.25, size_oz: 12, caffeine_mg: 225 },
+    { id: 'summit-waves', name: 'Summit Waves (12oz)', brand: 'Summit', price: 1.35, size_oz: 12, caffeine_mg: 200 },
+    { id: 'summit-gridlock', name: 'Summit Gridlock (16oz)', brand: 'Summit', price: 1.45, size_oz: 16, caffeine_mg: 150 },
+    { id: 'solimo-energy', name: 'Solimo (16oz)', brand: 'Solimo', price: 1.59, size_oz: 16, caffeine_mg: 200 }
   ];
 
   const DYNAMIC_CAFFEINE_INDEX_CONFIG = [
@@ -91,20 +98,23 @@
     { drinkId: 'ryse-fuel', name: 'Ryse Fuel (16oz)' },
     { drinkId: 'celsius-original', name: 'Celsius (12oz)' },
     { drinkId: 'prime-energy', name: 'Prime (12oz)' },
-    { drinkId: 'reign-storm', name: 'Storm (12oz)' },
+    { drinkId: 'reign-storm', name: 'Reign Storm (12oz)' },
     { drinkId: 'reign-total-body', name: 'Reign (16oz)' },
-    { drinkId: 'bang-energy', name: 'Bang (16oz)' }
+    { drinkId: 'bang-energy', name: 'Bang (16oz)' },
+    { drinkId: 'red-thunder', name: 'Red Thunder (12oz) - ALDI', dividerBefore: true },
+    { drinkId: 'summit-gridlock', name: 'Summit Gridlock (16oz) - ALDI' },
+    { drinkId: 'solimo-energy', name: 'Solimo (16oz) - Amazon' },
+    { drinkId: 'summit-waves', name: 'Summit Waves (12oz) - ALDI' },
+    { drinkId: 'venom-energy', name: 'Venom (16oz)' },
+    { drinkId: 'bang-12oz', name: 'Bang (12oz, Dollar Tree only)' },
+    { drinkId: 'kirkland-energy', name: 'Kirkland Energy (12oz) - Costco' }
   ];
 
-  const STATIC_CAFFEINE_INDEX_ENTRIES = [
-    { name: 'Red Thunder (12oz) - ALDI', cpm: 0.11, price: 0.91, dividerBefore: true },
-    { name: 'Summit Gridlock (16oz) - ALDI', cpm: 0.10, price: 1.45 },
-    { name: 'Solimo (16oz) - Amazon', cpm: 0.08, price: 1.59 },
-    { name: 'Summit Waves (12oz) - ALDI', cpm: 0.07, price: 1.35 },
-    { name: 'Venom (16oz)', cpm: 0.06, price: 0.99 },
-    { name: 'Bang (12oz, Dollar Tree only)', cpm: 0.06, price: 1.25 },
-    { name: 'Kirkland Energy (12oz) - Costco', cpm: 0.04, price: 0.71 }
-  ];
+  /* No separate static index rows any more: every index row now comes
+     from the drink catalog above (drinks.json / FALLBACK_DRINKS), so a
+     price or caffeine change in one place updates the index too.
+     See PRICE_UPDATE_GUIDE.md. */
+  const STATIC_CAFFEINE_INDEX_ENTRIES = [];
 
   const STRATEGIES = [
     {
@@ -114,7 +124,7 @@
         { name: 'Kirkland Energy (12oz)', price: 0.71 },
         { name: 'Ghost (18-pack / 16oz)', price: 1.53 }
       ],
-      tip: 'Buy a pack once a month and you\'re done. Kirkland at $0.71 is the lowest per-can cost available anywhere. Costco also often runs a rotating monthly energy drink deal at 20%+ off.',
+      tip: 'Kirkland at $0.71 is the lowest per-can cost on this page. Costco also often runs a rotating monthly energy drink deal at 20%+ off.',
       linkText: 'Find a Costco near you',
       href: 'https://www.costco.com/s?keyword=energy%20drinks'
     },
@@ -127,7 +137,7 @@
         { name: 'Alani Nu (12oz)', price: 1.26 },
         { name: 'Alani Nu Mini (8.4oz)', price: 0.94 }
       ],
-      tip: "Sam's Club carries a wide multi-brand lineup. Alani Mini at $0.94 is one of the sharpest value cans in the market.",
+      tip: "Sam's Club carries a wide multi-brand lineup. Alani Mini (8.4oz) at $0.94 is one of the sharpest value cans in the market — note it's a smaller 8.4oz can.",
       linkText: "Find a Sam's Club near you",
       href: 'https://www.samsclub.com/search?q=energy+drink'
     },
@@ -138,21 +148,18 @@
       options: [
         {
           name: 'Summit Gridlock', size: '16oz', price: 1.45,
-          altOf: 'Monster', altPrice: 3.59,
-          altNote: 'Name-brand Monster at ALDI itself: $2.95 - still cheaper than a c-store'
+          altNote: 'Name-brand Monster at ALDI itself: $2.95 — still cheaper than a convenience store'
         },
         {
           name: 'Summit Waves', size: '12oz', price: 1.35,
-          altOf: 'Celsius / Alani Nu', altPrice: 3.29,
           altNote: 'Celsius at ALDI: $2.15 vs up to $3.29 at convenience stores'
         },
         {
           name: 'Red Thunder', size: '12oz', price: 0.91,
-          altOf: 'Red Bull', altPrice: 3.99,
           altNote: "ALDI's Red Bull dupe - sold as a 4-pack ($3.65 total), best per-can value in this tier"
         }
       ],
-      tip: 'ALDI private-label cans are consistent quality with no membership required. Prices are shelf-stable - no need to wait for a sale.',
+      tip: 'ALDI private-label cans are consistent quality with no membership required. Prices are shelf-stable — no need to wait for a sale.',
       linkText: 'Find an ALDI near you',
       href: 'https://www.aldi.us/store-locator'
     },
@@ -167,9 +174,9 @@
         },
         { name: 'Bang (12oz)', price: 1.25 },
         { name: 'Rockstar (12oz)', price: 1.25 },
-        { name: 'Venom', price: 0.99, note: 'Available at Dollar General.' }
+        { name: 'Venom', price: 0.99, note: 'Available at Dollar General, not Dollar Tree.' }
       ],
-      tip: 'Closeout stores and Grocery Outlet occasionally stock name brands at deep discount - worth a look every visit.',
+      tip: 'Closeout stores and Grocery Outlet occasionally stock name brands at deep discount - worth a look every visit. Dollar Tree stock rotates by location and week, and $1.25 cans are usually room temperature, not chilled — this is a stock-up price, not a grab-a-cold-one price.',
       linkText: 'Find Dollar Tree near you',
       href: 'https://locations.dollartree.com/store-locator#?callerURL=www.dollartree.com&dest=/drinks/sport-energy-drinks'
     }
@@ -232,12 +239,19 @@
         return {
           name: config.name || drink.name,
           cpm: computeCpm(drink.price, drink.caffeine_mg),
-          price: drink.price
+          price: drink.price,
+          caffeine_mg: drink.caffeine_mg,
+          ...(config.dividerBefore ? { dividerBefore: true } : {})
         };
       })
       .filter(Boolean);
 
-    return [...dynamicEntries, ...STATIC_CAFFEINE_INDEX_ENTRIES];
+    // Most expensive per 10mg first, so the rendered list matches the
+    // "sorted most to least expensive" subtitle. Stable sort keeps the
+    // config order for ties; dividerBefore travels with its entry.
+    const sorted = [...dynamicEntries, ...STATIC_CAFFEINE_INDEX_ENTRIES]
+      .sort((a, b) => (b.cpm ?? -Infinity) - (a.cpm ?? -Infinity));
+    return sorted;
   }
 
   return {

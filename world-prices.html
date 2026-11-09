@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="dark"/>
+<link rel="icon" href="data:,"/>
+<title>Energy Drink Prices Around the World — Your Daily Drain</title>
+<meta name="description" content="The same habit costs about 43% less in Europe. Energy drink prices by country: Red Bull, Monster and local rivals, per can and per ounce."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A; --surface:#111111; --surface2:#1a1a1a; --ink:#F2F2F2; --muted:#cccccc; --line:#222222;
+  --volt:#00ff87; --volt-dark:#00ff87; --red:#ff2d20; --blue:#00ff87; --green:#00ff87; --amber:#b7791f;
+  --cheap:#0f2418; --mid:#221f0f; --pricey:#2a1610;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;line-height:1.5}
+a{color:inherit}
+.wrap{max-width:1440px;margin:0 auto;padding:0 40px 64px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.topbar a{text-decoration:none;border-bottom:2px solid var(--volt)}
+.badge-mock{display:inline-block;background:var(--volt);color:#0A0A0A;font-weight:800;padding:4px 10px;border-radius:999px;font-size:11px;letter-spacing:.08em}
+.page-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:16px 0 28px;width:100%;max-width:100%}
+.page-box{position:relative;display:flex;flex-direction:column;gap:2px;text-decoration:none;border-radius:14px;padding:16px 14px 14px;border:1px solid var(--line);background:#111111;color:#F2F2F2;min-height:196px;justify-content:flex-start;min-width:0;max-width:100%;overflow:hidden}
+.page-box:hover{border-color:#3a3a3a}
+.page-box:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.page-box-kicker{font-size:11px;font-weight:700;letter-spacing:.08em;line-height:1.2;text-transform:uppercase;color:var(--muted);min-width:0;max-width:100%;overflow-wrap:normal;word-break:normal}
+.page-box-title{font-family:"Bebas Neue",sans-serif;font-size:24px;line-height:1;text-transform:uppercase;letter-spacing:.01em;min-width:0;max-width:100%;overflow-wrap:normal;word-break:normal}
+.page-box-sub{font-size:13px;line-height:1.35;color:var(--muted);min-width:0;max-width:100%;overflow-wrap:normal;word-break:normal}
+.page-box-cta{font-size:13px;font-weight:700;line-height:1.3;margin-top:6px;min-width:0;max-width:100%;overflow-wrap:normal;word-break:normal}
+.page-box.is-active{background:#F2F2F2;color:#0A0A0A;border-color:#F2F2F2;padding-top:36px}
+.page-box.is-active .page-box-kicker,.page-box.is-active .page-box-sub{color:#333333} .page-box.is-active .page-box-cta{color:#0A0A0A}
+.page-box.is-active::after{content:"You're here";position:absolute;top:10px;right:10px;background:#0A0A0A;color:var(--volt);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:999px}
+@media(max-width:900px){.page-nav{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.page-nav{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.page-box{padding:14px 12px;min-height:98px}.page-box-title{font-size:24px}.page-box-sub{font-size:13px}.page-box.is-active::after{position:static;align-self:flex-start;margin-top:6px}}
+.hero{padding:28px 0 8px}
+.hero h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(44px,8vw,84px);line-height:.92;text-transform:uppercase;margin:10px 0 12px;letter-spacing:.01em}
+.hero h1 em{font-style:normal;background:var(--volt);color:#0A0A0A;padding:0 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero p.lede{font-size:19px;max-width:680px;color:var(--muted);margin:0}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.stat b{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:36px;display:block;line-height:1;color:var(--volt)} .stat{display:flex;align-items:baseline;gap:14px}
+.stat span{font-size:13px;color:var(--muted)}
+.controls{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:flex;background:#111111;border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--volt);color:#0A0A0A}
+.controls label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+h2{font-family:"Bebas Neue",sans-serif;font-size:34px;text-transform:uppercase;margin:34px 0 4px;line-height:1}
+.sub{color:var(--muted);margin:0 0 14px;max-width:720px}
+.map-grid{display:grid;gap:8px}
+.map-eu{grid-template-columns:repeat(6,1fr)}
+.map-asia{grid-template-columns:repeat(5,1fr)}
+.tile{border:1px solid var(--line);border-radius:12px;padding:12px 10px;min-height:96px;text-align:left;font:inherit;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:6px;transition:transform .12s, outline .12s}
+.tile:hover{transform:translateY(-2px)}
+.tile:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.tile.selected{outline:3px solid var(--volt);outline-offset:1px}
+.tile .cname{font-weight:700;font-size:15px;line-height:1.15}
+.tile .cavg{font-family:"Bebas Neue",sans-serif;font-size:26px;line-height:1}
+.tile .cvs{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.tile.empty{visibility:hidden;pointer-events:none;border:0;background:transparent}
+.t-cheap{background:var(--cheap)} .t-mid{background:var(--mid)} .t-pricey{background:var(--pricey)} .t-us{background:var(--volt);color:#0A0A0A} .t-us .cvs{color:#0A0A0A}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px;border:1px solid var(--line)}
+.detail{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.detail-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:14px}
+.detail-head h3{font-family:"Bebas Neue",sans-serif;font-size:36px;margin:0;text-transform:uppercase;line-height:1}
+.detail-head p{margin:4px 0 0;color:var(--muted);max-width:520px}
+.big-avg{text-align:right}
+.big-avg b{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:44px;display:block;line-height:1;color:var(--volt)}
+.drinks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.drink{border:1px solid var(--line);border-radius:12px;padding:14px;background:#0A0A0A}
+.drink .brand{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.drink .price{font-family:"Bebas Neue",sans-serif;font-size:34px;line-height:1.1}
+.drink .meta{font-size:13px;color:var(--muted)}
+.bar{height:8px;background:#222222;border-radius:99px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--volt-dark);border-radius:99px}
+.bar.red i{background:var(--red)} .bar.dark i{background:#F2F2F2}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.calc{background:#111111;color:#F2F2F2;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:28px}
+.calc h2{color:#F2F2F2;margin-top:0} .calc .out{color:var(--volt)} .calc select{background:#0A0A0A;color:#F2F2F2;border:1px solid var(--line)} .calc input[type=range]{accent-color:var(--volt)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:end}
+.calc select,.calc input[type=range]{width:100%}
+.calc select{padding:12px;border-radius:10px;font:inherit;font-size:16px}
+.calc .out{font-family:"Bebas Neue",sans-serif;font-size:40px;line-height:1}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:15px}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr{cursor:pointer} tbody tr:hover{background:var(--surface2)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.insight{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.insight h3{margin:0 0 6px;font-size:17px}
+.insight p{margin:0;color:var(--muted);font-size:14px}
+footer{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+footer a{text-decoration:underline}
+.tooltip{position:fixed;z-index:50;pointer-events:none;background:#F2F2F2;color:#0A0A0A;border:1px solid #222222;padding:8px 11px;border-radius:8px;font-size:13px;max-width:240px;display:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+@media(max-width:760px){
+  .hero-stats,.drinks,.insights,.calc-grid{grid-template-columns:1fr}
+  .map-eu{grid-template-columns:repeat(3,1fr)} .map-asia{grid-template-columns:repeat(3,1fr)}
+  .tile.empty{display:none}
+  .big-avg{text-align:left}
+  th.hide-m,td.hide-m{display:none}
+  .controls{position:static}
+}
+@media(prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
+.hero h1,h2,.detail-head h3,.tile .cavg,.drink .price,.calc .out{font-weight:400}
+.page-box.wide{grid-column:auto}
+.page-box{min-width:0;max-width:100%}
+.page-box>*{min-width:0;max-width:100%}
+.page-box-title{overflow-wrap:normal;word-break:normal}
+.page-box-kicker,.page-box-sub,.page-box-cta{overflow-wrap:break-word}
+.page-box-cta{color:var(--ink)}
+.page-box.is-active .page-box-cta{color:#0A0A0A}
+.page-box.is-active::after{background:#0A0A0A;color:var(--volt)}
+/* Desktop layout: wider reading measures */
+.hero{padding:28px 0 10px}
+.hero p.lede{max-width:760px}
+.sub{max-width:820px}
+.detail{padding:26px}
+.detail-head p{max-width:640px}
+.calc{padding:26px}
+.map-grid{gap:10px}
+.tile{min-height:108px;padding:14px 12px}
+@media(max-width:900px){
+  .hero-stats{grid-template-columns:1fr}
+  .drinks,.insights,.calc-grid{grid-template-columns:1fr}
+  .map-eu{grid-template-columns:repeat(3,1fr)} .map-asia{grid-template-columns:repeat(3,1fr)}
+  .tile.empty{display:none}
+  .big-avg{text-align:left}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="page-nav" aria-label="Your Daily Drain pages">
+    <a class="page-box" href="index.html">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">US</span>
+      <span class="page-box-sub">Calculator &amp; US prices — what your habit costs you to earn</span>
+      <span class="page-box-cta">Go to US page →</span>
+    </a>
+    <div class="page-box is-active" aria-current="page">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">International</span>
+      <span class="page-box-sub">Energy drink prices around the world — Europe &amp; Asia</span>
+      <span class="page-box-cta">Prices by country below ↓</span>
+    </div>
+    <a class="page-box" href="caffeine-alternatives.html" aria-label="Caffeine Alternatives">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Caffeine Alternatives</span>
+      <span class="page-box-sub">NoDoz, Mio, gum, coffee &amp; tea — the cheapest caffeine, ranked</span>
+      <span class="page-box-cta">See alternatives →</span>
+    </a>
+    <a class="page-box" href="how-expensive.html" aria-label="How Expensive">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">How Expensive</span>
+      <span class="page-box-sub">Energy drinks vs Coke, soda, seltzer, water &amp; coffee — the research</span>
+      <span class="page-box-cta">See the comparison →</span>
+    </a>
+    <a class="page-box" href="market-share.html" aria-label="Market Share">
+      <span class="page-box-kicker">Your Daily Drain</span>
+      <span class="page-box-title">Market Share</span>
+      <span class="page-box-sub">US market share pie — Red Bull, Monster, Celsius &amp; more</span>
+      <span class="page-box-cta">See market share →</span>
+    </a>
+  </nav>
+
+  <header class="hero">
+    <div style="font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px">Page 2 of Your Daily Drain — prices around the world</div>
+    <h1>The same habit costs <em>about 43% less</em> in Europe</h1>
+    <p class="lede">Hover or tap a country to see its average energy drink price per can. Tap again to open the full breakdown — Red Bull, Monster, and, where one was researched, the local rival people actually buy there. Every price is a single can or bottle from a supermarket or convenience store, with can sizes in ounces and prices also shown in cents per ounce, the way you'd compare cans in the US. Prices that still need a fresh store check are marked “price to verify” instead of being shown as verified.</p>
+    <div class="hero-stats">
+      <div class="stat"><b>$3.19</b><span>United States average — Red Bull (grocery price) &amp; Monster</span></div>
+      <div class="stat"><b>$1.83</b><span>Europe average across the five countries on this page — about 43% cheaper than the US</span></div>
+      <div class="stat"><b>$0.82</b><span>China average — the cheapest market on this page (average of the two verified drinks; Monster shelf price still to verify)</span></div>
+    </div>
+  </header>
+
+  <div class="controls" role="group" aria-label="Display options">
+    <label>Region</label>
+    <div class="seg" id="regionSeg">
+      <button aria-pressed="true" data-region="all">All</button><button aria-pressed="false" data-region="europe">Europe</button><button aria-pressed="false" data-region="asia">Asia</button>
+    </div>
+    <div class="seg" id="currSeg">
+      <button aria-pressed="true" data-curr="usd">USD $</button><button aria-pressed="false" data-curr="local">Local price</button>
+    </div>
+  </div>
+
+  <section id="europeSection">
+    <h2>Europe — tap a country</h2>
+    <p class="sub">France ($1.42 avg) is the cheapest of the five, after the fresh Carrefour shelf-price check. The UK ($2.45 avg) sits at the top — the closest thing to US prices on this page, especially per ounce.</p>
+    <div class="map-grid map-eu" id="euGrid"></div>
+    <div class="legend"><span><i style="background:var(--cheap)"></i>Under $1.60 avg</span><span><i style="background:var(--mid)"></i>$1.60–$2.10</span><span><i style="background:var(--pricey)"></i>Over $2.10</span><span><i style="background:var(--volt)"></i>United States, for comparison</span></div>
+  </section>
+
+  <section id="asiaSection">
+    <h2>Asia — tap a country</h2>
+    <p class="sub">Japan, Korea, China, Hong Kong and Singapore — the five markets on this page. Cans run smaller in Asia (250–400ml is normal), which is why the cents-per-ounce figure in each breakdown matters here.</p>
+    <div class="map-grid map-asia" id="asiaGrid"></div>
+  </section>
+
+  <section class="detail" id="detail" aria-live="polite"></section>
+
+  <section class="calc">
+    <h2>What would your habit cost there?</h2>
+    <p style="color:#cccccc;margin-top:0">Pick a country and how many cans a day. This uses that country's average can price.</p>
+    <div class="calc-grid">
+      <div><label for="calcCountry">Country</label><select id="calcCountry"></select></div>
+      <div><label for="calcPerDay">Cans per day: <b id="perDayLabel">1</b></label><input type="range" id="calcPerDay" min="0" max="4" step="1" value="1"></div>
+      <div><div class="out" id="calcOut">$648 / year</div><div id="calcVs" style="color:#cccccc;font-size:14px"></div></div>
+    </div>
+    <p style="font-size:13px;color:#cccccc">Want the full US calculator — with what it costs you to <i>earn</i> that money after tax? <a href="index.html" style="color:#00ff87">Open Your Daily Drain →</a></p>
+  </section>
+
+  <section>
+    <h2>Every country, cheapest first</h2>
+    <p class="sub">Tap any row to load that country above. “Avg” is the mean of the verified drinks listed for that country — a “price to verify” drink is left out of its country’s average, the same way France’s average leaves out Rockstar and China’s leaves out Monster.</p>
+    <div style="overflow-x:auto">
+    <table><thead><tr><th>#</th><th>Country</th><th class="num">Avg / can</th><th class="num hide-m">Avg ¢ / oz</th><th class="num">vs US</th><th class="hide-m">Cheapest drink</th></tr></thead><tbody id="rankBody"></tbody></table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Three things that jump out</h2>
+    <div class="insights">
+      <div class="insight"><h3>Europe's secret is the big can</h3><p>Monster is a 16.9oz (500ml) can almost everywhere in Europe vs 16oz (473ml) in the US — and it still costs less. Per ounce, a German Monster works out at roughly half the US price.</p></div>
+      <div class="insight"><h3>China's Red Bull isn't the same drink</h3><p>The gold can sold in China is a licensed, non-carbonated version with a different formula. It's also why it's so cheap — about ¥6. Don't compare it like-for-like without that note.</p></div>
+      <div class="insight"><h3>Four of these markets have a local spoiler</h3><p>Burn in Italy, ZONe in Japan, HOT6 in Korea, Eastroc in China. The local brand is often the cheapest can on the shelf, but by how much varies a lot — about 17% under Red Bull for Eastroc in China, about 13% under for Burn in Italy. ZONe is the exception: in Japan it actually costs slightly more than Red Bull.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>How to read this page:</strong> Prices from the November 2026 store-by-store research (Tesco in the UK, Knuspr in Germany, Carrefour in France and Spain, HKTVmall in Hong Kong, FairPrice in Singapore, and equivalent supermarket listings elsewhere). Single-can prices, not multipacks — multipacks are cheaper everywhere. USD figures are converted from the local price at the ECB reference rates for 6 Nov 2026 and kept at full precision — only the number on display is rounded, and yearly costs are worked out from the unrounded price. The rates: $1 = €0.8957, £0.7470, ¥158.48 (Japan), ₩1,363.80, ¥6.675 (China), HK$7.84, S$1.2826. Deposits (Pfand in Germany and similar schemes) not included. Can sizes differ by market, so prices are shown per can with the size in ounces, plus cents per ounce for the fairest comparison.</p>
+    <p>Key spot-checks you can verify: UK Red Bull 250ml £2.10, Monster 500ml £2.10 and Rockstar 500ml £1.30 at Tesco; France Red Bull 250ml €1.19 and Monster 500ml €1.35 at Carrefour (fresh check, Nov 8 — the €2.07 Red Bull figure seen earlier was a Carrefour Express delivery markup, not the shelf price); Japan Red Bull 250ml ¥213 before tax (¥230 with tax) and Monster 355ml ¥230 with tax; Germany Red Bull, Monster and Rockstar all €1.59 at Knuspr. Cells marked “price to verify” — France Rockstar, China Monster, Korea HOT6, Singapore Red Bull — have no verified shelf price and are deliberately shown without one. Cells flagged research-weak (Italy Monster, Singapore's Krating Daeng, Korea's two prices) rest on a single weaker source.</p>
+  </footer>
+</div>
+<div class="tooltip" id="tip"></div>
+<script>
+var DATA=[
+{id:"us",name:"United States",region:"europe",flag:"Baseline",currency:"$",fx:1,note:"The home market. The Red Bull price below is the 250ml / 8.4oz grocery price — the site's own convenience list price for the same can is $2.99. Monster is the 16oz (473ml) can from your calculator at $3.59. Celsius (12oz) has a verified single-can price — $3.29 at convenience, $2.59 at Target — but this page's US average uses Red Bull and Monster only.",drinks:[{b:"Red Bull",size:250,local:2.79,flag:"Grocery price — $2.99 at convenience"},{b:"Monster",size:473,local:3.59}]},
+{id:"it",name:"Italy",region:"europe",currency:"€",fx:1.1165,note:"Prices sit toward the cheaper end of Western Europe. Burn — not Rockstar — is the third drink in the research for Italy, in a smaller 250ml can.",drinks:[{b:"Red Bull",size:250,local:1.49},{b:"Monster",size:500,local:1.50,flag:"Research-weak — price-tracking site"},{b:"Burn — local third drink",size:250,local:1.29}]},
+{id:"de",name:"Germany",region:"europe",currency:"€",fx:1.1165,note:"Add 25¢ Pfand deposit per can at the till — you get it back when you return the can. Prices below exclude the deposit. All three drinks sit at the same €1.59 at Knuspr.",drinks:[{b:"Red Bull",size:250,local:1.59},{b:"Monster",size:500,local:1.59},{b:"Rockstar",size:500,local:1.59}]},
+{id:"es",name:"Spain",region:"europe",currency:"€",fx:1.1165,note:"No third drink is published for Spain: the only researched third price (Rockstar €1.00) is a wholesale list price, not a shelf price, so it is left out rather than shown as one.",drinks:[{b:"Red Bull",size:250,local:1.59},{b:"Monster",size:500,local:1.79}]},
+{id:"fr",name:"France",region:"europe",currency:"€",fx:1.1165,note:"Carrefour shelf prices, verified in the Nov 8 fresh check. The €2.07 Red Bull price that circulated earlier was a Carrefour Express delivery markup, not the shelf price. Rockstar is listed by Carrefour with no price shown, so it stays price to verify.",drinks:[{b:"Red Bull",size:250,local:1.19},{b:"Monster",size:500,local:1.35},{b:"Rockstar",size:500,verify:true,why:"Listed by Carrefour without a price — fresh check needed"}]},
+{id:"gb",name:"United Kingdom",region:"europe",currency:"£",fx:1.3386,note:"Tesco prices, Nov 2026: Red Bull 250ml £2.10, Monster 500ml £2.10, Rockstar 500ml £1.30. Meal-deal pricing can undercut these in convenience stores.",drinks:[{b:"Red Bull",size:250,local:2.10},{b:"Monster",size:500,local:2.10},{b:"Rockstar",size:500,local:1.30}]},
+{id:"cn",name:"China",region:"asia",currency:"¥",fx:1/6.675,note:"Cheapest overall — but read the fine print. The gold-can Red Bull in China is a licensed, non-carbonated drink with a different recipe. Eastroc (Dongpeng) in the big 500ml bottle is what a lot of people actually drink. No verified supermarket single-can price was found for Monster, so no single price is published and, like France's unverified Rockstar, it stays out of the average — the average here is the two verified drinks only.",drinks:[{b:"Red Bull (gold can)",size:250,local:6},{b:"Monster",size:500,verify:true,why:"No verified supermarket single-can price was found — fresh check needed"},{b:"Eastroc — local leader",size:500,local:5}]},
+{id:"jp",name:"Japan",region:"asia",currency:"¥",fx:1/158.48,note:"Red Bull Japan's official price is ¥213 before tax for 250ml (¥230 with tax, used here). Monster's standard 355ml can is also ¥230 with tax. ZONe's can is 400ml.",drinks:[{b:"Red Bull",size:250,local:230},{b:"Monster",size:355,local:230},{b:"ZONe — local rival",size:400,local:241}]},
+{id:"kr",name:"South Korea",region:"asia",currency:"₩",fx:1/1363.80,note:"Convenience stores (CU, GS25) run constant 1+1 and 2+1 deals, so the shelf price is often not what people pay. Red Bull availability has been shaky since a distributor change, and HOT6's size and price still need a fresh check — no HOT6 price is shown.",drinks:[{b:"Red Bull",size:250,local:2900,flag:"Research-weak — availability shaky after distributor change"},{b:"Monster",size:355,local:2300,flag:"Research-weak — social-media source"},{b:"HOT6 — Korean brand",verify:true,sizeVerify:true,why:"Size and price conflict across sightings — fresh check needed"}]},
+{id:"hk",name:"Hong Kong",region:"asia",currency:"HK$",fx:1/7.84,note:"HKTVmall pricing. No third drink is published for Hong Kong.",drinks:[{b:"Red Bull",size:250,local:19.50},{b:"Monster",size:355,local:16.50}]},
+{id:"sg",name:"Singapore",region:"asia",currency:"S$",fx:1/1.2826,note:"FairPrice pricing for Monster. No verified supermarket single-can price was found for Red Bull, so no Red Bull price is shown.",drinks:[{b:"Red Bull",size:250,verify:true,why:"No verified supermarket single-can price was found — fresh check needed"},{b:"Monster",size:355,local:2.95},{b:"Krating Daeng — local rival",size:250,local:2.00,flag:"Research-weak — vending-machine photo only"}]}
+];
+// USD values are derived from the local shelf price at the ECB 6 Nov 2026 rates
+// and kept at full precision internally; figures are rounded only when displayed.
+DATA.forEach(function(c){ c.drinks.forEach(function(d){ if(!d.verify) d.usd=d.local*c.fx; }); });
+var EU_ORDER=["gb","de","fr","it","es","us"];
+var ASIA_ORDER=["cn","kr","jp","hk","sg"];
+var state={selected:"de",curr:"usd"};
+function verified(c){return c.drinks.filter(function(d){return !d.verify})}
+function avg(c){ var v=verified(c); return v.reduce(function(s,d){return s+d.usd},0)/v.length}
+function ozOf(size){ var m={250:8.4,500:16.9,355:12,400:13.5,330:11.2,473:16}; return m[size]||Math.round(size/29.5735*10)/10; }
+function centsOz(d){ return d.usd/(d.size/29.5735)*100; }
+function avgCentsOz(c){ var v=verified(c); return v.reduce(function(s,d){return s+centsOz(d)},0)/v.length}
+function fmtUSD(v){return "$"+v.toFixed(2)}
+function fmtLocal(c,d){ if(d.verify) return "Price to verify"; if(c.id==="jp"||c.id==="kr"||c.id==="cn") return c.currency+Math.round(d.local).toLocaleString(); if(c.suffix) return d.local.toFixed(2)+" "+c.currency; return c.currency+d.local.toFixed(2); }
+function fmtLocalVal(c,v){ if(c.id==="jp"||c.id==="kr"||c.id==="cn") return c.currency+v.toFixed(2); if(c.suffix) return v.toFixed(2)+" "+c.currency; return c.currency+v.toFixed(2); }
+function displayPrice(c,d){ if(d.verify) return "Price to verify"; return state.curr==="usd"? fmtUSD(d.usd) : fmtLocal(c,d); }
+function perOzText(c,d){ if(state.curr==="usd") return Math.round(centsOz(d))+"¢ per oz"; return fmtLocalVal(c,d.local/(d.size/29.5735))+" per oz"; }
+function tileClass(c){ var a=avg(c); if(c.id==="us") return "t-us"; if(a<1.6) return "t-cheap"; if(a<=2.1) return "t-mid"; return "t-pricey"; }
+function makeTile(c){
+  var b=document.createElement("button"); b.className="tile "+tileClass(c)+(state.selected===c.id?" selected":""); b.setAttribute("aria-label",c.name);
+  var mainVal = fmtUSD(avg(c));
+  var vs = Math.round((avg(c)/avg(DATA[0])-1)*100);
+  b.innerHTML='<span class="cname">'+c.name+'</span><span><span class="cavg">'+mainVal+'</span><br><span class="cvs">'+(c.id==="us"?"Baseline":(vs>0?vs+"% vs US":""+vs+"% vs US"))+'</span></span>';
+  b.addEventListener("click",function(){selectCountry(c.id,true)});
+  b.addEventListener("mouseenter",function(e){showTip(e,c)}); b.addEventListener("mousemove",moveTip); b.addEventListener("mouseleave",hideTip);
+  return b;
+}
+function renderMaps(){
+  var eu=document.getElementById("euGrid"); eu.innerHTML="";
+  EU_ORDER.forEach(function(id){ if(!id){var d=document.createElement("div");d.className="tile empty";eu.appendChild(d);return;} var c=DATA.find(function(x){return x.id===id}); eu.appendChild(makeTile(c)); });
+  var as=document.getElementById("asiaGrid"); as.innerHTML="";
+  ASIA_ORDER.forEach(function(id){ var c=DATA.find(function(x){return x.id===id}); as.appendChild(makeTile(c)); });
+}
+var tip=document.getElementById("tip");
+function showTip(e,c){ tip.style.display="block"; tip.innerHTML="<b>"+c.name+"</b><br>Avg "+fmtUSD(avg(c))+" per can • "+Math.round(avgCentsOz(c))+"¢ per oz<br><span style='opacity:.8'>Tap to see Red Bull, Monster &amp; rival</span>"; moveTip(e); }
+function moveTip(e){ tip.style.left=Math.min(window.innerWidth-250,e.clientX+14)+"px"; tip.style.top=(e.clientY+14)+"px"; }
+function hideTip(){ tip.style.display="none"; }
+function selectCountry(id,scroll){
+  state.selected=id; renderMaps(); renderDetail(); renderRank();
+  if(scroll){ document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"nearest"}); }
+}
+function renderDetail(){
+  var c=DATA.find(function(x){return x.id===state.selected}); var us=DATA[0];
+  var vds=verified(c);
+  var max=Math.max.apply(null,vds.map(function(d){return d.usd}));
+  var cheapest=vds.reduce(function(a,b){return a.usd<b.usd?a:b});
+  var avgLabel=(vds.length<c.drinks.length? "Average of verified prices" : "Average per can");
+  var html='<div class="detail-head"><div><h3>'+c.name+'</h3><p>'+c.note+'</p></div><div class="big-avg"><span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">'+avgLabel+'</span><b>'+fmtUSD(avg(c))+'</b><span>'+Math.round((avg(c)/avg(us)-1)*100)+'% vs United States • '+Math.round(avgCentsOz(c))+'¢ per oz average (verified prices)</span></div></div>';
+  html+='<div class="drinks">';
+  c.drinks.forEach(function(d,i){
+    var cls=i===0?"red":(i===1?"":"dark");
+    if(d.verify){
+      html+='<div class="drink"><div class="brand">'+d.b+'</div><div class="price" style="font-size:24px">Price to verify</div><div class="meta">'+(d.sizeVerify?'Size to verify':ozOf(d.size)+' oz can')+' • Not published as a verified price.<br>'+d.why+'</div><div class="bar '+cls+'"><i style="width:0%"></i></div></div>';
+      return;
+    }
+    var pct=Math.round(d.usd/max*100);
+    html+='<div class="drink"><div class="brand">'+d.b+'</div><div class="price">'+displayPrice(c,d)+'</div><div class="meta">'+ozOf(d.size)+' oz can • '+fmtLocal(c,d)+' local • '+perOzText(c,d)+'<br>1 a day for a year: <b>'+fmtUSD(d.usd*365)+'</b>'+(d.flag?'<br><span style="color:var(--amber)">'+d.flag+'</span>':'')+'</div><div class="bar '+cls+'"><i style="width:'+pct+'%"></i></div></div>';
+  });
+  html+='</div><p class="note">Cheapest here: <b>'+cheapest.b+'</b> at '+fmtUSD(cheapest.usd)+' — that is '+fmtUSD((avg(us)-cheapest.usd))+' less per can than the US average. At one a day, drinking the local cheapest instead of paying US average prices saves about <b>'+fmtUSD((avg(us)-cheapest.usd)*365)+' a year</b>.</p>';
+  document.getElementById("detail").innerHTML=html;
+}
+function renderRank(){
+  var sorted=DATA.slice().sort(function(a,b){return avg(a)-avg(b)});
+  var body=document.getElementById("rankBody"); body.innerHTML="";
+  sorted.forEach(function(c,i){
+    var cheap=verified(c).reduce(function(a,b){return a.usd<b.usd?a:b});
+    var vs=Math.round((avg(c)/avg(DATA[0])-1)*100);
+    var tr=document.createElement("tr"); if(c.id===state.selected) tr.style.background="var(--surface2)";
+    tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+c.name+'</b></td><td class="num">'+fmtUSD(avg(c))+'</td><td class="num hide-m">'+Math.round(avgCentsOz(c))+'¢</td><td class="num"><span class="pill" style="background:var(--surface2)">'+(c.id==="us"?"—":vs+"%")+'</span></td><td class="hide-m">'+cheap.b+' • '+fmtUSD(cheap.usd)+'</td>';
+    tr.addEventListener("click",function(){selectCountry(c.id,true)});
+    body.appendChild(tr);
+  });
+}
+function renderCalc(){
+  var sel=document.getElementById("calcCountry"); var c=DATA.find(function(x){return x.id===sel.value})||DATA.find(function(x){return x.id==="de"});
+  var n=parseInt(document.getElementById("calcPerDay").value,10);
+  document.getElementById("perDayLabel").textContent=n;
+  var yearly=avg(c)*n*365; var usYearly=avg(DATA[0])*n*365;
+  document.getElementById("calcOut").textContent="$"+Math.round(yearly).toLocaleString()+" / year";
+  document.getElementById("calcVs").textContent= n===0? "Zero cans — you keep the lot, wherever you live." : ("Same habit in the US: $"+Math.round(usYearly).toLocaleString()+" — a difference of $"+Math.round(Math.abs(usYearly-yearly)).toLocaleString()+(yearly<usYearly?" saved":" extra")+" a year in "+c.name+".");
+}
+(function init(){
+  var sel=document.getElementById("calcCountry");
+  DATA.forEach(function(c){ var o=document.createElement("option"); o.value=c.id; o.textContent=c.name+" — "+fmtUSD(avg(c))+"/can avg"; if(c.id==="de") o.selected=true; sel.appendChild(o); });
+  sel.addEventListener("change",renderCalc); document.getElementById("calcPerDay").addEventListener("input",renderCalc);
+  document.querySelectorAll("#regionSeg button").forEach(function(b){ b.addEventListener("click",function(){ document.querySelectorAll("#regionSeg button").forEach(function(x){x.setAttribute("aria-pressed","false")}); b.setAttribute("aria-pressed","true"); var r=b.getAttribute("data-region"); document.getElementById("europeSection").style.display=(r==="asia")?"none":""; document.getElementById("asiaSection").style.display=(r==="europe")?"none":""; }); });
+  document.querySelectorAll("#currSeg button").forEach(function(b){ b.addEventListener("click",function(){ document.querySelectorAll("#currSeg button").forEach(function(x){x.setAttribute("aria-pressed","false")}); b.setAttribute("aria-pressed","true"); state.curr=b.getAttribute("data-curr"); renderDetail(); }); });
+  renderMaps(); renderDetail(); renderRank(); renderCalc();
+})();
+</script>
+</body>
+</html>

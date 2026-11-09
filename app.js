@@ -120,6 +120,14 @@ let taxRate       = 0.25;
 let salesTaxRate  = 0.06;
 let resultsVisible = false;
 
+/* ── STORE CHANNEL ───────────────────────────────────────── */
+/* price = convenience store (gas station, 7-Eleven, QT...).
+   price_grocery = grocery / big-store single can (Target, Nov 2026),
+   only where verified; otherwise the grocery price is the same. */
+let storeChannel = 'convenience';
+const drinkPrice = d => (storeChannel === 'grocery' && typeof d.price_grocery === 'number') ? d.price_grocery : d.price;
+const channelDrinks = () => drinks.map(d => ({ ...d, price: drinkPrice(d) }));
+
 /* ── HELPERS ─────────────────────────────────────────────── */
 const fmt2 = n => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const fmt0 = n => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -202,16 +210,26 @@ function applyStaticCopy() {
 }
 
 /* ── COUNTUP ANIMATION ───────────────────────────────────── */
+/* A new animation on the same element cancels the previous one,
+   so a fast input change can't leave a stale loop overwriting
+   the latest value (e.g. 0 cans showing the old annual cost). */
 function animateValue(el, to, duration, formatter) {
+  const animId = (el._animId || 0) + 1;
+  el._animId = animId;
   let startTs = null;
   function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
   function step(ts) {
+    if (el._animId !== animId) return;
     if (!startTs) startTs = ts;
     const progress = Math.min((ts - startTs) / duration, 1);
     el.textContent = formatter(to * easeOutQuart(progress));
     if (progress < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
+}
+
+function cancelAnimation(el) {
+  el._animId = (el._animId || 0) + 1;
 }
 
 /* ── SLIDER TRACK FILL ───────────────────────────────────── */
@@ -224,25 +242,34 @@ function updateSliderFill(slider) {
 
 /* ── MATH ────────────────────────────────────────────────── */
 function computeCosts() {
-  const wage        = parseFloat(document.getElementById('hourly-wage').value) || 20;
-  const canPrice    = currentDrink.price * (1 + salesTaxRate);
+  const wageInput   = parseFloat(document.getElementById('hourly-wage').value);
+  const wageValid   = Number.isFinite(wageInput) && wageInput > 0;
+  const wage        = wageValid ? wageInput : 0;
+  const afterTaxWage = wageValid ? wage * (1 - taxRate) : 0;
+  const canPrice    = drinkPrice(currentDrink) * (1 + salesTaxRate);
   const daily       = canPrice * cansPerDay;
-  const weekly      = daily * 7;
-  const monthly     = daily * 30.44;
   const annual      = daily * 365;
+  /* Reconciled: weekly and monthly are derived from the annual figure,
+     so weekly x 52 and monthly x 12 both equal the annual total. */
+  const weekly      = annual / 52;
+  const monthly     = annual / 12;
+  const annualAtOneCan = canPrice * 365;
   const gross       = annual / (1 - taxRate);
-  const hoursWorked = gross / wage;
-  const truePerCan  = (gross / 365) / cansPerDay;
-  const weeksWorked = hoursWorked / 40;
-  return { wage, canPrice, daily, weekly, monthly, annual, hoursWorked, truePerCan, weeksWorked };
+  const hoursWorked = wageValid ? gross / wage : null;
+  const truePerCan  = (gross / 365) / Math.max(cansPerDay, 1);
+  const weeksWorked = hoursWorked == null ? null : hoursWorked / 40;
+  return { wage, wageValid, afterTaxWage, canPrice, daily, weekly, monthly, annual, annualAtOneCan, hoursWorked, truePerCan, weeksWorked };
 }
 
 function buildSubline(canPrice, truePerCan) {
+  if (cansPerDay === 0) {
+    return `0 cans a day — you'd keep $${(canPrice * 365).toFixed(0)} a year by not drinking ${currentDrink.name}.`;
+  }
   if (salesTaxRate > 0) {
     const pct = (salesTaxRate * 100).toFixed(0);
-    return `$${currentDrink.price.toFixed(2)} shelf + ${pct}% sales tax = $${canPrice.toFixed(2)} at the register. After income tax, each can costs you $${truePerCan.toFixed(2)} to earn.`;
+    return `$${drinkPrice(currentDrink).toFixed(2)} shelf + ${pct}% sales tax = $${canPrice.toFixed(2)} at the register. After income tax, each can costs you $${truePerCan.toFixed(2)} to earn.`;
   }
-  return `At your wage & tax rate, that $${currentDrink.price.toFixed(2)} can actually costs you $${truePerCan.toFixed(2)} to earn.`;
+  return `At your wage & tax rate, that $${drinkPrice(currentDrink).toFixed(2)} can actually costs you $${truePerCan.toFixed(2)} to earn.`;
 }
 
 /* ── WEEKS CONTEXT ───────────────────────────────────────── */
@@ -250,7 +277,47 @@ function updateHoursContext() {
   const el = document.getElementById('weeks-count');
   if (!el || !currentDrink) return;
   const { weeksWorked } = computeCosts();
-  el.textContent = weeksWorked.toFixed(1);
+  el.textContent = weeksWorked == null ? '—' : weeksWorked.toFixed(1);
+}
+
+function updateWageNote() {
+  const { wage, wageValid, afterTaxWage } = computeCosts();
+  const noteEl = document.getElementById('wage-note');
+  if (noteEl) {
+    noteEl.textContent = wageValid
+      ? `$${wage.toFixed(2)}/hr becomes $${afterTaxWage.toFixed(2)}/hr after ${(taxRate * 100).toFixed(0)}% income tax.`
+      : 'Enter a wage above $0 to see hours.';
+    noteEl.hidden = false;
+  }
+  const hoursEl = document.getElementById('hours-worked');
+  if (hoursEl && !wageValid) hoursEl.textContent = '—';
+}
+
+function updateIncomeTaxNote() {
+  const { wage, wageValid, afterTaxWage } = computeCosts();
+  const noteEl = document.getElementById('income-tax-note');
+  if (!noteEl) return;
+  noteEl.textContent = wageValid
+    ? `Drag to match your bracket · $${wage.toFixed(2)}/hr becomes $${afterTaxWage.toFixed(2)}/hr after ${(taxRate * 100).toFixed(0)}% tax`
+    : 'Drag to match your bracket';
+}
+
+function updateStepperButtons() {
+  const minus = document.getElementById('stepper-minus');
+  const plus = document.getElementById('stepper-plus');
+  if (minus) minus.disabled = cansPerDay <= 0;
+  if (plus) plus.disabled = cansPerDay >= 6;
+}
+
+function updateQuitState() {
+  const annualSubEl = document.getElementById('annual-sub');
+  if (!annualSubEl) return;
+  if (cansPerDay === 0) {
+    const { annualAtOneCan } = computeCosts();
+    annualSubEl.textContent = `You'd keep ${fmt0(annualAtOneCan)} a year.`;
+  } else if (typeof siteCopy.annualSub === 'string') {
+    annualSubEl.textContent = siteCopy.annualSub;
+  }
 }
 
 /* ── RENDER STRATEGY CARDS ───────────────────────────────── */
@@ -264,17 +331,32 @@ function renderStrategies(annualCost) {
     let badgeText, annualText, optionsHTML;
 
     if (strategy.useAltPrices) {
-      /* ALDI mode: each option compares against its own name-brand c-store price */
-      const savingsArr       = strategy.options.map(o => (o.altPrice - o.price) * (1 + salesTaxRate));
+      /* ALDI mode: every saving is vs the currently selected drink,
+         after sales tax — the same basis as the other cards.
+         The old static comparators (vs Monster / vs Red Bull 12oz)
+         are gone; the altNote is kept only as extra context. */
+      const savingsArr       = strategy.options.map(o => (drinkPrice(currentDrink) - o.price) * (1 + salesTaxRate));
       const maxSavingsPerCan = Math.max(...savingsArr);
       const maxAnnualSavings = maxSavingsPerCan * cansPerDay * 365;
       const bestOption       = strategy.options[savingsArr.indexOf(maxSavingsPerCan)];
 
-      badgeText  = `Up to ${fmt2(maxSavingsPerCan)}/can saved`;
-      annualText = `Best deal: ${bestOption.name} saves you ${fmt0(maxAnnualSavings)}/yr at your pace`;
+      /* Comparator label: just "Monster" when a Monster is selected —
+         Original, Ultra and Juice are all $3.59 for 16oz (Java is the
+         only pricier one, $3.99), so "vs Monster Original (16oz)" is
+         needlessly specific and made the badge overflow on phones.
+         Other brands keep the full drink name, since e.g. Red Bull
+         varies by size ($2.99–$4.99) and "vs Red Bull" would be vague. */
+      const vsLabel = currentDrink.brand === 'Monster' ? 'Monster' : currentDrink.name;
+
+      badgeText  = maxSavingsPerCan > 0
+        ? `Up to ${fmt2(maxSavingsPerCan)}/can saved vs ${vsLabel}`
+        : 'Already cheaper';
+      annualText = maxSavingsPerCan > 0
+        ? `Best deal: ${bestOption.name} saves you ${fmt0(maxAnnualSavings)}/yr at your pace`
+        : `You're already in this price range with ${currentDrink.name}.`;
 
       optionsHTML = strategy.options.map(o => {
-        const perCanSavings  = (o.altPrice - o.price) * (1 + salesTaxRate);
+        const perCanSavings  = (drinkPrice(currentDrink) - o.price) * (1 + salesTaxRate);
         const annualSavings  = perCanSavings * cansPerDay * 365;
         const noteHtml       = o.altNote
           ? `<div class="strategy-item-note">${o.altNote}</div>`
@@ -283,7 +365,7 @@ function renderStrategies(annualCost) {
           <div class="strategy-item strategy-item--detailed">
             <div class="strategy-item-info">
               <div class="strategy-item-name">${o.name} <span class="strategy-item-size">${o.size}</span></div>
-              <div class="strategy-item-vs">Saves ${fmt2(perCanSavings)}/can vs ${o.altOf} at a c-store · ${fmt0(annualSavings)}/yr</div>
+              <div class="strategy-item-vs">Saves ${fmt2(perCanSavings)}/can vs ${vsLabel} · ${fmt0(annualSavings)}/yr</div>
               ${noteHtml}
             </div>
             <div class="strategy-item-price">$${o.price.toFixed(2)}<span class="strategy-item-unit">/can</span></div>
@@ -294,7 +376,7 @@ function renderStrategies(annualCost) {
     } else {
       /* Standard mode: savings vs the currently selected drink */
       const bestPrice      = Math.min(...strategy.options.map(o => o.price));
-      const savingsPerCan  = (currentDrink.price - bestPrice) * (1 + salesTaxRate);
+      const savingsPerCan  = (drinkPrice(currentDrink) - bestPrice) * (1 + salesTaxRate);
       const savingsPerYear = savingsPerCan * cansPerDay * 365;
 
       if (savingsPerCan <= 0) {
@@ -354,10 +436,15 @@ function renderSavingsIdeas(annualCost) {
   const section    = document.getElementById('savings-ideas');
   const grid       = document.getElementById('ideas-grid');
 
-  /* Use cheapest strategy option as baseline, tax-inclusive */
+  /* Use cheapest strategy option as baseline, tax-inclusive.
+     This is the SAME saving as the best Cheaper Hit (Kirkland at
+     Costco, $0.71/can) — one savings number across the whole page. */
   const cheapestStrategyPrice = Math.min(
     ...STRATEGIES.flatMap(s => s.options.map(o => o.price))
   );
+  const cheapestStrategyName = STRATEGIES
+    .flatMap(s => s.options.map(o => ({ ...o, strategy: s.label })))
+    .find(o => o.price === cheapestStrategyPrice)?.name || 'the cheapest option';
   const minAnnual  = cheapestStrategyPrice * (1 + salesTaxRate) * cansPerDay * 365;
   const maxSavings = Math.max(0, annualCost - minAnnual);
 
@@ -371,17 +458,17 @@ function renderSavingsIdeas(annualCost) {
     let amountText;
     if (idea.freeToStart) {
       amountText = maxSavings > 0
-        ? `Put your ${fmt0(maxSavings)} in annual savings to work here — free to start.`
+        ? `Put your ${fmt0(maxSavings)} in annual savings (switching to ${cheapestStrategyName}) to work here — free to start.`
         : `Free to open — redirect your habit savings here.`;
     } else if (maxSavings <= 0) {
       amountText = `Switch to a cheaper option to unlock this.`;
     } else if (canAfford) {
       amountText = multiple > 1
-        ? `Your ${fmt0(maxSavings)} savings covers this ${multiple}× over.`
-        : `Your ${fmt0(maxSavings)} savings covers this entirely.`;
+        ? `Your ${fmt0(maxSavings)} savings covers this ${fmt0(idea.annual_cost)} item ${multiple}× over.`
+        : `Your ${fmt0(maxSavings)} savings covers this ${fmt0(idea.annual_cost)} item entirely.`;
     } else {
       const pct = Math.round((maxSavings / idea.annual_cost) * 100);
-      amountText = `Your ${fmt0(maxSavings)} gets you ${pct}% there — just ${fmt0(shortfall)} short.`;
+      amountText = `Your ${fmt0(maxSavings)} gets you ${pct}% there on this ${fmt0(idea.annual_cost)} item — just ${fmt0(shortfall)} short.`;
     }
 
     const card = document.createElement('a');
@@ -427,7 +514,7 @@ function renderCaffeineIndex() {
   }
 
   callout.innerHTML =
-    `<span class="caff-callout-expensive">${caffeineIndex[0].name}</span> costs ` +
+    `Worst vs best on this list: <span class="caff-callout-expensive">${caffeineIndex[0].name}</span> costs ` +
     `<span class="caff-callout-mult">${ratio.toFixed(1)}&times;</span> more per mg of caffeine than ` +
     `<span class="caff-callout-cheap">${caffeineIndex[caffeineIndex.length - 1].name}</span>`;
 
@@ -435,6 +522,7 @@ function renderCaffeineIndex() {
     const fraction  = 1 - (d.cpm - minCpm) / (maxCpm - minCpm);
     const barPct    = (d.cpm / maxCpm) * 100;
     const color     = barColor(fraction);
+    const mgHtml    = d.caffeine_mg != null ? `<span class="caff-can-price">${d.caffeine_mg}mg</span>` : '';
     const priceHtml = d.price != null
       ? `<span class="caff-can-price">$${d.price.toFixed(2)}/can</span>`
       : '';
@@ -452,6 +540,7 @@ function renderCaffeineIndex() {
       <div class="caff-row">
         <div class="caff-meta">
           <span class="caff-name">${nameHtml}</span>
+          ${mgHtml}
           ${priceHtml}
         </div>
         <div class="caff-bar-row">
@@ -475,10 +564,10 @@ async function loadDrinks() {
     if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     drinks = data.drinks;
-    caffeineIndex = buildCaffeineIndex(drinks);
+    caffeineIndex = buildCaffeineIndex(channelDrinks());
   } catch (_) {
     drinks = getFallbackDrinks();
-    caffeineIndex = buildCaffeineIndex(drinks);
+    caffeineIndex = buildCaffeineIndex(channelDrinks());
   }
   populateDropdown();
 }
@@ -505,6 +594,11 @@ const DRINK_GROUPS = [
   {
     label: 'Value',
     ids: ['cstore-private-label']
+  },
+  {
+    label: 'Cheaper Swaps',
+    ids: ['kirkland-energy', 'red-thunder', 'venom-energy', 'bang-12oz',
+          'summit-waves', 'summit-gridlock', 'solimo-energy']
   }
 ];
 
@@ -523,7 +617,7 @@ function populateDropdown() {
       if (!d) return;
       const opt = document.createElement('option');
       opt.value = d.id;
-      opt.textContent = `${d.name} — $${d.price.toFixed(2)}`;
+      opt.textContent = `${d.name} — $${drinkPrice(d).toFixed(2)}`;
       optgroup.appendChild(opt);
       if (!firstDrink) firstDrink = d;
     });
@@ -531,7 +625,8 @@ function populateDropdown() {
     if (optgroup.children.length > 0) sel.appendChild(optgroup);
   });
 
-  currentDrink = firstDrink || drinks[0];
+  currentDrink = drinks.find(d => d.id === 'monster-original') || firstDrink || drinks[0];
+  sel.value = currentDrink ? currentDrink.id : '';
   updateDrinkMeta();
 
   if (isDesktop()) liveUpdate();
@@ -539,8 +634,8 @@ function populateDropdown() {
 
 function updateDrinkMeta() {
   if (!currentDrink) return;
-  const base = `${currentDrink.size_oz}oz · ${currentDrink.caffeine_mg}mg caffeine · $${currentDrink.price.toFixed(2)}/can`;
-  const canPrice = currentDrink.price * (1 + salesTaxRate);
+  const base = `${currentDrink.size_oz}oz · ${currentDrink.caffeine_mg}mg caffeine · $${drinkPrice(currentDrink).toFixed(2)}/can`;
+  const canPrice = drinkPrice(currentDrink) * (1 + salesTaxRate);
   const taxPart  = salesTaxRate > 0
     ? ` · $${canPrice.toFixed(2)} w/ ${(salesTaxRate * 100).toFixed(0)}% tax`
     : '';
@@ -566,10 +661,13 @@ function liveUpdate() {
     void resultsEl.offsetWidth;
     resultsEl.classList.add('reveal');
     animateValue(annualEl, annual,       1200, fmt0);
-    animateValue(hoursEl,  hoursWorked,  1200, n => fmtN(n, 1));
+    if (hoursWorked != null) animateValue(hoursEl, hoursWorked, 1200, n => fmtN(n, 1));
+    else hoursEl.textContent = '—';
   } else {
+    cancelAnimation(annualEl);
+    cancelAnimation(hoursEl);
     annualEl.textContent = fmt0(annual);
-    hoursEl.textContent  = fmtN(hoursWorked, 1);
+    hoursEl.textContent  = hoursWorked == null ? '—' : fmtN(hoursWorked, 1);
   }
 
   document.getElementById('results-subline').textContent = buildSubline(canPrice, truePerCan);
@@ -579,6 +677,10 @@ function liveUpdate() {
 
   updateSliderFill(document.getElementById('tax-slider'));
   updateHoursContext();
+  updateWageNote();
+  updateIncomeTaxNote();
+  updateQuitState();
+  updateStepperButtons();
   renderCaffeineIndex();
   renderStrategies(annual);
   renderSavingsIdeas(annual);
@@ -603,10 +705,15 @@ function calculate() {
   document.getElementById('monthly-cost').textContent    = fmt2(monthly);
 
   animateValue(document.getElementById('annual-cost'),  annual,      1500, fmt0);
-  animateValue(document.getElementById('hours-worked'), hoursWorked, 1500, n => fmtN(n, 1));
+  if (hoursWorked != null) animateValue(document.getElementById('hours-worked'), hoursWorked, 1500, n => fmtN(n, 1));
+  else document.getElementById('hours-worked').textContent = '—';
 
   updateSliderFill(document.getElementById('tax-slider'));
   updateHoursContext();
+  updateWageNote();
+  updateIncomeTaxNote();
+  updateQuitState();
+  updateStepperButtons();
 
   setTimeout(() => {
     renderCaffeineIndex();
@@ -628,24 +735,58 @@ function recalcAll() {
   document.getElementById('price-per-can').textContent   = fmt2(canPrice);
   document.getElementById('weekly-cost').textContent     = fmt2(weekly);
   document.getElementById('monthly-cost').textContent    = fmt2(monthly);
+  cancelAnimation(document.getElementById('annual-cost'));
+  cancelAnimation(document.getElementById('hours-worked'));
   document.getElementById('annual-cost').textContent     = fmt0(annual);
-  document.getElementById('hours-worked').textContent    = fmtN(hoursWorked, 1);
+  cancelAnimation(document.getElementById('hours-worked'));
+  document.getElementById('hours-worked').textContent    = hoursWorked == null ? '—' : fmtN(hoursWorked, 1);
   document.getElementById('results-subline').textContent = buildSubline(canPrice, truePerCan);
   updateHoursContext();
+  updateWageNote();
+  updateIncomeTaxNote();
+  updateQuitState();
+  updateStepperButtons();
   renderCaffeineIndex();
   renderStrategies(annual);
   renderSavingsIdeas(annual);
+}
+
+/* ── STORE CHANNEL TOGGLE ────────────────────────────────── */
+function updateDropdownPrices() {
+  const sel = document.getElementById('drink-select');
+  if (!sel) return;
+  [...sel.options].forEach(opt => {
+    const d = drinks.find(drink => drink.id === opt.value);
+    if (d) opt.textContent = `${d.name} — $${drinkPrice(d).toFixed(2)}`;
+  });
+}
+
+function setStoreChannel(channel) {
+  if (channel !== 'convenience' && channel !== 'grocery') return;
+  storeChannel = channel;
+  document.querySelectorAll('.store-toggle-btn').forEach(btn => {
+    const active = btn.dataset.channel === channel;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+  caffeineIndex = buildCaffeineIndex(channelDrinks());
+  updateDrinkMeta();
+  updateDropdownPrices();
+  if (isDesktop()) liveUpdate();
+  else if (resultsVisible) recalcAll();
 }
 
 /* ── INIT ────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   applyStaticCopy();
   loadDrinks();
+  updateStepperButtons();
 
   document.getElementById('stepper-minus').addEventListener('click', () => {
-    if (cansPerDay > 1) {
+    if (cansPerDay > 0) {
       cansPerDay--;
       document.getElementById('stepper-value').textContent = cansPerDay;
+      updateStepperButtons();
       if (isDesktop()) liveUpdate();
     }
   });
@@ -654,6 +795,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cansPerDay < 6) {
       cansPerDay++;
       document.getElementById('stepper-value').textContent = cansPerDay;
+      updateStepperButtons();
       if (isDesktop()) liveUpdate();
     }
   });
@@ -662,6 +804,10 @@ document.addEventListener('DOMContentLoaded', () => {
     currentDrink = drinks.find(d => d.id === e.target.value) || null;
     updateDrinkMeta();
     if (isDesktop()) liveUpdate();
+  });
+
+  document.querySelectorAll('.store-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => setStoreChannel(btn.dataset.channel));
   });
 
   document.getElementById('hourly-wage').addEventListener('input', () => {
