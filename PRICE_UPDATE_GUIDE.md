@@ -51,13 +51,13 @@ Current master list (Nov 7, 2026):
 | Monster Juice (16oz) | 16oz | 160mg | $3.59 |
 | Java Monster (15oz) | 15oz | 188mg | $3.99 |
 | Celsius Original (12oz) | 12oz | 200mg | $3.29 |
-| Celsius Essentials (16oz) | 16oz | 200mg | $3.49 |
+| Celsius Essentials (16oz) | 16oz | 200mg | $3.59 |
 | Alani Nu (12oz) | 12oz | 200mg | $3.39 |
 | Ghost Energy (16oz) | 16oz | 200mg | $3.49 |
 | Prime Energy (12oz) | 12oz | 200mg | $3.29 |
 | C4 Energy (16oz) | 16oz | 200mg | $3.49 |
 | Reign Total Body (16oz) | 16oz | 300mg | $3.49 |
-| Storm (12oz) | 12oz | 130mg | $3.29 |
+| Reign Storm (12oz) | 12oz | 130mg | $3.29 |
 | Bang Energy (16oz) | 16oz | 300mg | $3.29 |
 | Rockstar Original (16oz) | 16oz | 160mg | $3.29 |
 | NOS Original (16oz) | 16oz | 160mg | $3.29 |

@@ -144,10 +144,11 @@ test('grocery prices exist only where verified, convenience price unchanged', ()
   assert.equal(byId.get('red-bull-regular').price_grocery, 2.79);
   assert.equal(byId.get('rockstar-original').price, 3.29);
   assert.equal(byId.get('rockstar-original').price_grocery, 1.89);
+  assert.equal(byId.get('celsius-original').price, 3.29);
+  assert.equal(byId.get('celsius-original').price_grocery, 2.59);
 
   // Every other drink has no separate grocery price yet, so the
   // channel toggle leaves it unchanged.
-  assert.equal(byId.get('celsius-original').price_grocery, undefined);
   assert.equal(byId.get('java-monster').price_grocery, undefined);
   assert.equal(byId.get('kirkland-energy').price_grocery, undefined);
 });

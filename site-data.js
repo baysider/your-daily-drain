@@ -46,7 +46,7 @@
     savingsIdeasLabel: 'REDIRECT THE CASH',
     savingsIdeasSubtitle: 'What your savings could actually buy you.',
     freshnessNote: 'Retail price inputs last updated November 7, 2026.',
-    footerDisclaimer: 'Prices are US retail averages. Results are estimates for illustrative purposes. Affiliate links may earn a commission.'
+    footerDisclaimer: 'Prices are US retail list prices. Results are estimates for illustrative purposes. Affiliate links may earn a commission.'
   };
 
   const FALLBACK_DRINKS = [
@@ -58,14 +58,14 @@
     { id: 'monster-ultra', name: 'Monster Ultra (16oz)', brand: 'Monster', price: 3.59, price_grocery: 2.89, size_oz: 16, caffeine_mg: 150 },
     { id: 'monster-juice', name: 'Monster Juice (16oz)', brand: 'Monster', price: 3.59, price_grocery: 2.89, size_oz: 16, caffeine_mg: 160 },
     { id: 'java-monster', name: 'Java Monster (15oz)', brand: 'Monster', price: 3.99, size_oz: 15, caffeine_mg: 188 },
-    { id: 'celsius-original', name: 'Celsius Original (12oz)', brand: 'Celsius', price: 3.29, size_oz: 12, caffeine_mg: 200 },
-    { id: 'celsius-essentials', name: 'Celsius Essentials (16oz)', brand: 'Celsius', price: 3.49, size_oz: 16, caffeine_mg: 200 },
+    { id: 'celsius-original', name: 'Celsius Original (12oz)', brand: 'Celsius', price: 3.29, price_grocery: 2.59, size_oz: 12, caffeine_mg: 200 },
+    { id: 'celsius-essentials', name: 'Celsius Essentials (16oz)', brand: 'Celsius', price: 3.59, size_oz: 16, caffeine_mg: 200 },
     { id: 'alani-nu', name: 'Alani Nu (12oz)', brand: 'Alani Nu', price: 3.39, size_oz: 12, caffeine_mg: 200 },
     { id: 'ghost-energy', name: 'Ghost Energy (16oz)', brand: 'Ghost', price: 3.49, size_oz: 16, caffeine_mg: 200 },
     { id: 'prime-energy', name: 'Prime Energy (12oz)', brand: 'Prime', price: 3.29, size_oz: 12, caffeine_mg: 200 },
     { id: 'c4-energy', name: 'C4 Energy (16oz)', brand: 'C4', price: 3.49, size_oz: 16, caffeine_mg: 200 },
     { id: 'reign-total-body', name: 'Reign Total Body (16oz)', brand: 'Reign', price: 3.49, size_oz: 16, caffeine_mg: 300 },
-    { id: 'reign-storm', name: 'Storm (12oz)', brand: 'Reign', price: 3.29, size_oz: 12, caffeine_mg: 130 },
+    { id: 'reign-storm', name: 'Reign Storm (12oz)', brand: 'Reign', price: 3.29, size_oz: 12, caffeine_mg: 130 },
     { id: 'bang-energy', name: 'Bang Energy (16oz)', brand: 'Bang', price: 3.29, size_oz: 16, caffeine_mg: 300 },
     { id: 'rockstar-original', name: 'Rockstar Original (16oz)', brand: 'Rockstar', price: 3.29, price_grocery: 1.89, size_oz: 16, caffeine_mg: 160 },
     { id: 'nos-original', name: 'NOS Original (16oz)', brand: 'NOS', price: 3.29, size_oz: 16, caffeine_mg: 160 },
@@ -98,7 +98,7 @@
     { drinkId: 'ryse-fuel', name: 'Ryse Fuel (16oz)' },
     { drinkId: 'celsius-original', name: 'Celsius (12oz)' },
     { drinkId: 'prime-energy', name: 'Prime (12oz)' },
-    { drinkId: 'reign-storm', name: 'Storm (12oz)' },
+    { drinkId: 'reign-storm', name: 'Reign Storm (12oz)' },
     { drinkId: 'reign-total-body', name: 'Reign (16oz)' },
     { drinkId: 'bang-energy', name: 'Bang (16oz)' },
     { drinkId: 'red-thunder', name: 'Red Thunder (12oz) - ALDI', dividerBefore: true },
@@ -124,7 +124,7 @@
         { name: 'Kirkland Energy (12oz)', price: 0.71 },
         { name: 'Ghost (18-pack / 16oz)', price: 1.53 }
       ],
-      tip: 'Kirkland at $0.71 is the lowest per-can cost available anywhere. Costco also often runs a rotating monthly energy drink deal at 20%+ off.',
+      tip: 'Kirkland at $0.71 is the lowest per-can cost on this page. Costco also often runs a rotating monthly energy drink deal at 20%+ off.',
       linkText: 'Find a Costco near you',
       href: 'https://www.costco.com/s?keyword=energy%20drinks'
     },
@@ -148,7 +148,7 @@
       options: [
         {
           name: 'Summit Gridlock', size: '16oz', price: 1.45,
-          altNote: 'Name-brand Monster at ALDI itself: $2.95 - still cheaper than a c-store'
+          altNote: 'Name-brand Monster at ALDI itself: $2.95 — still cheaper than a convenience store'
         },
         {
           name: 'Summit Waves', size: '12oz', price: 1.35,
@@ -159,7 +159,7 @@
           altNote: "ALDI's Red Bull dupe - sold as a 4-pack ($3.65 total), best per-can value in this tier"
         }
       ],
-      tip: 'ALDI private-label cans are consistent quality with no membership required. Prices are shelf-stable - no need to wait for a sale.',
+      tip: 'ALDI private-label cans are consistent quality with no membership required. Prices are shelf-stable — no need to wait for a sale.',
       linkText: 'Find an ALDI near you',
       href: 'https://www.aldi.us/store-locator'
     },
@@ -246,7 +246,12 @@
       })
       .filter(Boolean);
 
-    return [...dynamicEntries, ...STATIC_CAFFEINE_INDEX_ENTRIES];
+    // Most expensive per 10mg first, so the rendered list matches the
+    // "sorted most to least expensive" subtitle. Stable sort keeps the
+    // config order for ties; dividerBefore travels with its entry.
+    const sorted = [...dynamicEntries, ...STATIC_CAFFEINE_INDEX_ENTRIES]
+      .sort((a, b) => (b.cpm ?? -Infinity) - (a.cpm ?? -Infinity));
+    return sorted;
   }
 
   return {
