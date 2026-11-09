@@ -17,8 +17,8 @@ test('getFallbackDrinks returns the shared fallback drink catalog', () => {
 test('getSiteCopy returns cloned homepage copy content', () => {
   const copy = getSiteCopy();
 
-  assert.equal(copy.pageTitle, 'Your Daily Drain');
-  assert.equal(copy.metaDescription, 'Calculate the true cost of your daily energy drink habit in hours worked.');
+  assert.equal(copy.pageTitle, 'Your Daily Drain – How Much Does Your Energy Drink Habit Really Cost?');
+  assert.equal(copy.metaDescription, 'One Monster a day costs $1,389 a year to earn after tax. Calculate the true cost of your energy drink habit — per can, per week, per year, in hours of work.');
   assert.equal(copy.ogDescription, 'That $3 Monster actually costs you nearly $5 to earn. Find out exactly how many hours you\'re working for caffeine.');
   assert.equal(copy.calculatorLabel, 'YOUR HABIT');
   assert.equal(copy.salesTaxNote, 'Applied to shelf price before all calculations');
@@ -30,7 +30,7 @@ test('getSiteCopy returns cloned homepage copy content', () => {
   copy.pageTitle = 'Changed Title';
   copy.calculatorLabel = 'CHANGED LABEL';
   assert.equal(getSiteCopy().heroEyebrow, 'YOUR DAILY DRAIN');
-  assert.equal(getSiteCopy().pageTitle, 'Your Daily Drain');
+  assert.equal(getSiteCopy().pageTitle, 'Your Daily Drain – How Much Does Your Energy Drink Habit Really Cost?');
   assert.equal(getSiteCopy().calculatorLabel, 'YOUR HABIT');
 });
 

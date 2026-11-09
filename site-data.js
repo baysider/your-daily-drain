@@ -8,9 +8,9 @@
   'use strict';
 
   const SITE_COPY = {
-    pageTitle: 'Your Daily Drain',
-    metaDescription: 'Calculate the true cost of your daily energy drink habit in hours worked.',
-    ogTitle: 'Your Daily Drain - The True Cost of Your Energy Habit',
+    pageTitle: 'Your Daily Drain – How Much Does Your Energy Drink Habit Really Cost?',
+    metaDescription: 'One Monster a day costs $1,389 a year to earn after tax. Calculate the true cost of your energy drink habit — per can, per week, per year, in hours of work.',
+    ogTitle: 'Your Daily Drain – How Much Does Your Energy Drink Habit Really Cost?',
     ogDescription: 'That $3 Monster actually costs you nearly $5 to earn. Find out exactly how many hours you\'re working for caffeine.',
     heroEyebrow: 'YOUR DAILY DRAIN',
     heroHeadlineHtml: 'That <span class="hl">$3</span> Monster<br>actually costs you <span class="hl">nearly $5</span><br>to earn.',
