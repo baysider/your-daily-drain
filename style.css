@@ -1137,6 +1137,15 @@ body::before {
   color: #000;
 }
 
+/* ── EMAIL SIGNUP (Kit form renders its own styles) ─────── */
+.signup-section {
+  background: var(--bg-card);
+  border: 2px solid var(--border-dim);
+  padding: 28px;
+  position: relative;
+  margin-top: 32px;
+}
+
 /* ── SELECTION ───────────────────────────────────────────── */
 ::selection {
   background: var(--yellow);
