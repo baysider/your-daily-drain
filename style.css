@@ -1112,6 +1112,31 @@ body::before {
   padding-top: 20px;
 }
 
+/* ── TIP BUTTON (Ko-fi, plain link — no widget script) ───── */
+.tip-wrap {
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.tip-button {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 19px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: transparent;
+  border: 2px solid var(--green);
+  padding: 10px 22px;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tip-button:hover {
+  background: var(--green);
+  color: #000;
+}
+
 /* ── SELECTION ───────────────────────────────────────────── */
 ::selection {
   background: var(--yellow);
