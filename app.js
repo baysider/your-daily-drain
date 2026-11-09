@@ -122,7 +122,7 @@ let resultsVisible = false;
 
 /* ── STORE CHANNEL ───────────────────────────────────────── */
 /* price = convenience store (gas station, 7-Eleven, QT...).
-   price_grocery = grocery / big-store single can (Target, Nov 2026),
+   price_grocery = grocery / large-store single can (Target, Nov 2026),
    only where verified; otherwise the grocery price is the same. */
 let storeChannel = 'convenience';
 const drinkPrice = d => (storeChannel === 'grocery' && typeof d.price_grocery === 'number') ? d.price_grocery : d.price;
@@ -560,7 +560,7 @@ function renderCaffeineIndex() {
 /* ── LOAD DRINKS ─────────────────────────────────────────── */
 async function loadDrinks() {
   try {
-    const res = await fetch('drinks.json');
+    const res = await fetch('drinks.json?v=20261108');
     if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     drinks = data.drinks;

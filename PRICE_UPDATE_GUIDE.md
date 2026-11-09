@@ -16,7 +16,7 @@ each drink can carry two prices:
 
 - **`price`** — the convenience-store price (gas station, 7-Eleven, QT,
   RaceTrac, Circle K). This is the default the site shows.
-- **`price_grocery`** — the grocery / big-store single-can price
+- **`price_grocery`** — the grocery / large-store single-can price
   (Target / Walmart). Only add one where you have verified a single-can
   shelf price. If a drink has no `price_grocery`, the toggle leaves it
   unchanged.
@@ -135,6 +135,18 @@ python -m http.server 4173
 - Cheaper Hits and Redirect the Cash show the same best saving
   ($1,114 a year to Kirkland at current prices).
 - 0 cans shows "You'd keep $1,389 a year."
+
+## Cache-busting — bump the version query string
+
+The shared files are loaded with a version query string
+(`style.css?v=20261108`, `site-data.js?v=20261108` and
+`app.js?v=20261108` in `index.html`, plus `drinks.json?v=20261108`
+in the fetch call in `app.js`). Whenever `app.js`, `site-data.js`,
+`style.css` or `drinks.json` changes, bump that version on every
+reference (e.g. to today's date), or returning visitors' browsers
+may keep showing the old cached copy. This matters because prices
+get updated roughly quarterly, so a stale cache can show old prices
+for months.
 
 ## Step 4 — Ship it
 
