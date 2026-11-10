@@ -1243,6 +1243,92 @@ body::before {
   color: #f0b0a0;
 }
 
+/* ── SIGNUP AS A SLIM STRIP (desktop ≥900px) ────────────────
+   One row when it fits: label + description on the left, the
+   email field + Subscribe on the right, badge inline at the end
+   of the form row — roughly half the stacked height (~53px vs
+   ~137px). The tab stops overlapping the top edge and becomes
+   inline text, smaller (16px) so JOIN THE LIST reads quiet.
+   The strip lives in the right column (max ~908px wide), so the
+   section wraps gracefully where one row can't fit: below
+   ~1430px viewports the form drops to a second line, and on
+   narrow desktop widths the description may take its own line —
+   still tighter than the stacked layout (no dead space, 8px
+   padding). Below 900px the stacked mobile layout (base rules
+   above) is unchanged. */
+@media (min-width: 900px) {
+  .signup-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 8px 16px;
+  }
+
+  /* Tab: inline, smaller, no longer overlapping the top edge */
+  .signup-section .section-label-tab {
+    position: static;
+    flex: none;
+    font-size: 16px;
+    padding: 2px 10px;
+  }
+
+  /* Description sits next to the label; one line where it fits */
+  .signup-section .section-subtitle {
+    margin-bottom: 0;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  /* Form takes the remaining width; wraps below the text when
+     the column is too narrow for one row */
+  .signup-section .formkit-form[data-uid="93db58418c"] {
+    flex: 1 1 330px;
+    min-width: 0;
+    margin-left: auto;
+  }
+
+  /* Form internals in one row: fields + badge side by side */
+  .signup-section .formkit-form[data-uid="93db58418c"] [data-style="clean"] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* No space below the Email/Subscribe row in the strip */
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-field,
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-submit {
+    margin: 0 5px;
+  }
+
+  /* Field + input must be allowed to shrink so the row fits */
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-field,
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-input {
+    min-width: 0;
+  }
+
+  /* Badge inline at the end of the form row, a touch smaller.
+     Kit's own variant rule sets width:133px at (0,4,0) and its
+     <style> comes after ours, so this selector adds
+     [data-variant] to win the tie; the container's width:100%
+     from Kit is also neutralised so it doesn't swallow the row. */
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-powered-by-convertkit-container {
+    margin: 0;
+    flex: none;
+    width: auto;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-powered-by-convertkit[data-variant] {
+    height: 22px;
+    width: 84px;
+  }
+}
+
 /* ── SELECTION ───────────────────────────────────────────── */
 ::selection {
   background: var(--yellow);
