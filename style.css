@@ -1306,6 +1306,26 @@ body::before {
     margin: 0 5px;
   }
 
+  /* Input + button on ONE row: Kit stacks them by default — its
+     base rule gives both `flex: 1 0 100%` (each item takes a full
+     row) and its min-width~700 rule gives the field `flex: 100 1
+     auto` (it hogs the row, the button wraps below). These
+     selectors beat Kit's (0,4,0) at (0,7,0)/(0,6,0): the fields
+     container stops wrapping, the field flexes to fill the row,
+     the button keeps its natural width beside it. */
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-field {
+    flex: 1 1 0;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-submit {
+    flex: none;
+  }
+
   /* Field + input must be allowed to shrink so the row fits */
   .signup-section .formkit-form[data-uid="93db58418c"] .formkit-field,
   .signup-section .formkit-form[data-uid="93db58418c"] .formkit-input {
