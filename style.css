@@ -1144,24 +1144,39 @@ body::before {
    under .signup-section and using [data-uid] for specificity —
    pull it back into the dark theme. Kit also sets a few inline
    styles on the input/button, which is why color/background need
-   !important there; everything else wins on specificity alone. */
+   !important there; everything else wins on specificity alone.
+   Kit's "clean" wrapper div also ships 56px of top padding (room
+   for a heading the form doesn't have) — the rule below zeroes it.
+   The input is near-black (#141414) so it recedes into the card
+   instead of reading as a light patch; its border stays visible
+   so the field is still findable.
+   The section spans the full width of the container like the
+   sibling sections (results, Cheaper Hits, Redirect) — no max-width,
+   so its left/right edges line up with theirs. */
 .signup-section {
   background: #1c1c1c;
   border: 2px solid var(--border-dim);
-  padding: 22px 20px 16px;
+  padding: 16px 16px 12px;
   position: relative;
-  max-width: 420px;
-  margin: 32px auto 0;
+  margin-top: 32px;
 }
 
 .signup-section .section-subtitle {
   font-size: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 /* Kit form shell: never wider than the card */
 .signup-section .formkit-form[data-uid="93db58418c"] {
   max-width: 100%;
+}
+
+/* Kill the dead space: Kit's "clean" wrapper carries 56px of top
+   padding (padding:10px;padding-top:56px) at specificity (0,4,0);
+   this selector goes one further to win. */
+.signup-section .formkit-form[data-uid="93db58418c"][min-width~="700"] [data-style="clean"],
+.signup-section .formkit-form[data-uid="93db58418c"][min-width~="800"] [data-style="clean"] {
+  padding: 0;
 }
 
 /* Tighter stacking, smaller gaps between input / button.
@@ -1170,12 +1185,12 @@ body::before {
    further to win while keeping the 5px side margins. */
 .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-field,
 .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-submit {
-  margin: 0 5px 10px;
+  margin: 0 5px 8px;
 }
 
-/* Gray input, light text, smaller type */
+/* Near-black input, light text, smaller type */
 .signup-section .formkit-form[data-uid="93db58418c"] .formkit-input {
-  background: #2a2a2a;
+  background: #141414;
   color: #f2f2f2 !important;
   border-color: #3a3a3a !important;
   font-size: 13px;
@@ -1226,6 +1241,112 @@ body::before {
   background: #2a1a1a;
   border-color: #5c2a1e;
   color: #f0b0a0;
+}
+
+/* ── SIGNUP AS A SLIM STRIP (desktop ≥900px) ────────────────
+   One row when it fits: label + description on the left, the
+   email field + Subscribe on the right, badge inline at the end
+   of the form row — roughly half the stacked height (~53px vs
+   ~137px). The tab stops overlapping the top edge and becomes
+   inline text, smaller (16px) so JOIN THE LIST reads quiet.
+   The strip lives in the right column (max ~908px wide), so the
+   section wraps gracefully where one row can't fit: below
+   ~1430px viewports the form drops to a second line, and on
+   narrow desktop widths the description may take its own line —
+   still tighter than the stacked layout (no dead space, 8px
+   padding). Below 900px the stacked mobile layout (base rules
+   above) is unchanged. */
+@media (min-width: 900px) {
+  .signup-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 8px 16px;
+  }
+
+  /* Tab: inline, smaller, no longer overlapping the top edge */
+  .signup-section .section-label-tab {
+    position: static;
+    flex: none;
+    font-size: 16px;
+    padding: 2px 10px;
+  }
+
+  /* Description sits next to the label; one line where it fits */
+  .signup-section .section-subtitle {
+    margin-bottom: 0;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  /* Form takes the remaining width; wraps below the text when
+     the column is too narrow for one row */
+  .signup-section .formkit-form[data-uid="93db58418c"] {
+    flex: 1 1 330px;
+    min-width: 0;
+    margin-left: auto;
+  }
+
+  /* Form internals in one row: fields + badge side by side */
+  .signup-section .formkit-form[data-uid="93db58418c"] [data-style="clean"] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* No space below the Email/Subscribe row in the strip */
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-field,
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-submit {
+    margin: 0 5px;
+  }
+
+  /* Input + button on ONE row: Kit stacks them by default — its
+     base rule gives both `flex: 1 0 100%` (each item takes a full
+     row) and its min-width~700 rule gives the field `flex: 100 1
+     auto` (it hogs the row, the button wraps below). These
+     selectors beat Kit's (0,4,0) at (0,7,0)/(0,6,0): the fields
+     container stops wrapping, the field flexes to fill the row,
+     the button keeps its natural width beside it. */
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-field {
+    flex: 1 1 0;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .seva-fields.formkit-fields[data-stacked="false"] .formkit-submit {
+    flex: none;
+  }
+
+  /* Field + input must be allowed to shrink so the row fits */
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-field,
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-input {
+    min-width: 0;
+  }
+
+  /* Badge inline at the end of the form row, a touch smaller.
+     Kit's own variant rule sets width:133px at (0,4,0) and its
+     <style> comes after ours, so this selector adds
+     [data-variant] to win the tie; the container's width:100%
+     from Kit is also neutralised so it doesn't swallow the row. */
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-powered-by-convertkit-container {
+    margin: 0;
+    flex: none;
+    width: auto;
+  }
+
+  .signup-section .formkit-form[data-uid="93db58418c"] .formkit-powered-by-convertkit[data-variant] {
+    height: 22px;
+    width: 84px;
+  }
 }
 
 /* ── SELECTION ───────────────────────────────────────────── */
